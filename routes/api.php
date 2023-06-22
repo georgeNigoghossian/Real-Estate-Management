@@ -18,6 +18,7 @@ use App\Http\Controllers\PassportAuth;
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/resetpassword', [PassportAuth\ForgotPasswordController::class,'sendResetLinkEmail'])->name('resetpassword.api');
     Route::post('/register', [PassportAuth\RegisterController::class,'register'])->name('register.api');
+
 });
 
 Route::group(['middleware' => ['cors', 'json.response','oauth']], function () {

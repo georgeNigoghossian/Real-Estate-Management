@@ -7,9 +7,17 @@ use Laravel\Passport\RefreshTokenRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    use AuthenticatesUsers;
+
+    public function __construct()
+    {
+        $this->middleware('web');
+    }
+
     public function logout(Request $request)
     {
         $tokenId = $request->user()->token()->id;
