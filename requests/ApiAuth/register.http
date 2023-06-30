@@ -1,0 +1,16 @@
+POST {{host}}/api/register
+Content-Type: application/json
+
+{
+    "name": "nicolas alahmar",
+    "email": "nicolasalahmar4@gmail.com",
+    "password": "new_password",
+    "password_confirmation": "new_password"
+}
+> {%
+client.global.set("user_token", response.body.token);
+    client.test("status code 200", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###

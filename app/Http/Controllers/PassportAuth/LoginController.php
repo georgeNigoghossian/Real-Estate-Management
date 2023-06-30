@@ -13,11 +13,6 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    public function __construct()
-    {
-        $this->middleware('web');
-    }
-
     public function logout(Request $request)
     {
         $tokenId = $request->user()->token()->id;
