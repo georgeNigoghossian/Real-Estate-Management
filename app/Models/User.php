@@ -22,6 +22,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'remember_token',
+        'mobile',
+        'facebook',
+        'gender',
+        'date_of_birth',
+        'is_blocked',
+        'priority',
     ];
 
     /**
@@ -47,5 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new \App\Notifications\MailResetPasswordNotification($token));
     }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class,'user_notifications');
+    }
+
 
 }
