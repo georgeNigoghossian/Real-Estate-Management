@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\PassportAuth;
 
-use Laravel\Passport\TokenRepository;
-use Laravel\Passport\RefreshTokenRepository;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\App\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Passport\RefreshTokenRepository;
+use Laravel\Passport\TokenRepository;
 
 class LoginController extends Controller
 {

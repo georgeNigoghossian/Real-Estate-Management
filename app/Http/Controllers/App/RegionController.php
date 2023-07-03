@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\Commercial;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
-class CommercialController extends Controller
+class RegionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class CommercialController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Commercial  $commercial
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function show(Commercial $commercial)
+    public function show(Region $region)
     {
         //
     }
@@ -52,10 +52,10 @@ class CommercialController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Commercial  $commercial
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function edit(Commercial $commercial)
+    public function edit(Region $region)
     {
         //
     }
@@ -64,10 +64,10 @@ class CommercialController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Commercial  $commercial
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Commercial $commercial)
+    public function update(Request $request, Region $region)
     {
         //
     }
@@ -75,10 +75,10 @@ class CommercialController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Commercial  $commercial
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Commercial $commercial)
+    public function destroy(Region $region)
     {
         //
     }

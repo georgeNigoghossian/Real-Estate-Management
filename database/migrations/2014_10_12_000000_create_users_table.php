@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('mobile');
-            $table->string('facebook');
+            $table->string('mobile')->nullable();
+            $table->string('facebook')->nullable();
             $table->enum('gender', ['male', 'female'])->default('male');
             $table->date('date_of_birth')->nullable();
-            $table->integer('is_blocked')->nullable()->default('1');
-            $table->integer('priority');
+            $table->integer('is_blocked')->nullable()->default('0');
+            $table->integer('priority')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

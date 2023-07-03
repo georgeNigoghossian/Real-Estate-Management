@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\Region;
+use App\Models\Residential;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class ResidentialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RegionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function show(Region $region)
+    public function show(Residential $residential)
     {
         //
     }
@@ -52,10 +52,10 @@ class RegionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function edit(Region $region)
+    public function edit(Residential $residential)
     {
         //
     }
@@ -64,10 +64,10 @@ class RegionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, Residential $residential)
     {
         //
     }
@@ -75,10 +75,10 @@ class RegionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Region $region)
+    public function destroy(Residential $residential)
     {
         //
     }

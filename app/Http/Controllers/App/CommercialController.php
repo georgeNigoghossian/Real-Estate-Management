@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\Property;
+use App\Models\Commercial;
 use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class CommercialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Commercial  $commercial
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property)
+    public function show(Commercial $commercial)
     {
         //
     }
@@ -52,10 +52,10 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Commercial  $commercial
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property)
+    public function edit(Commercial $commercial)
     {
         //
     }
@@ -64,10 +64,10 @@ class PropertyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Commercial  $commercial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, Commercial $commercial)
     {
         //
     }
@@ -75,10 +75,10 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Commercial  $commercial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Commercial $commercial)
     {
         //
     }

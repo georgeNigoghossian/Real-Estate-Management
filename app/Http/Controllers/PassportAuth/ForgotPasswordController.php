@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\PassportAuth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\App\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 

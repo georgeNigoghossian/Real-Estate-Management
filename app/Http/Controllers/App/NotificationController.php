@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\AmenityType;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
-class AmenityTypeController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AmenityTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function show(AmenityType $amenityType)
+    public function show(Notification $notification)
     {
         //
     }
@@ -52,10 +52,10 @@ class AmenityTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function edit(AmenityType $amenityType)
+    public function edit(Notification $notification)
     {
         //
     }
@@ -64,10 +64,10 @@ class AmenityTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AmenityType $amenityType)
+    public function update(Request $request, Notification $notification)
     {
         //
     }
@@ -75,10 +75,10 @@ class AmenityTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AmenityType $amenityType)
+    public function destroy(Notification $notification)
     {
         //
     }

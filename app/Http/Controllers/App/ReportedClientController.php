@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\AgencyContactInfo;
+use App\Models\ReportedClient;
 use Illuminate\Http\Request;
 
-class AgencyContactInfoController extends Controller
+class ReportedClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\ReportedClient  $reportedClient
      * @return \Illuminate\Http\Response
      */
-    public function show(AgencyContactInfo $agencyContactInfo)
+    public function show(ReportedClient $reportedClient)
     {
         //
     }
@@ -52,10 +52,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\ReportedClient  $reportedClient
      * @return \Illuminate\Http\Response
      */
-    public function edit(AgencyContactInfo $agencyContactInfo)
+    public function edit(ReportedClient $reportedClient)
     {
         //
     }
@@ -64,10 +64,10 @@ class AgencyContactInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\ReportedClient  $reportedClient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AgencyContactInfo $agencyContactInfo)
+    public function update(Request $request, ReportedClient $reportedClient)
     {
         //
     }
@@ -75,10 +75,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\ReportedClient  $reportedClient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AgencyContactInfo $agencyContactInfo)
+    public function destroy(ReportedClient $reportedClient)
     {
         //
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\ReportedClient;
+use App\Models\City;
 use Illuminate\Http\Request;
 
-class ReportedClientController extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ReportedClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ReportedClient  $reportedClient
+     * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function show(ReportedClient $reportedClient)
+    public function show(City $city)
     {
         //
     }
@@ -52,10 +52,10 @@ class ReportedClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ReportedClient  $reportedClient
+     * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function edit(ReportedClient $reportedClient)
+    public function edit(City $city)
     {
         //
     }
@@ -64,10 +64,10 @@ class ReportedClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ReportedClient  $reportedClient
+     * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ReportedClient $reportedClient)
+    public function update(Request $request, City $city)
     {
         //
     }
@@ -75,10 +75,10 @@ class ReportedClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ReportedClient  $reportedClient
+     * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReportedClient $reportedClient)
+    public function destroy(City $city)
     {
         //
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\City;
+use App\Models\Agricultural;
 use Illuminate\Http\Request;
 
-class CityController extends Controller
+class AgriculturalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class CityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\City  $city
+     * @param  \App\Models\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function show(City $city)
+    public function show(Agricultural $agricultural)
     {
         //
     }
@@ -52,10 +52,10 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\City  $city
+     * @param  \App\Models\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function edit(City $city)
+    public function edit(Agricultural $agricultural)
     {
         //
     }
@@ -64,10 +64,10 @@ class CityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\City  $city
+     * @param  \App\Models\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, Agricultural $agricultural)
     {
         //
     }
@@ -75,10 +75,10 @@ class CityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\City  $city
+     * @param  \App\Models\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy(Agricultural $agricultural)
     {
         //
     }

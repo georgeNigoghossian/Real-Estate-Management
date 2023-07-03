@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\ReportCategory;
+use App\Models\Amenity;
 use Illuminate\Http\Request;
 
-class ReportCategoryController extends Controller
+class AmenityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ReportCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function show(ReportCategory $reportCategory)
+    public function show(Amenity $amenity)
     {
         //
     }
@@ -52,10 +52,10 @@ class ReportCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function edit(ReportCategory $reportCategory)
+    public function edit(Amenity $amenity)
     {
         //
     }
@@ -64,10 +64,10 @@ class ReportCategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ReportCategory $reportCategory)
+    public function update(Request $request, Amenity $amenity)
     {
         //
     }
@@ -75,10 +75,10 @@ class ReportCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param  \App\Models\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReportCategory $reportCategory)
+    public function destroy(Amenity $amenity)
     {
         //
     }

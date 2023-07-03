@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\RateAgency;
+use App\Models\SavedProperty;
 use Illuminate\Http\Request;
 
-class RateAgencyController extends Controller
+class SavedPropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RateAgencyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\SavedProperty  $savedProperty
      * @return \Illuminate\Http\Response
      */
-    public function show(RateAgency $rateAgency)
+    public function show(SavedProperty $savedProperty)
     {
         //
     }
@@ -52,10 +52,10 @@ class RateAgencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\SavedProperty  $savedProperty
      * @return \Illuminate\Http\Response
      */
-    public function edit(RateAgency $rateAgency)
+    public function edit(SavedProperty $savedProperty)
     {
         //
     }
@@ -64,10 +64,10 @@ class RateAgencyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\SavedProperty  $savedProperty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RateAgency $rateAgency)
+    public function update(Request $request, SavedProperty $savedProperty)
     {
         //
     }
@@ -75,10 +75,10 @@ class RateAgencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\SavedProperty  $savedProperty
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RateAgency $rateAgency)
+    public function destroy(SavedProperty $savedProperty)
     {
         //
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\Agricultural;
+use App\Models\AmenityType;
 use Illuminate\Http\Request;
 
-class AgriculturalController extends Controller
+class AmenityTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AgriculturalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Agricultural  $agricultural
+     * @param  \App\Models\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function show(Agricultural $agricultural)
+    public function show(AmenityType $amenityType)
     {
         //
     }
@@ -52,10 +52,10 @@ class AgriculturalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Agricultural  $agricultural
+     * @param  \App\Models\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agricultural $agricultural)
+    public function edit(AmenityType $amenityType)
     {
         //
     }
@@ -64,10 +64,10 @@ class AgriculturalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Agricultural  $agricultural
+     * @param  \App\Models\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agricultural $agricultural)
+    public function update(Request $request, AmenityType $amenityType)
     {
         //
     }
@@ -75,10 +75,10 @@ class AgriculturalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Agricultural  $agricultural
+     * @param  \App\Models\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agricultural $agricultural)
+    public function destroy(AmenityType $amenityType)
     {
         //
     }

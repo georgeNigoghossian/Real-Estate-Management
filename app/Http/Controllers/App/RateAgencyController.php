@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
-use App\Models\Residential;
+use App\Models\RateAgency;
 use Illuminate\Http\Request;
 
-class ResidentialController extends Controller
+class RateAgencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ResidentialController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Residential  $residential
+     * @param  \App\Models\RateAgency  $rateAgency
      * @return \Illuminate\Http\Response
      */
-    public function show(Residential $residential)
+    public function show(RateAgency $rateAgency)
     {
         //
     }
@@ -52,10 +52,10 @@ class ResidentialController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Residential  $residential
+     * @param  \App\Models\RateAgency  $rateAgency
      * @return \Illuminate\Http\Response
      */
-    public function edit(Residential $residential)
+    public function edit(RateAgency $rateAgency)
     {
         //
     }
@@ -64,10 +64,10 @@ class ResidentialController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Residential  $residential
+     * @param  \App\Models\RateAgency  $rateAgency
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Residential $residential)
+    public function update(Request $request, RateAgency $rateAgency)
     {
         //
     }
@@ -75,10 +75,10 @@ class ResidentialController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Residential  $residential
+     * @param  \App\Models\RateAgency  $rateAgency
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Residential $residential)
+    public function destroy(RateAgency $rateAgency)
     {
         //
     }

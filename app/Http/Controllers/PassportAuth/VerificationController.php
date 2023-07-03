@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\PassportAuth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\App\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\JsonResponse;
