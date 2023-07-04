@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Property;
 
-use App\Models\SavedProperty;
+use App\Http\Controllers\App\Controller;
+use App\Models\Property\Residential;
 use Illuminate\Http\Request;
 
-class SavedPropertyController extends Controller
+class ResidentialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class SavedPropertyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SavedProperty  $savedProperty
+     * @param  \App\Models\Property\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function show(SavedProperty $savedProperty)
+    public function show(Residential $residential)
     {
         //
     }
@@ -52,10 +53,10 @@ class SavedPropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SavedProperty  $savedProperty
+     * @param  \App\Models\Property\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function edit(SavedProperty $savedProperty)
+    public function edit(Residential $residential)
     {
         //
     }
@@ -64,10 +65,10 @@ class SavedPropertyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SavedProperty  $savedProperty
+     * @param  \App\Models\Property\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SavedProperty $savedProperty)
+    public function update(Request $request, Residential $residential)
     {
         //
     }
@@ -75,10 +76,10 @@ class SavedPropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SavedProperty  $savedProperty
+     * @param  \App\Models\Property\Residential  $residential
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SavedProperty $savedProperty)
+    public function destroy(Residential $residential)
     {
         //
     }

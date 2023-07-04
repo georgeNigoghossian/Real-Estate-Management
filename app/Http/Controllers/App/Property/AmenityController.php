@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Property;
 
-use App\Models\Region;
+use App\Http\Controllers\App\Controller;
+use App\Models\Property\Amenity;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class AmenityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class RegionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Property\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function show(Region $region)
+    public function show(Amenity $amenity)
     {
         //
     }
@@ -52,10 +53,10 @@ class RegionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Property\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Region $region)
+    public function edit(Amenity $amenity)
     {
         //
     }
@@ -64,10 +65,10 @@ class RegionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Property\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, Amenity $amenity)
     {
         //
     }
@@ -75,10 +76,10 @@ class RegionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Property\Amenity  $amenity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Region $region)
+    public function destroy(Amenity $amenity)
     {
         //
     }

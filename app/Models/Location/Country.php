@@ -1,15 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Location;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AmenityType extends Model
+class Country extends Model
 {
     use HasFactory;
 
     public $fillable = [
-        'name',
+      'name',
     ];
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
 }

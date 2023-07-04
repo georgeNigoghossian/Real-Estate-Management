@@ -14,7 +14,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private UserRepository $userRepository ;
+    private UserRepository $userRepository;
+
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -38,7 +39,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,7 +50,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $User
+     * @param \App\Models\User $User
      * @return \Illuminate\Http\Response
      */
     public function show(User $User)
@@ -60,7 +61,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $User
+     * @param \App\Models\User $User
      * @return \Illuminate\Http\Response
      */
     public function edit(User $User)
@@ -71,8 +72,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $User
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $User
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $User)
@@ -83,21 +84,22 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $User
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\User $User
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(Request $request)
     {
         $id = $request->user_id;
         $res = $this->userRepository->deleteAccount($id);
 
-        if($res)
-            return response()->json(['message'=>__("api.messages.success_delete_account"),'success'=>true,'data'=>$res]);
+        if ($res)
+            return response()->json(['message' => __("api.messages.success_delete_account"), 'success' => true, 'data' => $res]);
         else
-            return response()->json(['message'=>__("api.messages.failed_delete_account"),'success'=>false]);
+            return response()->json(['message' => __("api.messages.failed_delete_account"), 'success' => false]);
     }
 
-    public function reportClient(Request $request){
+    public function reportClient(Request $request)
+    {
 
         $reporting_user_id = $request->reporting_user_id;
         $reported_user_id = $request->reported_user_id;
@@ -105,11 +107,11 @@ class UserController extends Controller
         $description = $request->description;
 
 
-        $data = $this->userRepository->reportClient($reporting_user_id,$reported_user_id,$report_category_id,$description);
+        $data = $this->userRepository->reportClient($reporting_user_id, $reported_user_id, $report_category_id, $description);
 
-        if($data)
-            return response()->json(['message'=>__("api.messages.success_report_client"),'success'=>true,'data'=>$data]);
+        if ($data)
+            return response()->json(['message' => __("api.messages.success_report_client"), 'success' => true, 'data' => $data]);
         else
-            return response()->json(['message'=>__("api.messages.failed_report_client"),'success'=>false]);
+            return response()->json(['message' => __("api.messages.failed_report_client"), 'success' => false]);
     }
 }

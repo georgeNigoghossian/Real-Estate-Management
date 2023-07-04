@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Location;
 
-use App\Models\AmenityType;
+use App\Http\Controllers\App\Controller;
+use App\Models\Location\City;
 use Illuminate\Http\Request;
 
-class AmenityTypeController extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class AmenityTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Location\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function show(AmenityType $amenityType)
+    public function show(City $city)
     {
         //
     }
@@ -52,10 +53,10 @@ class AmenityTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Location\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function edit(AmenityType $amenityType)
+    public function edit(City $city)
     {
         //
     }
@@ -64,10 +65,10 @@ class AmenityTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Location\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AmenityType $amenityType)
+    public function update(Request $request, City $city)
     {
         //
     }
@@ -75,10 +76,10 @@ class AmenityTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AmenityType  $amenityType
+     * @param  \App\Models\Location\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AmenityType $amenityType)
+    public function destroy(City $city)
     {
         //
     }

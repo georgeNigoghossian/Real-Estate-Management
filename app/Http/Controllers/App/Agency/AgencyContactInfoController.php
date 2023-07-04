@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Agency;
 
-use App\Models\Agency;
+use App\Http\Controllers\App\Controller;
+use App\Models\Agency\AgencyContactInfo;
 use Illuminate\Http\Request;
 
-class AgencyController extends Controller
+class AgencyContactInfoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class AgencyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Agency  $agency
+     * @param  \App\Models\Agency\AgencyContactInfo  $agencyContactInfo
      * @return \Illuminate\Http\Response
      */
-    public function show(Agency $agency)
+    public function show(AgencyContactInfo $agencyContactInfo)
     {
         //
     }
@@ -52,10 +53,10 @@ class AgencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Agency  $agency
+     * @param  \App\Models\Agency\AgencyContactInfo  $agencyContactInfo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agency $agency)
+    public function edit(AgencyContactInfo $agencyContactInfo)
     {
         //
     }
@@ -64,10 +65,10 @@ class AgencyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Agency  $agency
+     * @param  \App\Models\Agency\AgencyContactInfo  $agencyContactInfo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agency $agency)
+    public function update(Request $request, AgencyContactInfo $agencyContactInfo)
     {
         //
     }
@@ -75,10 +76,10 @@ class AgencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Agency  $agency
+     * @param  \App\Models\Agency\AgencyContactInfo  $agencyContactInfo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agency $agency)
+    public function destroy(AgencyContactInfo $agencyContactInfo)
     {
         //
     }

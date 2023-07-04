@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Agency;
 
-use App\Models\Property;
+use App\Http\Controllers\App\Controller;
+use App\Models\Agency\Agency;
 use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class AgencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Agency\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property)
+    public function show(Agency $agency)
     {
         //
     }
@@ -52,10 +53,10 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Agency\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property)
+    public function edit(Agency $agency)
     {
         //
     }
@@ -64,10 +65,10 @@ class PropertyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Agency\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, Agency $agency)
     {
         //
     }
@@ -75,10 +76,10 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Property  $property
+     * @param  \App\Models\Agency\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Agency $agency)
     {
         //
     }

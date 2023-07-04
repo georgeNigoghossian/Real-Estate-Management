@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Property;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Amenity extends Model
 {
     use HasFactory;
 
     public $fillable = [
         'name',
+        'description',
         'active',
-        'parent_id',
-        'num_of_properties',
+        'amenity_type_id',
     ];
 
-
-    public function parent()
+    public function type()
     {
-        return $this->belongsTo(Tag::class,'parent_id');
+        return $this->belongsTo(AmenityType::class,'amenity_type_id');
     }
+
 }

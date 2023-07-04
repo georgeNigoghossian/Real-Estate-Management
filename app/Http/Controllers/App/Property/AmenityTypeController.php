@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Property;
 
-use App\Models\Tag;
+use App\Http\Controllers\App\Controller;
+use App\Models\Property\AmenityType;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class AmenityTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\Property\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(AmenityType $amenityType)
     {
         //
     }
@@ -52,10 +53,10 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\Property\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit(AmenityType $amenityType)
     {
         //
     }
@@ -64,10 +65,10 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\Property\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, AmenityType $amenityType)
     {
         //
     }
@@ -75,10 +76,10 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tag  $tag
+     * @param  \App\Models\Property\AmenityType  $amenityType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy(AmenityType $amenityType)
     {
         //
     }

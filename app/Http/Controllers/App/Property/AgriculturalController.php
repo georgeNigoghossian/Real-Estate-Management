@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Property;
 
-use App\Models\AgencyContactInfo;
+use App\Http\Controllers\App\Controller;
+use App\Models\Property\Agricultural;
 use Illuminate\Http\Request;
 
-class AgencyContactInfoController extends Controller
+class AgriculturalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\Property\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function show(AgencyContactInfo $agencyContactInfo)
+    public function show(Agricultural $agricultural)
     {
         //
     }
@@ -52,10 +53,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\Property\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function edit(AgencyContactInfo $agencyContactInfo)
+    public function edit(Agricultural $agricultural)
     {
         //
     }
@@ -64,10 +65,10 @@ class AgencyContactInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\Property\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AgencyContactInfo $agencyContactInfo)
+    public function update(Request $request, Agricultural $agricultural)
     {
         //
     }
@@ -75,10 +76,10 @@ class AgencyContactInfoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AgencyContactInfo  $agencyContactInfo
+     * @param  \App\Models\Property\Agricultural  $agricultural
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AgencyContactInfo $agencyContactInfo)
+    public function destroy(Agricultural $agricultural)
     {
         //
     }

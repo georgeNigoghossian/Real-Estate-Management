@@ -1,27 +1,21 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Property;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SavedProperty extends Model
+class Agricultural extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    public $fillable =[
         'property_id',
-        'user_id',
+        'specialAttributes',
     ];
-
 
     public function property()
     {
         return $this->belongsTo(Property::class,'property_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class,'user_id');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\App\Property\PropertyController;
+use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassportAuth;
 
@@ -16,7 +17,7 @@ use App\Http\Controllers\PassportAuth;
 */
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
-    Route::post('/resetpassword', [PassportAuth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('resetpassword.api');
+    Route::post('/reset-password', [PassportAuth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('resetpassword.api');
     Route::post('/register', [PassportAuth\RegisterController::class, 'register'])->name('register.api');
     Route::post('/login', [PassportAuth\LoginController::class, 'login'])->name('login.api');
 
@@ -30,7 +31,10 @@ Route::group(['middleware' => ['cors', 'json.response', 'oauth']], function () {
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors']], function () {
     Route::post('/logout', [PassportAuth\LoginController::class, 'logout'])->name('logout.api');
-    Route::get('/resendverification', [PassportAuth\VerificationController::class, 'resend'])->name('resend.api');
-    Route::post('/reportClient', [\App\Http\Controllers\App\UserController::class, 'reportClient'])->name('user.report_client');
-    Route::get('/delete', [\App\Http\Controllers\App\UserController::class, 'delete'])->name('user.delete_account');
+    Route::get('/resend-verification', [PassportAuth\VerificationController::class, 'resend'])->name('resend.api');
+    Route::post('/report-client', [UserController::class, 'reportClient'])->name('user.report_client');
+    Route::get('/delete', [UserController::class, 'delete'])->name('user.delete_account');
+
 });
+//Property Endpoints
+Route::apiResource('/properties', PropertyController::class);

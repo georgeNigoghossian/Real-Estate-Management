@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Location;
 
-use App\Models\RateAgency;
+use App\Http\Controllers\App\Controller;
+use App\Models\Location\Country;
 use Illuminate\Http\Request;
 
-class RateAgencyController extends Controller
+class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class RateAgencyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\Location\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function show(RateAgency $rateAgency)
+    public function show(Country $country)
     {
         //
     }
@@ -52,10 +53,10 @@ class RateAgencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\Location\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function edit(RateAgency $rateAgency)
+    public function edit(Country $country)
     {
         //
     }
@@ -64,10 +65,10 @@ class RateAgencyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\Location\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RateAgency $rateAgency)
+    public function update(Request $request, Country $country)
     {
         //
     }
@@ -75,10 +76,10 @@ class RateAgencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\RateAgency  $rateAgency
+     * @param  \App\Models\Location\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RateAgency $rateAgency)
+    public function destroy(Country $country)
     {
         //
     }
