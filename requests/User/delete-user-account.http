@@ -1,0 +1,5 @@
+GET {{host}}/api/delete?user_id=3
+Content-Type: application/json
+Authorization: Bearer {{user_token}}
+
+###

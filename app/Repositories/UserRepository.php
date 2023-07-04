@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\ReportedClient;
 use App\Models\User;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+use Illuminate\Support\Facades\Validator;
+
 //use Your Model
 
 /**
@@ -43,5 +45,43 @@ class UserRepository extends BaseRepository
         }
 
 
+    }
+    public function displayAccount($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            return $user;
+        } else {
+            return null;
+        }
+    }
+
+    public function validateUpdateAccount($request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['string', 'min:2', 'max:255'],
+            'email' => ['email', 'min:2', 'max:255'],
+            'mobile' => ['string', 'size:10'],
+            'facebook' => ['string'],
+            'gender' => ['in:male,female'],
+            'date_of_birth' => ['date:Y-m-d'],
+        ]);
+
+        return $validator;
+    }
+
+    public function updateAccount($user, $request)
+    {
+        $allowed_fields = ['name', 'email', 'facebook', 'mobile', 'gender', 'date_of_birth'];
+
+        foreach ($allowed_fields as $field) {
+            $value = $request->get($field);
+            if ($value != null){
+                $user->$field = $value;
+            }
+        }
+
+        return $user->save();
     }
 }

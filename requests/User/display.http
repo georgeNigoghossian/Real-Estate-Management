@@ -1,0 +1,5 @@
+GET {{host}}/api/view?user_id=1
+Content-Type: application/json
+Authorization: Bearer {{user_token}}
+
+###

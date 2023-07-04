@@ -34,7 +34,8 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors']], function () {
     Route::get('/resend-verification', [PassportAuth\VerificationController::class, 'resend'])->name('resend.api');
     Route::post('/report-client', [UserController::class, 'reportClient'])->name('user.report_client');
     Route::get('/delete', [UserController::class, 'delete'])->name('user.delete_account');
-
+    Route::get('/view', [UserController::class, 'show'])->name('user.show_account');
+    Route::post('/update', [UserController::class, 'update'])->name('user.update_account');
 });
 //Property Endpoints
 Route::apiResource('/properties', PropertyController::class);
