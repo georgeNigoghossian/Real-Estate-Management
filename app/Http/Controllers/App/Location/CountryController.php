@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\App\Location;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Location\Country;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class CountryController extends AppController
 {
     /**
      * Display a listing of the resource.

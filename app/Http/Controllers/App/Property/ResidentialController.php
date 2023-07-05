@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\App\Property;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Residential;
 use Illuminate\Http\Request;
 
-class ResidentialController extends Controller
+class ResidentialController extends AppController
 {
     /**
      * Display a listing of the resource.

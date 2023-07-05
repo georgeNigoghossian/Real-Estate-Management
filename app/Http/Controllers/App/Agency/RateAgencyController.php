@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\App\Agency;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Agency\RateAgency;
 use Illuminate\Http\Request;
 
-class RateAgencyController extends Controller
+class RateAgencyController extends AppController
 {
     /**
      * Display a listing of the resource.

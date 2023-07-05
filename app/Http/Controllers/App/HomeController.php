@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\App;
 
-class HomeController extends Controller
+use App\Http\Controllers\Controller;
+
+class HomeController extends AppController
 {
     /**
      * Show the application dashboard.

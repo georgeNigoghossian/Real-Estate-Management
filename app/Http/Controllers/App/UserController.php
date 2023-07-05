@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class UserController extends AppController
 {
     /**
      * Display a listing of the resource.
@@ -60,9 +61,10 @@ class UserController extends Controller
         $res = $this->userRepository->displayAccount($id);
 
         if ($res != null)
-            return response()->json(['message' => __("api.messages.success_retrieve_account"), 'success' => true, 'data' => $res]);
+
+            return $this->response(true,$res,__("api.messages.success_retrieve_account"),200);
         else
-            return response()->json(['message' => __("api.messages.failed_retrieve_account"), 'success' => false]);
+            return $this->response(false,null, __("api.messages.failed_retrieve_account"), null);
     }
 
     /**
@@ -81,24 +83,28 @@ class UserController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $User
-     * @return \Illuminate\Http\JsonResponse
+     * @return array
      */
     public function update(Request $request)
     {
         $user = $request->user();
+        $model = new User();
 
-        $validator = $this->userRepository->validateUpdateAccount($request);
+        $validator = Validator::make($request->all(),
+            $model->validation_rules
+        );
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return response()->json(['message' => __("api.messages.failed_update_account"), 'success' => false, 'data' => $errors], 400);
+            return $this->response(false,$errors,__("api.messages.failed_update_account"),400);
         } else {
-            $res = $this->userRepository->updateAccount($user, $request);
+            $values = $request->all();
 
+            $res = $this->userRepository->updateAccount($user, $values);
             if ($res) {
-                return response()->json(['message' => __("api.messages.success_update_account"), 'success' => true, 'data' => $res]);
+                return $this->response(true,$res,__("api.messages.success_update_account"),null);
             } else {
-                return response()->json(['message' => __("api.messages.failed_update_account"), 'success' => false], 500);
+                return $this->response(false,null,__("api.messages.failed_update_account"),500);
             }
         }
     }
@@ -115,9 +121,9 @@ class UserController extends Controller
         $res = $this->userRepository->deleteAccount($id);
 
         if ($res)
-            return response()->json(['message' => __("api.messages.success_delete_account"), 'success' => true, 'data' => $res]);
+            return $this->response(true,$res,__("api.messages.success_delete_account"),null);
         else
-            return response()->json(['message' => __("api.messages.failed_delete_account"), 'success' => false]);
+            return $this->response(false,null,__("api.messages.failed_delete_account"),null);
     }
 
     public function reportClient(Request $request)
@@ -132,8 +138,8 @@ class UserController extends Controller
         $data = $this->userRepository->reportClient($reporting_user_id, $reported_user_id, $report_category_id, $description);
 
         if ($data)
-            return response()->json(['message' => __("api.messages.success_report_client"), 'success' => true, 'data' => $data]);
+            return $this->response(true,$data,__("api.messages.success_report_client"),200);
         else
-            return response()->json(['message' => __("api.messages.failed_report_client"), 'success' => false]);
+            return $this->response(false,null,__("api.messages.failed_report_client"),null);
     }
 }

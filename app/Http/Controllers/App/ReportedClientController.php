@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Controllers\Controller;
 use App\Models\ReportedClient;
 use Illuminate\Http\Request;
 
-class ReportedClientController extends Controller
+class ReportedClientController extends AppController
 {
     /**
      * Display a listing of the resource.

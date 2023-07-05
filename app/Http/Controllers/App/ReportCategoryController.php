@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Controllers\Controller;
 use App\Models\ReportCategory;
 use Illuminate\Http\Request;
 
-class ReportCategoryController extends Controller
+class ReportCategoryController extends AppController
 {
     /**
      * Display a listing of the resource.

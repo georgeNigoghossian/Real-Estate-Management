@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\App\Property;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Amenity;
 use Illuminate\Http\Request;
 
-class AmenityController extends Controller
+class AmenityController extends AppController
 {
     /**
      * Display a listing of the resource.

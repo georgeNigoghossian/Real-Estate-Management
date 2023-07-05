@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\App\Property;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Tag;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class TagController extends AppController
 {
     /**
      * Display a listing of the resource.

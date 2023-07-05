@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\App\Property;
 
-use App\Http\Controllers\App\Controller;
+use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PropertyController extends Controller
+class PropertyController extends AppController
 {
     /**
      * Display a listing of the resource.
@@ -30,11 +31,8 @@ class PropertyController extends Controller
             ])
             ->paginate($request->per_page);
 
-        return response()->json([
-            'message' => "All Properties",
-            'data' => $properties,
-            'status' => 200
-        ]);
+
+        return $this->response(true,$properties,"All Properties",200);
 
     }
 

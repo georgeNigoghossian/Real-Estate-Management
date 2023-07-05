@@ -30,6 +30,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'priority',
     ];
 
+
+    public $validation_rules = [
+        'name' => ['string','min:2', 'max:255'],
+        'email' => ['email', 'min:2', 'max:255'],
+        'mobile' => ['string', 'size:10'],
+        'facebook' => ['string'],
+        'gender' => ['in:male,female'],
+        'date_of_birth' => ['date:Y-m-d'],
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
