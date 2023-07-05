@@ -1,0 +1,8 @@
+POST {{host}}/api/update
+Content-Type: application/json
+Authorization: Bearer {{user_token}}
+
+{
+  "name": "nigga1",
+  "email": "nigga1@gmail.com"
+}
