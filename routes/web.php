@@ -1,7 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PassportAuth\AuthenticatesUsersController;
+use App\Http\Controllers\PassportAuth\LoginController;
+use App\Http\Controllers\PassportAuth\RegisterController;
+use App\Http\Controllers\PassportAuth\SMSVerificationController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +22,21 @@ Route::get('/', function () {
     return redirect('home');
 });
 
-Auth::routes(['verify' => true]);
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/login', [LoginController::class, 'showLoginForm']);
+Route::get('/sms/verify', [SMSVerificationController::class, 'showVerificationForm'])->name('sms.verify');
+Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', [\App\Http\Controllers\App\HomeController::class, 'index'])->name('home');
+//Auth::routes(['verify' => true]);
+
+Route::group(['middleware' => ['is_sms_verified']], function () {
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
+
+Route::group(['middleware' => ['auth', 'is_sms_verified']], function () {
+
+    Route::post('/logout', [AuthenticatesUsersController::class, 'logout'])->name('logout');
+    Route::get('/home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+});
+

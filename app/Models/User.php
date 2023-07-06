@@ -28,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_of_birth',
         'is_blocked',
         'priority',
+        'sms_verification_code',
+        'sms_verified_at',
     ];
 
 

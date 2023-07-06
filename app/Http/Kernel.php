@@ -72,6 +72,6 @@ class Kernel extends HttpKernel
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'oauth' => \App\Http\Middleware\oauth::class,
-
+        'is_sms_verified' => \App\Http\Middleware\VerifySMS::class,
     ];
 }

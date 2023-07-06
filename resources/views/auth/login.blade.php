@@ -39,8 +39,8 @@
                                 @csrf
                                 <div class="input-group input-group-outline my-3">
 
-                                    <input name="email" id="email" type="email" class="form-control"
-                                           placeholder="{{ __('Email Address') }}">
+                                    <input name="mobile" id="mobile" type="mobile" class="form-control"
+                                           placeholder="{{ __('Mobile') }}">
                                 </div>
                                 <div class="input-group input-group-outline mb-3">
                                     <input name="password" type="password" class="form-control"

@@ -57,12 +57,54 @@
                                 <div class="input-group input-group-outline my-3">
 
 
+                                    <input id="mobile" type="text"
+                                           class="form-control @error('mobile') is-invalid @enderror" name="mobile"
+                                           placeholder="{{ __('Mobile') }}"
+                                           value="{{ old('mobile') }}" required autocomplete="email">
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
+                                </div>
+
+                                <div class="input-group input-group-outline my-3">
+
+
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
                                            placeholder="{{ __('Email Address') }}"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                           value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
+                                </div>
+
+                                <div class="input-group input-group-outline my-3">
+
+                                    <label class="form-check-label" >
+                                        {{__('Gender')}}
+                                    </label>
+                                    <div class="form-check">
+                                        <input required class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="male" value="male" checked>
+                                        <label class="form-check-label" for="male">
+                                            {{ __('Male') }}
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input required class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="female" value="female">
+                                        <label class="form-check-label" for="female">
+                                            {{ __('Female') }}
+                                        </label>
+                                    </div>
+
+                                    @error('gender')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

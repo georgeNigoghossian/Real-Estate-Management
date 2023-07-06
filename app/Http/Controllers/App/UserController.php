@@ -115,9 +115,10 @@ class UserController extends AppController
      * @param \App\Models\User $User
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request)
+    public function delete()
     {
-        $id = $request->user_id;
+
+        $id = auth()->user()->id;
         $res = $this->userRepository->deleteAccount($id);
 
         if ($res)
@@ -129,7 +130,7 @@ class UserController extends AppController
     public function reportClient(Request $request)
     {
 
-        $reporting_user_id = $request->reporting_user_id;
+        $reporting_user_id = auth()->user()->id;
         $reported_user_id = $request->reported_user_id;
         $report_category_id = $request->report_category_id;
         $description = $request->description;
