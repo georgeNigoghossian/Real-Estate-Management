@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 class AppController extends Controller
 {
-    public function response($success = false, $data = [], $message = null, $status = null)
+    public function response($success = false, $data = [], $message = null, $status = 200)
     {
         $return = array(
             "success" => $success,

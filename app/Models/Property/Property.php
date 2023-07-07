@@ -6,6 +6,8 @@ use App\Models\Location\Region;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Property extends Model
 {
@@ -24,21 +26,21 @@ class Property extends Model
         'is_disabled',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function region()
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class,'region_id');
     }
 
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class,'property_tags');
     }
-    public function amenities()
+    public function amenities(): BelongsToMany
     {
         return $this->belongsToMany(Amenity::class,'property_amenities');
     }

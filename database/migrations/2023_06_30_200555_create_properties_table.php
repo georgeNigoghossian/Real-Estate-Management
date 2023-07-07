@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->double('area')->nullable();
-            $table->double('price')->nullable();
+            $table->string('name');
+            $table->double('area');
+            $table->double('price');
             $table->text('description')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();

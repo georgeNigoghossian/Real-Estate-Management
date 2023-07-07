@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyChangeStatusRequest;
+use App\Http\Requests\PropertyStoreRequest;
+use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Property\Property;
-use Illuminate\Http\JsonResponse;
+use App\Repositories\PropertyRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +15,20 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertyController extends AppController
 {
+    private PropertyRepository $property_repository;
+
+    public function __construct(PropertyRepository $property_repository)
+    {
+        $this->property_repository = $property_repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return array
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): array
     {
         $columns = Schema::getColumnListing('properties');
         $properties = QueryBuilder::for(Property::class)
@@ -32,7 +41,7 @@ class PropertyController extends AppController
             ->paginate($request->per_page);
 
 
-        return $this->response(true,$properties,"All Properties",200);
+        return $this->response(true, $properties, "All Properties", 200);
 
     }
 
@@ -49,29 +58,31 @@ class PropertyController extends AppController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
+     * @param PropertyStoreRequest $request
+     * @return array
      */
-    public function store(Request $request)
+    public function store(PropertyStoreRequest $request): array
     {
-        //
+        $property = $this->property_repository->store($request->validated());
+        return $this->response(true, $property, "Property has been created successfully", 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Property\Property $property
-     * @return Response
+     * @param Property $property
+     * @return array
      */
-    public function show(Property $property)
+    public function show(Property $property): array
     {
-        //
+        $property = $this->property_repository->show($property);
+        return $this->response(true, $property);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Property\Property $property
+     * @param Property $property
      * @return Response
      */
     public function edit(Property $property)
@@ -82,23 +93,38 @@ class PropertyController extends AppController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Property\Property $property
-     * @return Response
+     * @param PropertyUpdateRequest $request
+     * @param Property $property
+     * @return array
      */
-    public function update(Request $request, Property $property)
+    public function update(PropertyUpdateRequest $request, Property $property): array
     {
-        //
+        $property = $this->property_repository->update($request->validated(), $property);
+        return $this->response(true, $property, 'property updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Property\Property $property
-     * @return Response
+     * @param Property $property
+     * @return array
      */
-    public function destroy(Property $property)
+    public function destroy(Property $property): array
     {
-        //
+        $this->property_repository->destroy($property);
+        return $this->response(true, null, 'property deleted successfully');
+    }
+
+    /**
+     * changes the status of a property
+     *
+     * @param PropertyChangeStatusRequest $request
+     * @param Property $property
+     * @return array
+     */
+    public function changeStatus(PropertyChangeStatusRequest $request, Property $property): array
+    {
+        $property = $this->property_repository->changeStatus($property, $request->validated());
+        return $this->response(true, $property, 'property status changed successfully');
     }
 }

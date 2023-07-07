@@ -37,5 +37,7 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors']], function () {
     Route::get('/view', [UserController::class, 'show'])->name('user.show_account');
     Route::post('/update', [UserController::class, 'update'])->name('user.update_account');
 });
+
 //Property Endpoints
+Route::put('/properties/{property}/change-status', [PropertyController::class, 'changeStatus']);
 Route::apiResource('/properties', PropertyController::class);
