@@ -15,8 +15,10 @@ class VerifySMS
         // Check if the user has a verified SMS (add your verification logic here)
 
         if (Auth::check() && Auth::user()->sms_verified_at === null) {
-
-            return redirect()->route('sms.verify');
+            if ($request->expectsJson())
+                return response()->json(["success" => false, "data" => null, "message" => __("api.messages.verify_sms_number"), "status" => 403]);
+            else
+                return redirect()->route('sms.verify');
         }
 
 

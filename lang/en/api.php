@@ -20,5 +20,6 @@ return array(
         'delete_property_forbidden'=>'You are unauthorized to delete this property',
         'success_retrieve_property'=>'Property retrieved successfully',
         'failed_retrieve_property'=>'Failed to retrieve Property',
+        'verify_sms_number'=>'Please verify your phone number through the verification code sent to your device',
     ),
 );
