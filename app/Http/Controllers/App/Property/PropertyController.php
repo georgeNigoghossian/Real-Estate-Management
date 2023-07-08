@@ -127,4 +127,59 @@ class PropertyController extends AppController
         $property = $this->property_repository->changeStatus($property, $request->validated());
         return $this->response(true, $property, 'property status changed successfully');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function display_property(Request $request)
+    {
+        $id = $request->property_id;
+        $res = $this->property_repository->displayProperty($id);
+
+        if ($res != null)
+            return $this->response(true, $res, __("api.messages.success_retrieve_property"), 200);
+        else
+            return $this->response(false, null, __("api.messages.property_not_found"), 404);
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function delete_property(Request $request)
+    {
+        $id = $request->property_id;
+        $user = $request->user();
+        $res = $this->property_repository->deleteProperty($id, $user);
+
+        if ($res[0] == 200)
+            return $this->response(true, $res[1], $res[2], 200);
+        else
+            return $this->response(false, null, $res[1], $res[0]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function saveFavorite(Request $request)
+    {
+        $id = $request->property_id;
+        $user = $request->user();
+
+        $res = $this->property_repository->saveProperty($id, $user);
+
+        if ($res[0] == 200)
+            return $this->response(true, $res[1], $res[2], 200);
+        else
+            return $this->response(false, null, $res[1], $res[0]);
+    }
 }

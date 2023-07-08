@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -53,7 +54,7 @@ class UserController extends AppController
      * Display the specified resource.
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return array
      */
     public function show(Request $request)
     {
@@ -64,7 +65,7 @@ class UserController extends AppController
 
             return $this->response(true,$res,__("api.messages.success_retrieve_account"),200);
         else
-            return $this->response(false,null, __("api.messages.failed_retrieve_account"), null);
+            return $this->response(false,null, __("api.messages.failed_retrieve_account"), 404);
     }
 
     /**
@@ -113,7 +114,7 @@ class UserController extends AppController
      * Remove the specified resource from storage.
      *
      * @param \App\Models\User $User
-     * @return \Illuminate\Http\JsonResponse
+     * @return array
      */
     public function delete()
     {

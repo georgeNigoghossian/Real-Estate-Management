@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors', 'json.response', 'oauth']], function () {
 
 });
 
-Route::group(['middleware' => ['auth:api', 'api', 'cors']], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors']], function () {
     Route::post('/logout', [PassportAuth\LoginController::class, 'logout'])->name('logout.api');
     Route::get('/resend-verification', [PassportAuth\VerificationController::class, 'resend'])->name('resend.api');
     Route::post('/report-client', [UserController::class, 'reportClient'])->name('user.report_client');
@@ -37,6 +37,14 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors']], function () {
     Route::get('/view', [UserController::class, 'show'])->name('user.show_account');
     Route::post('/update', [UserController::class, 'update'])->name('user.update_account');
 });
+
+
+Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors']], function () {
+    Route::get('/show', [PropertyController::class, 'display_property'])->name('property.display_property');
+    Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.delete_property');
+    Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.save_property');
+});
+
 
 //Property Endpoints
 Route::put('/properties/{property}/change-status', [PropertyController::class, 'changeStatus']);
