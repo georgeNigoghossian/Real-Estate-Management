@@ -59,7 +59,7 @@ class UserController extends AppController
     public function show(Request $request)
     {
         $id = $request->user_id;
-        $res = $this->userRepository->displayAccount($id);
+        $res = $this->userRepository->get_single_user($id);
 
         if ($res != null)
 

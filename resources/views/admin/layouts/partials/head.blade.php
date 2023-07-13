@@ -10,5 +10,5 @@
         Real Estate Management
     </title>
 
-    @include('layouts.partials.head_scripts')
+    @include('admin.layouts.partials.head_scripts')
 </head>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\PassportAuth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -14,6 +14,22 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        if(Auth::guard('admin')->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        )){
+            return Auth::guard('admin')->attempt(
+                $this->credentials($request), $request->boolean('remember')
+            );
+        }
+
+    }
     public function login(Request $request)
     {
 
@@ -42,63 +58,48 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
-
         return $this->sendFailedLoginResponse($request);
     }
 
-    protected function sendFailedLoginResponse(Request $request)
+    public function redirectPath()
     {
+        if (method_exists($this, 'redirectTo')) {
+            return $this->redirectTo();
+        }
 
-        return response()->json(["success" => false, "data" =>null , "message" => __('auth.failed'), "status" => 422]);
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/admin/dashboard';
     }
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
-
         $this->clearLoginAttempts($request);
-
 
         if ($response = $this->authenticated($request, $this->guard()->user())) {
             return $response;
         }
 
-        $accessToken = Auth::user()->createToken('authToken')->accessToken;
+        $admin = Auth::guard('admin')->user();
+        $accessToken = $admin->createToken('authToken')->accessToken;
 
-        $response=[
-            'user' => Auth::user(),
+        $response = [
+            'user' => $admin,
             'access_token' => $accessToken,
         ];
 
         return $request->wantsJson()
-            ? response()->json(["success" => true, "data" =>$response , "message" => __("api.messages.log_in_successfully"), "status" => 200])
+            ? new JsonResponse($response, 200)
             : redirect()->intended($this->redirectPath());
-
     }
+
 
     public function logout(Request $request)
     {
-        $tokenId = $request->user()->token()->id;
 
-        app(TokenRepository::class)->revokeAccessToken($tokenId);
-        app(RefreshTokenRepository::class)->revokeRefreshTokensByAccessTokenId($tokenId);
-
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/');
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/admin/login');
     }
 
-    protected function loggedOut(Request $request)
-    {
-        return response()->json(["success" => true, "data" =>null , "message" => __("api.messages.logged_out_successfuly"), "status" => 200]);
 
-    }
-
-    protected function authenticated(Request $request, $user)
-    {
-        //
-    }
 }

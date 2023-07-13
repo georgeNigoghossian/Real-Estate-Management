@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('login') }}" role="form" class="text-start">
+                            <form method="POST" action="{{ route('admin.post_login') }}" role="form" class="text-start">
                                 @csrf
                                 <div class="input-group input-group-outline my-3">
 

@@ -46,7 +46,21 @@ class UserRepository extends BaseRepository
 
 
     }
-    public function displayAccount($id)
+
+    public function get_all($custom_cond = []){
+
+
+        if(count($custom_cond)>0){
+            $custom_cond= implode(' AND ', $custom_cond);
+
+            $users = User::whereRaw($custom_cond)->get();
+        }else{
+            $users = User::all();
+        }
+
+        return $users;
+    }
+    public function get_single_user($id)
     {
         $user = User::find($id);
 
@@ -71,5 +85,13 @@ class UserRepository extends BaseRepository
         }
 
         return $user->save();
+    }
+
+
+    public function c($status){
+        $user = User::update([
+            'is_blocked'=>$status,
+        ]);
+        return $user;
     }
 }

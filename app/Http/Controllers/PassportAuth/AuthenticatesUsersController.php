@@ -25,6 +25,22 @@ class AuthenticatesUsersController extends Controller
     }
 
     /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+
+        return response()->json(["success" => false, "data" =>null , "message" => __('auth.failed'), "status" => 422]);
+
+    }
+
+
+    /**
      * Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -60,7 +76,8 @@ class AuthenticatesUsersController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+
+        $this->sendFailedLoginResponse($request);
     }
 
     /**
@@ -138,20 +155,6 @@ class AuthenticatesUsersController extends Controller
         //
     }
 
-    /**
-     * Get the failed login response instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
-        ]);
-    }
 
     /**
      * Get the login username to be used by the controller.

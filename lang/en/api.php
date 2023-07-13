@@ -21,5 +21,9 @@ return array(
         'success_retrieve_property'=>'Property retrieved successfully',
         'failed_retrieve_property'=>'Failed to retrieve Property',
         'verify_sms_number'=>'Please verify your phone number through the verification code sent to your device',
+        'success_user_creation'=>'User Created Successfully ',
+        'failure_sms_number'=>'SMS Verfication Failure',
+        'logged_out_successfuly'=>'User Logged Out Successfully',
+        'log_in_successfully'=>'User Logged In Successfully'
     ),
 );

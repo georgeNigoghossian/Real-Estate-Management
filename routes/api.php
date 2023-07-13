@@ -4,6 +4,7 @@ use App\Http\Controllers\App\Property\PropertyController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassportAuth;
+use App\Http\Controllers\PassportAuth\SMSVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,14 @@ use App\Http\Controllers\PassportAuth;
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/reset-password', [PassportAuth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('resetpassword.api');
     Route::post('/register', [PassportAuth\RegisterController::class, 'register'])->name('register.api');
+    Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post.api');
+    Route::post('/sms/verify-and-register', [PassportAuth\RegisterController::class, 'verify_and_register'])->name('sms.verify_and_register.post.api');
+
 });
 
 Route::group(['middleware' => ['cors', 'json.response', 'is_sms_verified']], function () {
     Route::post('/oauth/token', [Laravel\Passport\Http\Controllers\AccessTokenController::class, 'issueToken'])->middleware(['oauth']);
-    Route::post('/login', [PassportAuth\LoginController::class, 'login'])->name('login.api')->middleware(['cors', 'json.response', 'is_sms_verified']);
+    Route::post('/login', [PassportAuth\LoginController::class, 'login'])->name('login.api');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {

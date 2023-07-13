@@ -4,11 +4,13 @@ namespace App\Http\Controllers\PassportAuth;
 
 use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
+use App\Models\MobileVerification;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -61,29 +63,9 @@ class RegisterController extends Controller
 
         $this->validator($request->all())->validate();
 
-        $user = $this->create($request->all());
-
-        $this->guard()->login($user);
-
-        $verificationCode = rand(1000, 9999);
-        $user->sms_verification_code=$verificationCode;
-        $user->save();
-
-        $gsm = $request->mobile;
-        if (substr($gsm, 0, 1) === "0") {
-            $gsm = "963" . substr($gsm, 1);
-        } elseif (substr($gsm, 0, 4) === "+963") {
-            $gsm = "963" . substr($gsm, 4);
-        }
-        $message = "\"Your verification code is: $verificationCode\"";
-
-        $url = "https://services.mtnsyr.com:7443/general/MTNSERVICES/ConcatenatedSender.aspx?User=ppa277&Pass=dnat121717&From=Road Ride&Gsm=$gsm&Msg=$message&Lang=1";
-
-        //$response = Http::post($url);
-
         $appController = new AppController();
         return $request->wantsJson()
-            ? $appController->response(true,$user,"User Created But Needs Verification",200)
+            ? $appController->response(true,null,"User Needs Verification",200)
             : redirect($this->redirectPath());
     }
 
@@ -111,5 +93,31 @@ class RegisterController extends Controller
         return response()->json(['message'=>'created account successfuly.']);
     }
 
+    public function verify_and_register(Request $request){
+
+
+        $verificationCode = $request->verification_code;
+        $storedVerificationCode = MobileVerification::where('mobile',$request->mobile)->first();
+
+        if($storedVerificationCode["verification_code"]==$verificationCode){
+            $user = $this->create($request->all());
+            $this->guard()->login($user);
+            $accessToken = $user->createToken('authToken')->accessToken;
+
+            $user->sms_verified_at = now();
+            $user->save();
+            if($request->wantsJson()){
+                $response=[
+                    'user' => Auth::user(),
+                    'access_token' => $accessToken,
+                ];
+                return response()->json(["success" => true, "data" =>$response , "message" => __("api.messages.success_user_creation"), "status" => 200]);
+            }
+        }else{
+            if($request->wantsJson()) {
+                return response()->json(["success" => false, "data" =>null, "message" => __("api.messages.failure_sms_number"), "status" => 403]);
+            }
+        }
+    }
 
 }
