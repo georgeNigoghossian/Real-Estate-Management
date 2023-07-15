@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * @method static create(array $array)
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -66,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new \App\Notifications\MailResetPasswordNotification($token));
     }
 
-    public function notifications()
+    public function notifications(): BelongsToMany
     {
         return $this->belongsToMany(Notification::class,'user_notifications');
     }

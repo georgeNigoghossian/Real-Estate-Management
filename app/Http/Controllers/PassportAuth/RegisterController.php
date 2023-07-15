@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PassportAuth;
 
 use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\VerifyAndRegisterRequest;
 use App\Models\MobileVerification;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -44,35 +45,35 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'gender'=>['required'],
-            'mobile'=>['required'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
+            'gender' => ['required'],
+            'mobile' => ['required','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
+    //Has no use currently
     public function register(Request $request)
     {
 
         $this->validator($request->all())->validate();
 
-        $appController = new AppController();
         return $request->wantsJson()
-            ? $appController->response(true,null,"User Needs Verification",200)
+            ? AppController::response(true, null, "User Needs Verification", 200)
             : redirect($this->redirectPath());
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
@@ -80,9 +81,9 @@ class RegisterController extends Controller
 
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email']??null,
+            'email' => $data['email'] ?? null,
             'mobile' => $data['mobile'],
-            'gender'=>$data['gender'],
+            'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
 
         ]);
@@ -90,32 +91,30 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        return response()->json(['message'=>'created account successfuly.']);
+        return response()->json(['message' => 'created account successfuly.']);
     }
 
-    public function verify_and_register(Request $request){
+    public function verifyAndRegister(VerifyAndRegisterRequest $request)
+    {
+        $storedVerificationCode = MobileVerification::where('mobile', $request->mobile)->first();
 
-
-        $verificationCode = $request->verification_code;
-        $storedVerificationCode = MobileVerification::where('mobile',$request->mobile)->first();
-
-        if($storedVerificationCode["verification_code"]==$verificationCode){
+        if ($storedVerificationCode["verification_code"] == $request->verification_code) {
             $user = $this->create($request->all());
             $this->guard()->login($user);
             $accessToken = $user->createToken('authToken')->accessToken;
 
             $user->sms_verified_at = now();
             $user->save();
-            if($request->wantsJson()){
-                $response=[
+            if ($request->wantsJson()) {
+                $data = [
                     'user' => Auth::user(),
                     'access_token' => $accessToken,
                 ];
-                return response()->json(["success" => true, "data" =>$response , "message" => __("api.messages.success_user_creation"), "status" => 200]);
+                return response()->json(["success" => true, "data" => $data, "message" => __("api.messages.success_user_creation"), "status" => 200]);
             }
-        }else{
-            if($request->wantsJson()) {
-                return response()->json(["success" => false, "data" =>null, "message" => __("api.messages.failure_sms_number"), "status" => 403]);
+        } else {
+            if ($request->wantsJson()) {
+                return response()->json(["success" => false, "data" => null, "message" => __("api.messages.failure_sms_number"), "status" => 403]);
             }
         }
     }
