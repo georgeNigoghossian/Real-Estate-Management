@@ -3,20 +3,42 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Property\AmenityStoreRequest;
+use App\Http\Requests\Property\AmenityUpdateRequest;
 use App\Models\Property\Amenity;
+use App\Repositories\AmenityRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\QueryBuilder;
+
 
 class AmenityController extends AppController
 {
+    private AmenityRepository $amenity_repository;
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param AmenityRepository $amenity_repository
      */
-    public function index()
+
+    public function __construct(AmenityRepository $amenity_repository)
     {
-        //
+        $this->amenity_repository = $amenity_repository;
+    }
+
+    public function index(Request $request): array
+    {
+        $columns = Schema::getColumnListing('amenities');
+        $amenities = QueryBuilder::for(Amenity::class)
+            ->allowedFilters([
+                ...$columns
+            ])
+            ->allowedSorts([
+                ...$columns
+            ])
+            ->paginate($request->per_page);
+        return $this->response(true, $amenities, "All Amenities");
     }
 
     /**
@@ -32,29 +54,31 @@ class AmenityController extends AppController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param AmenityStoreRequest $request
+     * @return array
      */
-    public function store(Request $request)
+    public function store(AmenityStoreRequest $request): array
     {
-        //
+        $amenity = $this->amenity_repository->store($request->validated());
+        return $this->response(true, $amenity, "Amenity has been created successfully", 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Property\Amenity  $amenity
-     * @return \Illuminate\Http\Response
+     * @param Amenity $amenity
+     * @return array
      */
-    public function show(Amenity $amenity)
+    public function show(Amenity $amenity): array
     {
-        //
+        $amenity = $this->amenity_repository->show($amenity);
+        return $this->response(true, $amenity);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Property\Amenity  $amenity
+     * @param Amenity $amenity
      * @return \Illuminate\Http\Response
      */
     public function edit(Amenity $amenity)
@@ -65,23 +89,25 @@ class AmenityController extends AppController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property\Amenity  $amenity
-     * @return \Illuminate\Http\Response
+     * @param AmenityUpdateRequest $request
+     * @param Amenity $amenity
+     * @return array
      */
-    public function update(Request $request, Amenity $amenity)
+    public function update(AmenityUpdateRequest $request, Amenity $amenity): array
     {
-        //
+        $amenity = $this->amenity_repository->update($request->validated(), $amenity);
+        return $this->response(true, $amenity, 'Amenity updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Property\Amenity  $amenity
-     * @return \Illuminate\Http\Response
+     * @param Amenity $amenity
+     * @return array
      */
-    public function destroy(Amenity $amenity)
+    public function destroy(Amenity $amenity): array
     {
-        //
+        $this->amenity_repository->destroy($amenity);
+        return $this->response(true, null, 'Amenity deleted successfully');
     }
 }
