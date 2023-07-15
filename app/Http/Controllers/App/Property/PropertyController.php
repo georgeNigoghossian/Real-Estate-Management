@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Requests\PropertyChangeStatusRequest;
-use App\Http\Requests\PropertyStoreRequest;
-use App\Http\Requests\PropertyUpdateRequest;
+use App\Http\Requests\Property\PropertyChangeStatusRequest;
+use App\Http\Requests\Property\PropertyStoreRequest;
+use App\Http\Requests\Property\PropertyUpdateRequest;
 use App\Models\Property\Property;
 use App\Repositories\PropertyRepository;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -39,16 +38,13 @@ class PropertyController extends AppController
                 ...$columns
             ])
             ->paginate($request->per_page);
-
-
-        return $this->response(true, $properties, "All Properties", 200);
-
+        return $this->response(true, $properties, "All Properties");
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     *
      */
     public function create()
     {
@@ -83,7 +79,7 @@ class PropertyController extends AppController
      * Show the form for editing the specified resource.
      *
      * @param Property $property
-     * @return Response
+     *
      */
     public function edit(Property $property)
     {

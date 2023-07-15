@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
+use Illuminate\Support\Facades\Auth;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 
 
@@ -20,7 +21,14 @@ class PropertyRepository extends BaseRepository
 
     public function store($data)
     {
-        return Property::create($data);
+        $property = Property::create($data);
+        $property->user()->associate(Auth::user());
+        $property->save();
+        if (array_key_exists('tags', $data))
+            $property->tags()->sync($data['tags']);
+        if (array_key_exists('amenities', $data))
+            $property->amenities()->sync($data['amenities']);
+        return $property;
     }
 
     public function show(Property $property): Property
@@ -28,16 +36,22 @@ class PropertyRepository extends BaseRepository
         return $property;
     }
 
-    public function update($data,Property $property): Property
+    public function update($data, Property $property): Property
     {
-         $property->update($data);
-         return $property;
+        $property->update($data);
+        if (array_key_exists('tags', $data))
+            $property->tags()->sync($data['tags']);
+        if (array_key_exists('amenities', $data))
+            $property->amenities()->sync($data['amenities']);
+        return $property;
     }
+
     public function destroy(Property $property)
     {
         $property->delete();
     }
-    public function changeStatus($property,$status)
+
+    public function changeStatus($property, $status)
     {
         $property->update($status);
         return $property;
@@ -61,32 +75,17 @@ class PropertyRepository extends BaseRepository
         if (!$property) return [404, __("api.messages.property_not_found")];
         if ($property->user_id != $user->id) return [403, __("api.messages.delete_property_forbidden")];
 
-        if ($property->delete()) {
-            return [200, $property, __("api.messages.success_delete_property")];
-        } else {
-            return [500, __("api.messages.failed_delete_property")];
-        }
     }
 
     public function saveProperty($id, $user)
     {
         $property = Property::find($id);
 
-        if (!$property) return [404, __("api.messages.property_not_found")];
         if ($property->is_disabled) return [403, __("api.messages.property_disabled")];
 
-        $saved_property = SavedProperty::firstOrCreate([
+        SavedProperty::firstOrCreate([
             'property_id' => $property->id,
             'user_id' => $user->id
         ]);
-
-        if ($saved_property) {
-            if ($saved_property->wasRecentlyCreated)
-                return [200, $property, __("api.messages.success_save_property")];
-            else
-                return [200, $property, __("api.messages.property_already_saved")];
-        } else {
-            return [500, __("api.messages.failed_save_property")];
-        }
     }
 }

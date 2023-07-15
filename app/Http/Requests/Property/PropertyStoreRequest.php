@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Property;
 
 use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -17,8 +17,10 @@ class PropertyStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
+            'tags' => ['nullable', 'array', 'exists:tags,id'],
+            'amenities' => ['nullable', 'array', 'exists:amenities,id'],
             'area' => ['numeric'],
-            'price' => ['required', 'numeric'],
+            'price' => ['required', 'numeric', 'min:0'],
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],

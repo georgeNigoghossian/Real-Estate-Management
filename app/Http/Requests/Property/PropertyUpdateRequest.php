@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Property;
 
 use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PropertyChangeStatusRequest  extends FormRequest
+class PropertyUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,6 +16,9 @@ class PropertyChangeStatusRequest  extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['sometimes', 'string', 'min:3', 'max:255'],
+            'price' => ['sometimes', 'numeric','min:0'],
+            'description' => ['string'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
         ];
     }
