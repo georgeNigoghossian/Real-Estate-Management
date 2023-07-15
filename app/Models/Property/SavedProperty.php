@@ -5,7 +5,11 @@ namespace App\Models\Property;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static firstOrCreate(array $array)
+ */
 class SavedProperty extends Model
 {
     use HasFactory;
@@ -16,12 +20,12 @@ class SavedProperty extends Model
     ];
 
 
-    public function property()
+    public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class,'property_id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'user_id');
     }

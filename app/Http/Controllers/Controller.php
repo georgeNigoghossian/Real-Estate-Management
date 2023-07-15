@@ -12,15 +12,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function response($success = false, $data = [], $message = null, $status = null)
+    public static function response($success = false, $data = [], $message = null, $status = null): array
     {
-        $return = array(
+        return array(
             "success" => $success,
             "data" => $data,
             "message" => $message ,
             "status" => $status,
         );
-
-        return $return;
     }
 }

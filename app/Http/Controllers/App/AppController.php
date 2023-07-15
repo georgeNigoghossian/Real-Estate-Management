@@ -6,15 +6,13 @@ use App\Http\Controllers\Controller;
 
 class AppController extends Controller
 {
-    public function response($success = false, $data = [], $message = null, $status = 200)
+    public static function response($success = false, $data = [], $message = null, $status = 200): array
     {
-        $return = array(
+        return array(
             "success" => $success,
             "data" => $data,
             "message" => $message ,
             "status" => $status,
         );
-
-        return $return;
     }
 }
