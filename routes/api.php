@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\App\Property\AgriculturalController;
+use App\Http\Controllers\App\Property\AmenityController;
 use App\Http\Controllers\App\Property\PropertyController;
+use App\Http\Controllers\App\Property\TagController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassportAuth;
@@ -21,8 +24,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/reset-password', [PassportAuth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('resetpassword.api');
     Route::post('/register', [PassportAuth\RegisterController::class, 'register'])->name('register.api');
     Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post.api');
-    Route::post('/sms/verify-and-register', [PassportAuth\RegisterController::class, 'verify_and_register'])->name('sms.verify_and_register.post.api');
-
+    Route::post('/sms/verify-and-register', [PassportAuth\RegisterController::class, 'verifyAndRegister'])->name('sms.verify_and_register.post.api');
 });
 
 Route::group(['middleware' => ['cors', 'json.response', 'is_sms_verified']], function () {
@@ -49,5 +51,9 @@ Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors'
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::apiResource('/properties', PropertyController::class);
+    Route::apiResource('/amenities', AmenityController::class);
+    Route::apiResource('/tags', TagController::class);
+    Route::apiResource('/agriculturals', AgriculturalController::class);
 });
+
 

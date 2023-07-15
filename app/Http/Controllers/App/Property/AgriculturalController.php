@@ -3,26 +3,51 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Property\AgriculturalStoreRequest;
+use App\Http\Requests\Property\AgriculturalUpdateRequest;
 use App\Models\Property\Agricultural;
+use App\Repositories\AgriculturalRepository;
+use App\Repositories\PropertyRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class AgriculturalController extends AppController
 {
+
+    private PropertyRepository $property_repository;
+    private AgriculturalRepository $agricultural_repository;
+
+    public function __construct(PropertyRepository $property_repository, AgriculturalRepository $agricultural_repository)
+    {
+        $this->property_repository = $property_repository;
+        $this->agricultural_repository = $agricultural_repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
-    public function index()
+    public function index(Request $request): array
     {
-        //
+        $columns = Schema::getColumnListing('properties');
+        $properties = QueryBuilder::for(Agricultural::class)
+            ->allowedFilters([
+                ...$columns
+            ])
+            ->allowedSorts([
+                ...$columns
+            ])
+            ->paginate($request->per_page);
+        return $this->response(true, $properties, "All Agricultural Properties");
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     *
      */
     public function create()
     {
@@ -32,30 +57,34 @@ class AgriculturalController extends AppController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param AgriculturalStoreRequest $request
+     * @return array
      */
-    public function store(Request $request)
+    public function store(AgriculturalStoreRequest $request): array
     {
-        //
+        $property = $this->property_repository->store($request->validated());
+        $agricultural_property = $this->agricultural_repository->store($request->validated(), $property);
+        return $this->response(true, $agricultural_property, "agricultural property has been created successfully", 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Property\Agricultural  $agricultural
-     * @return \Illuminate\Http\Response
+     * @param Agricultural $agricultural
+     * @return array
      */
-    public function show(Agricultural $agricultural)
+    public function show(Agricultural $agricultural): array
     {
-        //
+        $property = $this->property_repository->show($agricultural->property);
+        $agricultural = $this->agricultural_repository->show($agricultural);
+        return $this->response(true, $agricultural);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Property\Agricultural  $agricultural
-     * @return \Illuminate\Http\Response
+     * @param Agricultural $agricultural
+     *
      */
     public function edit(Agricultural $agricultural)
     {
@@ -65,23 +94,26 @@ class AgriculturalController extends AppController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property\Agricultural  $agricultural
-     * @return \Illuminate\Http\Response
+     * @param AgriculturalUpdateRequest $request
+     * @param Agricultural $agricultural
+     * @return array
      */
-    public function update(Request $request, Agricultural $agricultural)
+    public function update(AgriculturalUpdateRequest $request, Agricultural $agricultural): array
     {
-        //
+        $property = $this->property_repository->update($request->validated(), $agricultural->property);
+        $agricultural = $this->agricultural_repository->update($request->validated(), $agricultural);
+        return $this->response(true, $agricultural, 'property updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Property\Agricultural  $agricultural
-     * @return \Illuminate\Http\Response
+     * @param Agricultural $agricultural
+     * @return array
      */
-    public function destroy(Agricultural $agricultural)
+    public function destroy(Agricultural $agricultural): array
     {
-        //
+        $this->agricultural_repository->destroy($agricultural);
+        return $this->response(true, null, 'agricultural property deleted successfully');
     }
 }

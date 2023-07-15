@@ -4,7 +4,11 @@ namespace App\Models\Property;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static create($data)
+ */
 class Agricultural extends Model
 {
     use HasFactory;
@@ -14,7 +18,7 @@ class Agricultural extends Model
         'specialAttributes',
     ];
 
-    public function property()
+    public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class,'property_id');
     }
