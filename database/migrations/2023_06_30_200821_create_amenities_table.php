@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('description')->nullable();
             $table->integer('active')->nullable()->default('1');
             $table->timestamps();

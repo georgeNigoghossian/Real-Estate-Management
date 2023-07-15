@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('agriculturals', function (Blueprint $table) {
             $table->id();
-            $table->json('specialAttributes');
+            $table->json('specialAttributes')->nullable();
             $table->timestamps();
         });
 
