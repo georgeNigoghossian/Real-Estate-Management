@@ -1,21 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\App\AppController;
 use App\Models\ReportedClient;
+use App\Repositories\ReportedClientRepository;
 use Illuminate\Http\Request;
 
 class ReportedClientController extends AppController
 {
+    private $reportedClientRepository;
+    public function __construct(ReportedClientRepository $reportedClientRepository)
+    {
+        $this->reportedClientRepository = $reportedClientRepository;
+    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $users = $this->reportedClientRepository->get_all();
+        return view('admin.repoted_client.list',compact('users'));
     }
 
     /**

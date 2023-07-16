@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     $(':input', '.filters-form')
         .not(':button, :submit, :reset, :hidden')
@@ -17,14 +18,17 @@ $(document).ready(function () {
             is_blocked = 0;
         }
 
-
-
         $.ajax({
 
-            url: 'User/switch-block',
-            type: 'GET',
+            url: routes.switchBlock,
+            type: 'POST',
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
             data: {
-                'is_blocked': is_blocked
+                'is_blocked': is_blocked,
+                'id':id
             },
             success: function (data) {
 

@@ -88,8 +88,8 @@ class UserRepository extends BaseRepository
     }
 
 
-    public function c($status){
-        $user = User::update([
+    public function changeBlockStatus($user_id,$status){
+        $user = User::where('id',$user_id)->update([
             'is_blocked'=>$status,
         ]);
         return $user;

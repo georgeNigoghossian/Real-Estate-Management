@@ -21,7 +21,7 @@ class ReportedClient extends Model
         return $this->belongsTo(User::class,'reporting_user_id');
     }
 
-    public function reportiedUser()
+    public function reportedUser()
     {
         return $this->belongsTo(User::class,'reported_user_id');
     }

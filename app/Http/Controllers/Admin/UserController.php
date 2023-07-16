@@ -35,7 +35,12 @@ class UserController extends AppController
 
     public function switchBlock(Request $request){
         $status = $request->is_blocked;
+        $user_id = $request->id;
 
-        $this->userRepository->changeBlockStatus($status);
+        $this->userRepository->changeBlockStatus($user_id,$status);
+
+        if(isset($request->needs_redirect) && $request->needs_redirect==1){
+            return redirect()->back();
+        }
     }
 }
