@@ -10,7 +10,7 @@
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Priority
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Block Status
                     </th>
 
                     <th></th>
@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 @foreach($users as $user)
-                    <tr data-user-id="{{ $user->id }}">
+                    <tr>
                         <td>
                             <div class="d-flex px-2">
 
@@ -30,8 +30,11 @@
                         <td>
                             <p class="text-xs font-weight-normal mb-0">{{$user->email}}</p>
                         </td>
-                        <td class="priority-field w-25">
-                            {{$user->priority}}
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input blockSwitch" type="checkbox" role="switch" data-id="{{$user->id}}"  {{$user->is_blocked==1 ? "checked" : ""}} />
+
+                            </div>
                         </td>
 
 

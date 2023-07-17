@@ -40,3 +40,37 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function() {
+    $('.priority-field').click(function() {
+        var currentPriority = $(this).text().trim();
+        var inputField = $('<input>', {
+            type: 'number',
+            class: 'form-control',
+            value: currentPriority
+        });
+        $(this).html(inputField);
+        inputField.focus();
+    });
+
+    $(document).on('blur', '.priority-field input', function() {
+        var newPriority = $(this).val().trim();
+        var userId = $(this).closest('tr').data('user-id');
+
+        $.ajax({
+            url: routes.updatePriority,
+            method: 'POST',
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            data: {
+                userId: userId,
+                newPriority: newPriority
+            },
+
+            success: function(response) {
+                $('.priority-field').html(newPriority);
+            },
+        });
+    });
+});

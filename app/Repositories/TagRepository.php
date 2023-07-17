@@ -21,6 +21,19 @@ class TagRepository extends BaseRepository
         return Tag::create($data);
     }
 
+    public function get_all($custom_cond = []){
+
+
+        if(count($custom_cond)>0){
+            $custom_cond= implode(' AND ', $custom_cond);
+
+            $tags = Tag::whereRaw($custom_cond)->get();
+        }else{
+            $tags = Tag::all();
+        }
+
+        return $tags;
+    }
     public function show(Tag $tag): Tag
     {
         return $tag;

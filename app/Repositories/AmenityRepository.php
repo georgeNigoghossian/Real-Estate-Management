@@ -38,4 +38,18 @@ class AmenityRepository extends BaseRepository
         $amenity->delete();
     }
 
+    public function get_all($custom_cond = []){
+
+
+        if(count($custom_cond)>0){
+            $custom_cond= implode(' AND ', $custom_cond);
+
+            $tags = Amenity::whereRaw($custom_cond)->get();
+        }else{
+            $tags = Amenity::all();
+        }
+
+        return $tags;
+    }
+
 }

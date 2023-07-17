@@ -6,6 +6,8 @@
                 <input type="text" class="form-control" name="name" placeholder="Search By Name" value='{{request()->name != "" ? request()->name  : ""}}'>
             </div>
         </div>
+
+        @if (stripos($_SERVER['REQUEST_URI'], '/BlockedUser' )===false)
         <div class="col-md-3">
 
             <div class="input-group input-group-static mb-4 ">
@@ -21,7 +23,8 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-3">
+       @endif
+        <div class="col-md-3 align-self-end" >
             <button class="btn btn-outline-primary" type="submit">
                 <span class="material-icons">
                 search

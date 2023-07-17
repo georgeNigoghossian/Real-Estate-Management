@@ -94,4 +94,10 @@ class UserRepository extends BaseRepository
         ]);
         return $user;
     }
+
+    public function updatePriority($user_id,$priority){
+        $user=User::where('id',$user_id)->update([
+            'priority'=>$priority
+        ]);
+    }
 }

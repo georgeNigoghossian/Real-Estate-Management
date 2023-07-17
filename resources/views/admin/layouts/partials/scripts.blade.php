@@ -7,7 +7,8 @@
 
 <script>
     var routes = {
-        switchBlock: "{{ route('admin.user.switch_block') }}"
+        switchBlock: "{{ route('admin.user.switch_block') }}",
+        updatePriority : "{{route('admin.user.update_priority')}}",
     };
 </script>
 
