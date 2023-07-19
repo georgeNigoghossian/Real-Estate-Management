@@ -6,7 +6,7 @@ use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ResidentialStoreRequest extends FormRequest
+class CommercialStoreRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -25,11 +25,9 @@ class ResidentialStoreRequest extends FormRequest
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'num_of_bedrooms' => ['required','integer', 'min:1'],
             'num_of_bathrooms' => ['required','integer', 'min:1'],
             'num_of_balconies' => ['required','integer', 'min:0'],
-            'num_of_living_rooms' => ['required','integer'],
-            'floor' => ['integer'],
+            'floor' => ['nullable','integer'],
             'specialAttributes' => ['json']
 
         ];

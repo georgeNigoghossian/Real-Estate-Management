@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
+use App\Http\Controllers\App\Property\CommercialController;
 use App\Http\Controllers\App\Property\PropertyController;
 use App\Http\Controllers\App\Property\ResidentialController;
 use App\Http\Controllers\App\Property\ResidentialControllere;
@@ -57,7 +58,7 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/tags', TagController::class);
     Route::apiResource('/agriculturals', AgriculturalController::class);
     Route::apiResource('/residentials', ResidentialController::class);
-
+    Route::apiResource('/commercials', CommercialController::class);
 });
 
 

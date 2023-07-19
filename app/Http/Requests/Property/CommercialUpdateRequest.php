@@ -6,7 +6,7 @@ use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ResidentialStoreRequest extends FormRequest
+class CommercialUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,20 +16,18 @@ class ResidentialStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'name' => ['string', 'min:3', 'max:255'],
             'area' => ['numeric'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'price' => ['numeric', 'min:0'],
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'num_of_bedrooms' => ['required','integer', 'min:1'],
-            'num_of_bathrooms' => ['required','integer', 'min:1'],
-            'num_of_balconies' => ['required','integer', 'min:0'],
-            'num_of_living_rooms' => ['required','integer'],
-            'floor' => ['integer'],
+            'num_of_bathrooms' => ['integer', 'min:1'],
+            'num_of_balconies' => ['integer', 'min:0'],
+            'floor' => ['nullable','integer'],
             'specialAttributes' => ['json']
 
         ];

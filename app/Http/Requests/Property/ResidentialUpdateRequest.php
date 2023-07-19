@@ -27,7 +27,7 @@ class ResidentialUpdateRequest extends FormRequest
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
             'num_of_bedrooms' => ['integer', 'min:1'],
             'num_of_bathrooms' => ['integer', 'min:1'],
-            'num_of_balconies' => ['integer'],
+            'num_of_balconies' => ['integer', 'min:0'],
             'num_of_living_rooms' => ['integer'],
             'floor' => ['integer'],
             'specialAttributes' => ['json']
