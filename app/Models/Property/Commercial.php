@@ -5,6 +5,9 @@ namespace App\Models\Property;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static create($data)
+ */
 class Commercial extends Model
 {
     use HasFactory;

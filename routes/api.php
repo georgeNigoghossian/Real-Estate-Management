@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
+use App\Http\Controllers\App\Property\CommercialController;
 use App\Http\Controllers\App\Property\PropertyController;
+use App\Http\Controllers\App\Property\ResidentialController;
+use App\Http\Controllers\App\Property\ResidentialControllere;
 use App\Http\Controllers\App\Property\TagController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +57,8 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/amenities', AmenityController::class);
     Route::apiResource('/tags', TagController::class);
     Route::apiResource('/agriculturals', AgriculturalController::class);
+    Route::apiResource('/residentials', ResidentialController::class);
+    Route::apiResource('/commercials', CommercialController::class);
 });
 
 
