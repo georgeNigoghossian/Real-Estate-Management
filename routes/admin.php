@@ -18,6 +18,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/User/switch-block', [UserController::class, 'switchBlock'])->name('admin.user.switch_block');
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
     Route::get('/Tag', [TagController::class, 'index'])->name('admin.tags');
+    Route::get('/Tag/create', [TagController::class, 'create'])->name('admin.tags.create');
+    Route::post('/Tag', [TagController::class, 'store'])->name('admin.tags.store');
+    Route::post('/Tag/storePhoto', [TagController::class, 'storePhoto'])->name('admin.tags.storePhoto');
     Route::get('/Amenties', [AmenityController::class, 'index'])->name('admin.amenities');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');
 

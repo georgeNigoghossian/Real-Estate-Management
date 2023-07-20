@@ -25,5 +25,34 @@ class TagController extends AppController
         return view('admin.tag.list',compact('tags'));
     }
 
+    public function create(){
+        return view('admin.tag.create');
+    }
 
+
+    public function store(Request $request){
+        //dd($request->all());
+    }
+
+    public function storePhoto(Request $request){
+
+
+        $file = $request->file('file');
+
+
+        $path = storage_path('tmp/uploads');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+
+        $file->move($path, $name);
+
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
 }
