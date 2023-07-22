@@ -26,6 +26,7 @@ return array(
         'logged_out_successfully'=>'User Logged Out Successfully',
         'log_in_successfully'=>'User Logged In Successfully',
         'show_agency_successfully'=>'Agency information retrieved successfully',
+        'return_cities_tree_successfully'=>'Location information has been retrieved successfully',
         'disable_property_successfully'=>"Property has been disabled successfully",
         'enable_property_successfully'=>"Property has been enabled successfully",
     ),

@@ -5,10 +5,19 @@ namespace App\Http\Controllers\App\Location;
 use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
 use App\Models\Location\City;
+use App\Repositories\CityRepository;
+use Igaster\LaravelCities\Geo;
 use Illuminate\Http\Request;
 
 class CityController extends AppController
 {
+
+    private CityRepository $city_repository;
+
+    public function __construct(CityRepository $city_repository)
+    {
+        $this->city_repository = $city_repository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +52,7 @@ class CityController extends AppController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Location\City  $city
+     * @param City $city
      * @return \Illuminate\Http\Response
      */
     public function show(City $city)
@@ -54,7 +63,7 @@ class CityController extends AppController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Location\City  $city
+     * @param City $city
      * @return \Illuminate\Http\Response
      */
     public function edit(City $city)
@@ -66,7 +75,7 @@ class CityController extends AppController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Location\City  $city
+     * @param City $city
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, City $city)
@@ -77,11 +86,22 @@ class CityController extends AppController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Location\City  $city
+     * @param City $city
      * @return \Illuminate\Http\Response
      */
     public function destroy(City $city)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return array
+     */
+    public function getAll()
+    {
+        $tree = $this->city_repository->getTree();
+        return $this->response(true, $tree,  __("api.messages.return_cities_tree_successfully"));
     }
 }

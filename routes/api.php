@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\App\Agency\AgencyController;
+use App\Http\Controllers\App\Location\CityController;
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
 use App\Http\Controllers\App\Property\CommercialController;
@@ -67,6 +68,10 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::apiResource('/agencies', AgencyController::class);
+});
+
+Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::get('/cities/get-all', [CityController::class, 'getAll'])->name('cities.getAll.api');
 });
 
 

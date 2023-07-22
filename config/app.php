@@ -163,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Igaster\LaravelCities\GeoServiceProvider::class,
 
         /*
          * Package Service Providers...
