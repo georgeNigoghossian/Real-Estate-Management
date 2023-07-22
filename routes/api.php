@@ -5,7 +5,6 @@ use App\Http\Controllers\App\Property\AmenityController;
 use App\Http\Controllers\App\Property\CommercialController;
 use App\Http\Controllers\App\Property\PropertyController;
 use App\Http\Controllers\App\Property\ResidentialController;
-use App\Http\Controllers\App\Property\ResidentialControllere;
 use App\Http\Controllers\App\Property\TagController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
