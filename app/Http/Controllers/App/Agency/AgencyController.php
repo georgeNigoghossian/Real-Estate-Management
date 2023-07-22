@@ -5,10 +5,18 @@ namespace App\Http\Controllers\App\Agency;
 use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
 use App\Models\Agency\Agency;
+use App\Repositories\AgencyRepository;
+use App\Repositories\PropertyRepository;
 use Illuminate\Http\Request;
 
 class AgencyController extends AppController
 {
+    private AgencyRepository $agency_repository;
+
+    public function __construct(AgencyRepository $agency_repository)
+    {
+        $this->agency_repository = $agency_repository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,9 +54,10 @@ class AgencyController extends AppController
      * @param  \App\Models\Agency\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function show(Agency $agency)
+    public function show(Agency $agency): array
     {
-        //
+        $agency = $this->agency_repository->show($agency);
+        return $this->response(true, $agency,  __("api.messages.show_agency_successfully"));
     }
 
     /**

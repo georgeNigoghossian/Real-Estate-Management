@@ -25,6 +25,7 @@ return array(
         'failure_sms_number'=>'SMS Verfication Failure',
         'logged_out_successfully'=>'User Logged Out Successfully',
         'log_in_successfully'=>'User Logged In Successfully',
+        'show_agency_successfully'=>'Agency information retrieved successfully',
         'disable_property_successfully'=>"Property has been disabled successfully",
         'enable_property_successfully'=>"Property has been enabled successfully",
     ),
