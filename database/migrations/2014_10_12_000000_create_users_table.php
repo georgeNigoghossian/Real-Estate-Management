@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->integer('is_blocked')->nullable()->default('0');
             $table->integer('priority')->nullable();
+            $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

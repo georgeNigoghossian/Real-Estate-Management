@@ -40,7 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public $validation_rules = [
         'name' => ['string','min:2', 'max:255'],
         'email' => ['email', 'min:2', 'max:255'],
-        'mobile' => ['string', 'size:10'],
+        'mobile' => ['string', 'size:14'],
         'facebook' => ['string'],
         'gender' => ['in:male,female'],
         'date_of_birth' => ['date:Y-m-d'],
@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function notifications(): BelongsToMany
     {
-        return $this->belongsToMany(Notification::class,'user_notifications');
+        return $this->belongsToMany(UserNotification::class,'user_notifications');
     }
 
 
