@@ -34,9 +34,10 @@ class TagRepository extends BaseRepository
 
         return $tags;
     }
-    public function show(Tag $tag): Tag
+    public function get_single_tag($id)
     {
-        return $tag;
+
+        return Tag::find($id);
     }
 
     public function update($data, Tag $tag): Tag

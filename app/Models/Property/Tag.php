@@ -14,11 +14,17 @@ class Tag extends Model
         'active',
         'parent_id',
         'num_of_properties',
+        'file',
     ];
 
 
     public function parent()
     {
         return $this->belongsTo(Tag::class,'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Tag::class, 'parent_id', 'id');
     }
 }

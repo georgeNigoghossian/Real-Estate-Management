@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('active')->nullable()->default('1');
             $table->integer('num_of_properties')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
 
         });

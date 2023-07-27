@@ -13,7 +13,8 @@
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
 
-
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Parent</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -28,12 +29,25 @@
                                 </div>
                             </div>
                         </td>
+                        <td>
+                            <div class="d-flex px-2">
 
+                                <div class="my-auto">
+                                    <h6 class="mb-0 text-xs">{{$tag->parent ?$tag->parent->name : ""}}</h6>
+                                </div>
+                            </div>
+                        </td>
 
-                        <td class="align-middle">
-                            <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">list</i></span>
-                            </button>
+                        <td class="text-end">
+                            <a class="btn btn-icon btn-2 btn-primary text-end" href="{{route('admin.tags.edit',['id'=>$tag->id])}}">
+                                <span class="btn-inner--icon"><i class="material-icons">edit</i></span>
+                            </a>
+                        </td>
+
+                        <td class="text-start">
+                            <a class="btn btn-icon btn-2 btn-primary text-end" href="{{route('admin.tags.delete',['id'=>$tag->id])}}">
+                                <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
