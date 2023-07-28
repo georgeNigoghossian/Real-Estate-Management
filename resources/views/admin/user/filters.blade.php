@@ -11,8 +11,8 @@
         <div class="col-md-3">
 
             <div class="input-group input-group-static mb-4 ">
-                <label for="exampleFormControlSelect1" class="ms-0">Blocked</label>
-                <select class="form-control " id="exampleFormControlSelect1" name="is_blocked">
+                <label for="isBlocked" class="ms-0">Blocked</label>
+                <select class="form-control " id="isBlocked" name="is_blocked">
                     <option value="" {{ (!isset(request()->is_blocked) || request()->is_blocked=="") ? "selected" : ""}}>All
                     </option>
                     <option value="1" {{ (isset(request()->is_blocked) && request()->is_blocked==1)  ? "selected" : ""}}>Yes

@@ -88,4 +88,18 @@ class PropertyRepository extends BaseRepository
             'user_id' => $user->id
         ]);
     }
+
+    public function disableProperty($id){
+        $property = Property::find($id);
+        $property->is_disabled = true;
+        $property->save();
+        return $property;
+    }
+
+    public function enableProperty($id){
+        $property = Property::find($id);
+        $property->is_disabled = false;
+        $property->save();
+        return $property;
+    }
 }

@@ -2,10 +2,10 @@
 
 return array(
     'messages'=>array(
-      'success_report_client'=>'Client Reported Successfully',
-      'failed_report_client'=>'Failed To Report Client',
+        'success_report_client'=>'Client Reported Successfully',
+        'failed_report_client'=>'Failed To Report Client',
         'success_delete_account'=>'Account Deleted Successfully',
-        'failed_delete_account'=>'Failed To Delete Accoount',
+        'failed_delete_account'=>'Failed To Delete Account',
         'success_retrieve_account'=>'Account retrieved successfully',
         'failed_retrieve_account'=>'Failed to retrieve Account',
         'failed_update_account'=>'Failed to update Account',
@@ -23,7 +23,10 @@ return array(
         'verify_sms_number'=>'Please verify your phone number through the verification code sent to your device',
         'success_user_creation'=>'User Created Successfully ',
         'failure_sms_number'=>'SMS Verfication Failure',
-        'logged_out_successfuly'=>'User Logged Out Successfully',
-        'log_in_successfully'=>'User Logged In Successfully'
+        'logged_out_successfully'=>'User Logged Out Successfully',
+        'log_in_successfully'=>'User Logged In Successfully',
+        'show_agency_successfully'=>'Agency information retrieved successfully',
+        'disable_property_successfully'=>"Property has been disabled successfully",
+        'enable_property_successfully'=>"Property has been enabled successfully",
     ),
 );

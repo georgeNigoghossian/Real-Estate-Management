@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\App\Agency\AgencyController;
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
 use App\Http\Controllers\App\Property\CommercialController;
 use App\Http\Controllers\App\Property\PropertyController;
 use App\Http\Controllers\App\Property\ResidentialController;
-use App\Http\Controllers\App\Property\ResidentialControllere;
 use App\Http\Controllers\App\Property\TagController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +46,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'i
 
 //Property Endpoints
 Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::get('/show', [PropertyController::class, 'display_property'])->name('property.display_property');
-    Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.delete_property');
-    Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.save_property');
+    Route::get('/show', [PropertyController::class, 'display_property'])->name('property.displayProperty.api');
+    Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.deleteProperty.api');
+    Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.saveProperty.api');
+    Route::post('/enable', [PropertyController::class, 'enableProperty'])->name('property.enableProperty.api');
+    Route::post('/disable', [PropertyController::class, 'disableProperty'])->name('property.disableProperty.api');
     Route::put('/{property}/change-status', [PropertyController::class, 'changeStatus']);
 });
 
@@ -59,6 +61,10 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/agriculturals', AgriculturalController::class);
     Route::apiResource('/residentials', ResidentialController::class);
     Route::apiResource('/commercials', CommercialController::class);
+});
+
+Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::apiResource('/agencies', AgencyController::class);
 });
 
 

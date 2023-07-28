@@ -19,7 +19,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
     Route::get('/Tag', [TagController::class, 'index'])->name('admin.tags');
     Route::get('/Tag/create', [TagController::class, 'create'])->name('admin.tags.create');
+    Route::get('/Tag/edit', [TagController::class, 'edit'])->name('admin.tags.edit');
+    Route::get('/Tag/delete/{id}', [TagController::class, 'delete'])->name('admin.tags.delete');
     Route::post('/Tag', [TagController::class, 'store'])->name('admin.tags.store');
+    Route::post('/Tag/update/{id}', [TagController::class, 'update'])->name('admin.tags.update');
     Route::post('/Tag/storePhoto', [TagController::class, 'storePhoto'])->name('admin.tags.storePhoto');
     Route::get('/Amenties', [AmenityController::class, 'index'])->name('admin.amenities');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');

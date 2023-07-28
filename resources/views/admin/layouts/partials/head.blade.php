@@ -12,4 +12,5 @@
     </title>
 
     @include('admin.layouts.partials.head_scripts')
+    @stack('head_scripts')
 </head>
