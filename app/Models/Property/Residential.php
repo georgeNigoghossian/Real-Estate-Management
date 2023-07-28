@@ -2,13 +2,15 @@
 
 namespace App\Models\Property;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static create($data)
  */
-class Residential extends Model
+class Residential extends Property
 {
     use HasFactory;
 
@@ -23,8 +25,13 @@ class Residential extends Model
     ];
 
 
-    public function property()
+    public function property(): BelongsTo
     {
-        return $this->belongsTo(Property::class,'property_id');
+        return $this->belongsTo(Property::class);
+    }
+
+    public function scopeSortByPriority(){
+
+
     }
 }

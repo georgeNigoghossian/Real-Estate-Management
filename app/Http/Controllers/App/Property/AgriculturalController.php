@@ -8,8 +8,14 @@ use App\Http\Requests\Property\AgriculturalUpdateRequest;
 use App\Models\Property\Agricultural;
 use App\Repositories\AgriculturalRepository;
 use App\Repositories\PropertyRepository;
+use App\Sorts\AreaSort;
+use App\Sorts\PriceSort;
+use App\Sorts\PrioritySort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class AgriculturalController extends AppController
@@ -33,13 +39,19 @@ class AgriculturalController extends AppController
     public function index(Request $request): array
     {
         $columns = Schema::getColumnListing('properties');
+        $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'agriculturals')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Agricultural::class)
+            ->with('property', 'property.user')
             ->allowedFilters([
-                ...$columns
+                ...$columns,
+                AllowedFilter::scope('search'),
             ])
             ->allowedSorts([
-                ...$columns
+                AllowedSort::custom('price', new PriceSort, 'agriculturals'),
+                AllowedSort::custom('area', new AreaSort, 'agriculturals'),
+                $priority_sort
             ])
+            ->defaultSort($priority_sort)
             ->paginate($request->per_page);
         return $this->response(true, $properties, "All Agricultural Properties");
     }

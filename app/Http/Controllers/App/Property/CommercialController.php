@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Property\CommercialUpdateRequest;
 use App\Models\Property\Commercial;
 use App\Repositories\CommercialRepository;
 use App\Repositories\PropertyRepository;
+use App\Sorts\AreaSort;
+use App\Sorts\PriceSort;
+use App\Sorts\PrioritySort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CommercialController extends AppController
@@ -33,13 +37,18 @@ class CommercialController extends AppController
     public function index(Request $request): array
     {
         $columns = Schema::getColumnListing('properties');
+        $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'commercials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Commercial::class)
+            ->with('property')
             ->allowedFilters([
                 ...$columns
             ])
             ->allowedSorts([
-                ...$columns
+                AllowedSort::custom('price', new PriceSort, 'commercials'),
+                AllowedSort::custom('area', new AreaSort, 'commercials'),
+                $priority_sort
             ])
+            ->defaultSort($priority_sort)
             ->paginate($request->per_page);
         return $this->response(true, $properties, "All Commercial Properties");
     }

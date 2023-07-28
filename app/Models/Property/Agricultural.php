@@ -13,13 +13,20 @@ class Agricultural extends Model
 {
     use HasFactory;
 
-    public $fillable =[
+    public $fillable = [
         'property_id',
         'specialAttributes',
     ];
 
     public function property(): BelongsTo
     {
-        return $this->belongsTo(Property::class,'property_id');
+        return $this->belongsTo(Property::class, 'property_id');
+    }
+
+    public function scopeSearch($query, $search = '')
+    {
+        return $query->whereHas('property', function ($q) use ($search) {
+            return $q->where('name', 'LIKE', '%' . $search . '%');
+        });
     }
 }

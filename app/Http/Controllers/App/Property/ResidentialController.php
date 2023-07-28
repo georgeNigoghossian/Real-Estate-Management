@@ -8,8 +8,13 @@ use App\Http\Requests\Property\ResidentialUpdateRequest;
 use App\Models\Property\Residential;
 use App\Repositories\PropertyRepository;
 use App\Repositories\ResidentialRepository;
+use App\Sorts\AreaSort;
+use App\Sorts\PriceSort;
+use App\Sorts\PrioritySort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ResidentialController extends AppController
@@ -33,13 +38,18 @@ class ResidentialController extends AppController
     public function index(Request $request): array
     {
         $columns = Schema::getColumnListing('properties');
+        $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'residentials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Residential::class)
-            ->allowedFilters([
-                ...$columns
-            ])
+            ->with('property')
+//            ->allowedFilters([
+//                ...$columns
+//            ])
             ->allowedSorts([
-                ...$columns
+                AllowedSort::custom('price', new PriceSort, 'residentials'),
+                AllowedSort::custom('area', new AreaSort, 'residentials'),
+                $priority_sort,
             ])
+            ->defaultSort($priority_sort)
             ->paginate($request->per_page);
         return $this->response(true, $properties, "All Residential Properties");
     }
