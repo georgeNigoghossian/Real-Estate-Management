@@ -30,6 +30,19 @@ class LoginController extends Controller
         }
 
     }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'mobile' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only('mobile', 'password');
+    }
+
     public function login(Request $request)
     {
 
