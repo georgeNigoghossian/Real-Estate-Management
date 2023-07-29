@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\App\Agency\AgencyController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
 use \App\Http\Controllers\Admin\UserController;
@@ -57,4 +59,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/Admin', [AdminController::class, 'store'])->name('admin.admins.store');
     Route::post('/Admin/update/{id}', [AdminController::class, 'update'])->name('admin.admins.update');
 
+
+    Route::get('/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.verifyAgency');
 });

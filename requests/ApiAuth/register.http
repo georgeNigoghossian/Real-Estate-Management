@@ -1,11 +1,14 @@
-POST {{host}}/api/register
+POST {{host}}/api/sms/verify-and-register
 Content-Type: application/json
 
 {
     "name": "nicolas alahmar",
     "email": "nicolasalahmar4@gmail.com",
-    "password": "new_password",
-    "password_confirmation": "new_password"
+    "password": "password",
+    "password_confirmation": "password",
+    "mobile": "0935589733",
+    "gender": "male",
+    "verification_code": "5666"
 }
 > {%
 client.global.set("user_token", response.body.token);

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\App\Agency;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Agency\PromoteToAgencyRequest;
 use App\Models\Agency\Agency;
 use App\Repositories\AgencyRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AgencyController extends AppController
 {
@@ -19,7 +21,7 @@ class AgencyController extends AppController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -29,7 +31,7 @@ class AgencyController extends AppController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -39,12 +41,17 @@ class AgencyController extends AppController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PromoteToAgencyRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(PromoteToAgencyRequest $request)
     {
-        //
+        $user = $request->user();
+        if (Agency::where('created_by', '=',$user->id)->exists()) {
+            return $this->response(false, null,  __("api.messages.promote_to_agency_failed"));
+        }
+        $agency = $this->agency_repository->promote($request->validated(), $user);
+        return $this->response(true, $agency,  __("api.messages.promote_to_agency_success"));
     }
 
     /**
@@ -93,4 +100,15 @@ class AgencyController extends AppController
         //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Agency\Agency  $agency
+     * @return Response
+     */
+    public function verifyAgency($id)
+    {
+        $res = $this->agency_repository->verifyAgency($id);
+//        return $this->response(true, $res,  __("api.messages.show_agency_successfully"));
+    }
 }

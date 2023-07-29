@@ -30,5 +30,7 @@ return array(
         'disable_property_successfully'=>"Property has been disabled successfully",
         'enable_property_successfully'=>"Property has been enabled successfully",
         'add_region_successfully'=>"Region has been created successfully",
+        'promote_to_agency_success'=>"Promote to Agency request submitted successfully",
+        'promote_to_agency_failed'=>"Promote to Agency request Failed (request already exists)",
     ),
 );
