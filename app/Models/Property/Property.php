@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static create($data)
@@ -37,15 +38,31 @@ class Property extends Model
 
     public function region(): BelongsTo
     {
-        return $this->belongsTo(Region::class,'region_id');
+        return $this->belongsTo(Region::class, 'region_id');
     }
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class,'property_tags');
+        return $this->belongsToMany(Tag::class, 'property_tags');
     }
+
     public function amenities(): BelongsToMany
     {
-        return $this->belongsToMany(Amenity::class,'property_amenities');
+        return $this->belongsToMany(Amenity::class, 'property_amenities');
+    }
+
+    public function agricultural(): HasOne
+    {
+        return $this->hasOne(Agricultural::class);
+    }
+
+    public function residential(): HasOne
+    {
+        return $this->hasOne(Residential::class);
+    }
+
+    public function commercial(): HasOne
+    {
+        return $this->hasOne(Commercial::class);
     }
 }

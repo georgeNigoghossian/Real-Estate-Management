@@ -89,17 +89,34 @@ class PropertyRepository extends BaseRepository
         ]);
     }
 
-    public function disableProperty($id){
+    public function disableProperty($id)
+    {
         $property = Property::find($id);
         $property->is_disabled = true;
         $property->save();
         return $property;
     }
 
-    public function enableProperty($id){
+    public function enableProperty($id)
+    {
         $property = Property::find($id);
         $property->is_disabled = false;
         $property->save();
         return $property;
+    }
+
+    public function nearByPlaces($data)
+    {
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
+        if (array_key_exists('property_type', $data)) {
+            $property_type = $data['property_type'];
+            $properties = Property::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))+COS(RADIANS('latitude'))*COS(RADIANS($latitude))*COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < 6000")
+                ->whereHas($property_type)->get();
+        } else {
+            $properties = Property::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))+COS(RADIANS('latitude'))*COS(RADIANS($latitude))*COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < 6000")
+                ->get();
+        }
+        return $properties;
     }
 }

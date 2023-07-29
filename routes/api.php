@@ -55,12 +55,14 @@ Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors'
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::post('/properties/near-by-places', [PropertyController::class, 'nearbyPlaces']);
     Route::apiResource('/properties', PropertyController::class);
     Route::apiResource('/amenities', AmenityController::class);
     Route::apiResource('/tags', TagController::class);
     Route::apiResource('/agriculturals', AgriculturalController::class);
     Route::apiResource('/residentials', ResidentialController::class);
     Route::apiResource('/commercials', CommercialController::class);
+
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {

@@ -13,6 +13,7 @@ use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -41,9 +42,14 @@ class ResidentialController extends AppController
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'residentials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Residential::class)
             ->with('property')
-//            ->allowedFilters([
-//                ...$columns
-//            ])
+            ->allowedFilters([
+                ...$columns,
+                AllowedFilter::scope('search'),
+                AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
+                AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
+                AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than','AreaBiggerThan'),
+            ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'residentials'),
                 AllowedSort::custom('area', new AreaSort, 'residentials'),

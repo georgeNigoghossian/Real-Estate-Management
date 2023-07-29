@@ -12,6 +12,7 @@ use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -41,7 +42,12 @@ class CommercialController extends AppController
         $properties = QueryBuilder::for(Commercial::class)
             ->with('property')
             ->allowedFilters([
-                ...$columns
+                ...$columns,
+                AllowedFilter::scope('search'),
+                AllowedFilter::scope('price-lower-than','PriceLowerThan'),
+                AllowedFilter::scope('price-higher-than','PriceHigherThan'),
+                AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than','AreaBiggerThan'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'commercials'),

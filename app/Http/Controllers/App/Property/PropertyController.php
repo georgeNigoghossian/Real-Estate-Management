@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Property\nearbyPlacesRequest;
 use App\Http\Requests\Property\PropertyChangeStatusRequest;
 use App\Http\Requests\Property\PropertyDisableEnableRequest;
 use App\Http\Requests\Property\PropertyStoreRequest;
 use App\Http\Requests\Property\PropertyUpdateRequest;
 use App\Models\Property\Property;
 use App\Repositories\PropertyRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -41,6 +44,7 @@ class PropertyController extends AppController
             ->paginate($request->per_page);
         return $this->response(true, $properties, "All Properties");
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -179,13 +183,24 @@ class PropertyController extends AppController
         else
             return $this->response(false, null, $res[1], $res[0]);
     }
-    public function disableProperty(PropertyDisableEnableRequest $request){
+
+    public function disableProperty(PropertyDisableEnableRequest $request)
+    {
         $property = $this->property_repository->disableProperty($request->validated()['id']);
         return $this->response(true, $property, __("api.messages.disable_property_successfully"), 200);
     }
 
-    public function enableProperty(PropertyDisableEnableRequest $request){
+    public function enableProperty(PropertyDisableEnableRequest $request)
+    {
         $property = $this->property_repository->enableProperty($request->validated()['id']);
-        return $this->response(true, $property,  __("api.messages.enable_property_successfully"), 200);
+        return $this->response(true, $property, __("api.messages.enable_property_successfully"), 200);
     }
+
+    public function nearbyPlaces(nearbyPlacesRequest $request): array
+    {
+
+        $properties = $this->property_repository->nearByPlaces($request->validated());
+        return $this->response(true, $properties,count($properties), "All Properties nearby");
+    }
+
 }

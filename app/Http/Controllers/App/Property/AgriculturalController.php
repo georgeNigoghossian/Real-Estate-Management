@@ -45,6 +45,10 @@ class AgriculturalController extends AppController
             ->allowedFilters([
                 ...$columns,
                 AllowedFilter::scope('search'),
+                AllowedFilter::scope('price-lower-than','PriceLowerThan'),
+                AllowedFilter::scope('price-higher-than','PriceHigherThan'),
+                AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than','AreaBiggerThan'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'agriculturals'),
