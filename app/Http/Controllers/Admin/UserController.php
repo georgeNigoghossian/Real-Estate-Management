@@ -64,4 +64,10 @@ class UserController extends AppController
         $this->userRepository->updatePriority($user_id,$new_priority);
 
     }
+
+    public function details($id){
+        $user = $this->userRepository->get_single_user($id);
+
+        return view('admin.user.details',compact('user'));
+    }
 }

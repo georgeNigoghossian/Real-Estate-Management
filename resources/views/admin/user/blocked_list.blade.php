@@ -39,9 +39,9 @@
 
 
                         <td class="align-middle">
-                            <button class="btn btn-icon btn-2 btn-primary" type="button" >
+                            <a class="btn btn-icon btn-2 btn-primary"  href="{{route('admin.user.details',$user->id)}}" >
                                 <span class="btn-inner--icon"><i class="material-icons">list</i></span>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

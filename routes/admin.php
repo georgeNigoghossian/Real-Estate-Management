@@ -14,6 +14,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.home');
     Route::get('/User', [UserController::class, 'index'])->name('admin.user.list');
+    Route::get('/User/{id}/details', [UserController::class, 'details'])->name('admin.user.details');
     Route::get('/BlockedUser', [UserController::class, 'blocked_users'])->name('admin.user.blocked_list');
     Route::post('/User/switch-block', [UserController::class, 'switchBlock'])->name('admin.user.switch_block');
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
