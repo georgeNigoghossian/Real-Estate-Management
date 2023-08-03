@@ -3,32 +3,33 @@
 @section('content')
 
     @php
-        if(isset($tag)){
-            $url = route('admin.tags.update',['id'=>$tag->id]);
+        if(isset($amenity)){
+            $url = route('admin.amenities.update',['id'=>$amenity->id]);
         }else{
-            $url = route('admin.tags.store');
+            $url = route('admin.amenities.store');
         }
     @endphp
     <div class="card ">
         <div class="card-header">
-            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.tags')}}">Tags</a></h4>
-            <h4 class="font-weight-bolder d-inline-block"> / {{isset($tag) ? "Edit" : "Create" }} Tag</h4>
+            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.amenities')}}">Amenities</a></h4>
+            <h4 class="font-weight-bolder d-inline-block"> / {{isset($amenity) ? "Edit" : "Create" }} Amenity</h4>
         </div>
         <div class="card-body">
 
-            <form role="form" action="{{$url}}" method="POST" id="tagForm">
+            <form role="form" action="{{$url}}" method="POST" id="amenityForm">
                 @csrf
                 <div class="input-group input-group-outline mb-3">
                     <input type="text" class="form-control" placeholder="Name" name="name"
-                           value="{{isset($tag) ? $tag->name : ""}}">
+                           value="{{isset($amenity) ? $amenity->name : ""}}">
                 </div>
 
                 <div class="input-group input-group-static mb-4 ">
-                    <label for="exampleFormControlSelect1" class="ms-0">Property Type</label>
-                    <select class="form-control" name="property_type">
-                        <option value="" selected>Select A Property Type</option>
-                        @foreach($property_types as $key=>$type)
-                            <option value="{{$key}}" {{isset($tag) && $tag->property_type == $key ? "selected" : ""}}>{{$type}}</option>
+                    <label for="exampleFormControlSelect1" class="ms-0">Amenity Type</label>
+                    <select class="form-control" name="amenity_type">
+                        <option value="" selected>Select Amenity Type</option>
+                        @foreach($amenity_types as $key=>$type)
+
+                            <option value="{{$type["id"]}}" {{isset($amenity) && isset($amenity->type) && $amenity->type->id == $type["id"] ? "selected" : ""}}>{{$type["name"]}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -45,7 +46,7 @@
                     <button type="submit"
                             class="btn btn-lg bg-gradient-primary btn-lg mt-4 mb-0 align-self-end ms-auto w-10">Save
                     </button>
-                    <a href="{{ route('admin.tags') }}" type="button"
+                    <a href="{{ route('admin.amenities') }}" type="button"
                        class="btn btn-lg bg-gradient-secondary btn-lg mt-4 mb-0 align-self-end ms-auto w-">Cancel</a>
                 </div>
 
@@ -61,7 +62,7 @@
         var myDropzone;
 
         Dropzone.options.documentDropzone = {
-            url: '{{ route('admin.tags.storePhoto') }}',
+            url: '{{ route('admin.amenities.storePhoto') }}',
             method: 'post',
             maxFilesize: 2,
             acceptedFiles: 'image/svg+xml',
@@ -75,26 +76,26 @@
                 myDropzone = this;
 
                 @php
-                    if(isset($tag)){
-                        $filePath = public_path($tag->file);
+                    if(isset($amenity)){
+                        $filePath = public_path($amenity->file);
                         $fileSizeInBytes = file_exists($filePath) ? filesize($filePath) : 0;
                         $fileSizeInMB = round($fileSizeInBytes / (1024 * 1024), 1);
                     }
                 @endphp
 
-                @if(isset($tag) && $tag->file != null)
-                var mockFile = { name: "{{ $tag->file }}", size: {{ $fileSizeInMB }} };
+                @if(isset($amenity) && $amenity->file != null)
+                var mockFile = { name: "{{ $amenity->file }}", size: {{ $fileSizeInMB }} };
                 myDropzone.emit('addedfile', mockFile);
-                myDropzone.emit('thumbnail', mockFile, "{{ asset($tag->file) }}");
+                myDropzone.emit('thumbnail', mockFile, "{{ asset($amenity->file) }}");
 
                 var fileSizeText = $("[data-dz-size]").text();
                 var fileSizeInMB = fileSizeText.replace("b", "MB");
                 $("[data-dz-size]").text(fileSizeInMB);
-                uploadedDocumentMap[mockFile.name] = "{{ $tag->file }}";
+                uploadedDocumentMap[mockFile.name] = "{{ $amenity->file }}";
 
-                var tag_file = "{{$tag->file}}";
+                var amenity_file = "{{$amenity->file}}";
 
-                $('#tagForm').append('<input type="hidden" name="document[]" value="' + tag_file + '">');
+                $('#amenityForm').append('<input type="hidden" name="document[]" value="' + amenity_file + '">');
                 @endif
 
                     this.on("addedfile", function (file) {
@@ -105,7 +106,7 @@
 
                 this.on("success", function (file, response) {
 
-                    $('#tagForm').append('<input type="hidden" name="document[]" value="' + response.name + '">');
+                    $('#amenityForm').append('<input type="hidden" name="document[]" value="' + response.name + '">');
                     uploadedDocumentMap[file.name] = response.name;
                     submitForm();
                 });
@@ -117,7 +118,7 @@
                     } else {
                         name = uploadedDocumentMap[file.name];
                     }
-                    $('#tagForm').find('input[name="document[]"][value="' + name + '"]').remove();
+                    $('#amenityForm').find('input[name="document[]"][value="' + name + '"]').remove();
                 });
 
 
@@ -125,7 +126,7 @@
                 myDropzone.off('complete');
 
                 // Add a submit button event listener
-                $("#tagForm button[type='submit']").on('click', function (e) {
+                $("#amenityForm button[type='submit']").on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
                     if (myDropzone.getQueuedFiles().length > 0) {
@@ -142,8 +143,8 @@
         };
 
         function submitForm() {
-            $('#tagForm').off('submit');
-            $('#tagForm').submit();
+            $('#amenityForm').off('submit');
+            $('#amenityForm').submit();
         }
 
     </script>

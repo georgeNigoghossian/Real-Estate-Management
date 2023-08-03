@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->integer('active')->nullable()->default('1');
+            $table->string('file')->nullable();
             $table->timestamps();
 
 

@@ -12,19 +12,11 @@ class Tag extends Model
     public $fillable = [
         'name',
         'active',
-        'parent_id',
+        'property_type',
         'num_of_properties',
         'file',
     ];
 
 
-    public function parent()
-    {
-        return $this->belongsTo(Tag::class,'parent_id');
-    }
 
-    public function children()
-    {
-        return $this->hasMany(Tag::class, 'parent_id', 'id');
-    }
 }
