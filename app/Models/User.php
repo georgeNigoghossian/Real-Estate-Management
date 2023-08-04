@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Property\Property;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -38,12 +39,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public $validation_rules = [
-        'name' => ['string','min:2', 'max:255'],
+        'name' => ['string', 'min:2', 'max:255'],
         'email' => ['email', 'min:2', 'max:255'],
-        'mobile' => ['string', 'size:14'],
+        'mobile' => ['string', 'size:13'],
         'facebook' => ['string'],
         'gender' => ['in:male,female'],
         'date_of_birth' => ['date:Y-m-d'],
+        'fcm_token' => ['string'],
     ];
 
     /**
@@ -72,8 +74,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function notifications(): BelongsToMany
     {
-        return $this->belongsToMany(UserNotification::class,'user_notifications');
+        return $this->belongsToMany(UserNotification::class, 'user_notifications');
     }
 
+    public function savedProperties(): BelongsToMany
+    {
+        return $this->belongsToMany(Property::class,'saved_properties');
+    }
 
 }

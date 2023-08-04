@@ -9,14 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @method static create($data)
  * @method static find($id)
  */
-class Property extends Model
+class Property extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     public $fillable = [
         'name',
@@ -64,5 +66,10 @@ class Property extends Model
     public function commercial(): HasOne
     {
         return $this->hasOne(Commercial::class);
+    }
+
+    public function savedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'saved_properties');
     }
 }

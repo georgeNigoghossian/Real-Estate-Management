@@ -17,6 +17,9 @@ class ResidentialRepository
 
     public function store($data, $property)
     {
+        if ($data['specialAttributes']) {
+            $data['specialAttributes'] = json_decode($data['specialAttributes']);
+        }
         $residential = Residential::create($data);
         $residential->property()->associate($property);
         $residential->save();
@@ -26,6 +29,7 @@ class ResidentialRepository
 
     public function show(Residential $residential): Residential
     {
+        $residential->property->getMedia();
         return $residential;
     }
 

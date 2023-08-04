@@ -17,6 +17,9 @@ class AgriculturalRepository
 
     public function store($data, $property)
     {
+        if ($data['specialAttributes']) {
+            $data['specialAttributes'] = json_decode($data['specialAttributes']);
+        }
         $agricultural = Agricultural::create($data);
         $agricultural->property()->associate($property);
         $agricultural->save();
@@ -26,6 +29,7 @@ class AgriculturalRepository
 
     public function show(Agricultural $agricultural): Agricultural
     {
+        $agricultural->property->getMedia();
         return $agricultural;
     }
 

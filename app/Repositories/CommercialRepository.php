@@ -17,6 +17,9 @@ class CommercialRepository
 
     public function store($data, $property)
     {
+        if ($data['specialAttributes']) {
+            $data['specialAttributes'] = json_decode($data['specialAttributes']);
+        }
         $commercial = Commercial::create($data);
         $commercial->property()->associate($property);
         $commercial->save();
@@ -26,6 +29,7 @@ class CommercialRepository
 
     public function show(Commercial $commercial): Commercial
     {
+        $commercial->property->getMedia();
         return $commercial;
     }
 
