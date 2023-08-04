@@ -16,6 +16,7 @@ class ResidentialStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'images' => ['required', 'min:3'],
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'area' => ['numeric'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
@@ -30,7 +31,7 @@ class ResidentialStoreRequest extends FormRequest
             'num_of_balconies' => ['required','integer', 'min:0'],
             'num_of_living_rooms' => ['required','integer'],
             'floor' => ['integer'],
-            'specialAttributes' => ['json']
+            'specialAttributes' => ['string']
 
         ];
     }

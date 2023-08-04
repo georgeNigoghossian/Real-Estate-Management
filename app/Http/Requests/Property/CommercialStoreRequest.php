@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 
 class CommercialStoreRequest extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,11 +26,11 @@ class CommercialStoreRequest extends FormRequest
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'num_of_bathrooms' => ['required','integer', 'min:1'],
-            'num_of_balconies' => ['required','integer', 'min:0'],
-            'floor' => ['nullable','integer'],
-            'specialAttributes' => ['json']
-
+            'num_of_bathrooms' => ['required', 'integer', 'min:1'],
+            'num_of_balconies' => ['required', 'integer', 'min:0'],
+            'floor' => ['nullable', 'integer'],
+            'specialAttributes' => ['string'],
+            'images' => ['required','min:3', 'mimes:jpeg,png,doc,docs,pdf'],
         ];
     }
 

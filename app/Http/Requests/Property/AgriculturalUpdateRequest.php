@@ -25,6 +25,8 @@ class AgriculturalUpdateRequest extends FormRequest
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
+            'specialAttributes' => ['string'],
+
         ];
     }
 

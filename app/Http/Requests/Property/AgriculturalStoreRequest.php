@@ -16,6 +16,7 @@ class AgriculturalStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'images' => ['required', 'min:3'],
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'area' => ['numeric'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
@@ -25,7 +26,7 @@ class AgriculturalStoreRequest extends FormRequest
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'specialAttributes' => ['json'],
+            'specialAttributes' => ['string'],
         ];
     }
 

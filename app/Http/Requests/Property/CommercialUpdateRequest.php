@@ -8,6 +8,15 @@ use Illuminate\Validation\Rule;
 
 class CommercialUpdateRequest extends FormRequest
 {
+
+    public function prepareForValidation()
+    {
+        if($this->images){
+            return 'oy';
+
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,6 +25,7 @@ class CommercialUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'images' => [],
             'name' => ['string', 'min:3', 'max:255'],
             'area' => ['numeric'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
@@ -28,7 +38,7 @@ class CommercialUpdateRequest extends FormRequest
             'num_of_bathrooms' => ['integer', 'min:1'],
             'num_of_balconies' => ['integer', 'min:0'],
             'floor' => ['nullable','integer'],
-            'specialAttributes' => ['json']
+            'specialAttributes' => ['string']
 
         ];
     }

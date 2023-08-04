@@ -30,7 +30,7 @@ class ResidentialUpdateRequest extends FormRequest
             'num_of_balconies' => ['integer', 'min:0'],
             'num_of_living_rooms' => ['integer'],
             'floor' => ['integer'],
-            'specialAttributes' => ['json']
+            'specialAttributes' => ['string']
         ];
     }
 
