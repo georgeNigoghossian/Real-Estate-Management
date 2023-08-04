@@ -51,4 +51,12 @@ class TagRepository extends BaseRepository
         $tag->delete();
     }
 
+    public function changeActiveStatus($tag_id,$status){
+        $tag = Tag::where('id',$tag_id)->update([
+            'active'=>$status,
+        ]);
+        return $tag;
+    }
+
+
 }

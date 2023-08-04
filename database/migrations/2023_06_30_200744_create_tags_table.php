@@ -19,15 +19,11 @@ return new class extends Migration
             $table->integer('active')->nullable()->default('1');
             $table->integer('num_of_properties')->nullable();
             $table->string('file')->nullable();
+            $table->enum('property_type', ['residential','agricultural', 'commercial'])->nullable();
             $table->timestamps();
 
         });
 
-        Schema::table('tags', function ($table) {
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('tags')->onDelete('cascade');
-
-        });
     }
 
     /**

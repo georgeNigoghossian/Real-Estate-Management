@@ -13,7 +13,8 @@
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
 
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Parent</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Property Type</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Active</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -33,8 +34,15 @@
                             <div class="d-flex px-2">
 
                                 <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">{{$tag->parent ?$tag->parent->name : ""}}</h6>
+                                    <h6 class="mb-0 text-xs">{{$property_types[$tag->property_type]}}</h6>
                                 </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input tagActive" type="checkbox" role="switch" data-id="{{$tag->id}}"  {{$tag->active==1 ? "checked" : ""}} />
+
                             </div>
                         </td>
 

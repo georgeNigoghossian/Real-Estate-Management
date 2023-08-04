@@ -18,6 +18,7 @@ class Amenity extends Model
         'description',
         'active',
         'amenity_type_id',
+        'file',
     ];
 
     public function type(): BelongsTo

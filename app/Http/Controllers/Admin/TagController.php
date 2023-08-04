@@ -23,17 +23,25 @@ class TagController extends AppController
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
         $tags = $this->tagRepository->get_all($custom_cond);
-        return view('admin.tag.list',compact('tags'));
+        $property_types = [
+            'residential'=>'Residential',
+            'agricultural'=>'Agricultural',
+            'commercial'=>'Commercial'
+        ];
+        return view('admin.tag.list',compact('tags','property_types'));
     }
 
     public function create(){
 
-        $cond[] = "Active = 1";
-        $tags = $this->tagRepository->get_all($cond);
 
-        return view('admin.tag.create',compact('tags'));
+        $property_types = [
+            'residential'=>'Residential',
+            'agricultural'=>'Agricultural',
+            'commercial'=>'Commercial'
+        ];
+
+        return view('admin.tag.create',compact('property_types'));
     }
-
 
     public function store(Request $request){
 
@@ -48,7 +56,7 @@ class TagController extends AppController
         $data = [
             'name'=>$request->name,
             'file'=>$path,
-            'parent_id'=>$request->parent ,
+            'property_type'=>$request->property_type ,
         ];
 
         $tag = $this->tagRepository->store($data);
@@ -59,7 +67,7 @@ class TagController extends AppController
 
     public function storePhoto(Request $request){
 
-
+        //dd($request->all());
         $file = $request->file('file');
 
         $path = public_path('uploads/Tag');
@@ -82,15 +90,24 @@ class TagController extends AppController
 
     public function edit(Request $request){
 
-        $cond[] = "Active = 1";
-        $tags = $this->tagRepository->get_all($cond);
+        $property_types = [
+            'residential'=>'Residential',
+            'agricultural'=>'Agricultural',
+            'commercial'=>'Commercial'
+        ];
 
         $tag = $this->tagRepository->get_single_tag($request->id);
 
 
-        return view('admin.tag.create',compact('tags','tag'));
+        return view('admin.tag.create',compact('property_types','tag'));
     }
     public function update($id,Request $request){
+
+        $tag = Tag::find($id);
+//        $filePath = $tag->file;
+//        if (file_exists($filePath)) {
+//            unlink($filePath);
+//        }
 
         if(isset($request->document[0])){
             if(str_starts_with($request->document[0],"uploads/Tag")){
@@ -107,14 +124,10 @@ class TagController extends AppController
         $data = [
             'name'=>$request->name,
             'file'=>$path,
-            'parent_id'=>$request->parent ,
+            'property_type'=>$request->property_type ,
         ];
 
-        $tag = Tag::find($id);
-        $filePath = $tag->file;
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
+
         $tag = $this->tagRepository->update($data,$tag);
 
 
@@ -133,5 +146,16 @@ class TagController extends AppController
         $this->tagRepository->destroy($tag);
 
         return redirect()->back();
+    }
+
+    public function switchActive(Request $request){
+        $status = $request->is_active;
+        $tag_id = $request->id;
+
+        $this->tagRepository->changeActiveStatus($tag_id,$status);
+
+        if(isset($request->needs_redirect) && $request->needs_redirect==1){
+            return redirect()->back();
+        }
     }
 }
