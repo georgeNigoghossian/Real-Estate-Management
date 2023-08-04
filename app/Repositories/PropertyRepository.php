@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 
 
@@ -24,6 +25,12 @@ class PropertyRepository extends BaseRepository
         $property = Property::create($data);
         $property->user()->associate(Auth::user());
         $property->save();
+        if (array_key_exists("images", $data)) {
+            $images = $data['images'];
+            foreach ($images as $image) {
+                $property->addMedia($image)->toMediaCollection('images');
+            }
+        }
         if (array_key_exists('tags', $data))
             $property->tags()->sync($data['tags']);
         if (array_key_exists('amenities', $data))
@@ -77,16 +84,20 @@ class PropertyRepository extends BaseRepository
 
     }
 
-    public function saveProperty($id, $user)
+    public function saveProperty($id, $user): array
     {
         $property = Property::find($id);
 
         if ($property->is_disabled) return [403, __("api.messages.property_disabled")];
-
-        SavedProperty::firstOrCreate([
-            'property_id' => $property->id,
-            'user_id' => $user->id
-        ]);
+        $saved = SavedProperty::where('property_id', $property->id)->where('user_id', $user->id)->first();
+        if ($saved) {
+            $user->savedProperties()->detach($property->id);
+            $res = [false, 'Unsaved'];
+        } else {
+            $user->savedProperties()->attach($property->id);
+            $res = [true, 'saved'];
+        }
+        return $res;
     }
 
     public function disableProperty($id)
@@ -109,12 +120,20 @@ class PropertyRepository extends BaseRepository
     {
         $latitude = $data['latitude'];
         $longitude = $data['longitude'];
+        $radius = $data['radius'];
         if (array_key_exists('property_type', $data)) {
             $property_type = $data['property_type'];
-            $properties = Property::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))+COS(RADIANS('latitude'))*COS(RADIANS($latitude))*COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < 6000")
-                ->whereHas($property_type)->get();
+            $properties = Property::whereRaw(DB::raw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($latitude))+COS(RADIANS(latitude))*COS(RADIANS($latitude))*COS(RADIANS(longitude)-RADIANS($longitude)))*6380 < ?"), [$radius])
+                ->whereHas($property_type)
+                ->with('tags')
+                ->with('amenities')
+                ->with('user')
+                ->get();
         } else {
-            $properties = Property::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))+COS(RADIANS('latitude'))*COS(RADIANS($latitude))*COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < 6000")
+            $properties = Property::whereRaw(DB::raw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($latitude))+COS(RADIANS(latitude))*COS(RADIANS($latitude))*COS(RADIANS(longitude)-RADIANS($longitude)))*6380 < ?"), [$radius])
+                ->with('tags')
+                ->with('amenities')
+                ->with('user')
                 ->get();
         }
         return $properties;

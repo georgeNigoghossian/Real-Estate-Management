@@ -18,6 +18,7 @@ class nearbyPlacesRequest extends FormRequest
         return [
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
+            'radius'=>['numeric'],
             'property_type' => [Rule::in(array_column(PropertyTypeEnum::cases(), 'name'))],
         ];
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\App\Agency\AgencyController;
 use App\Http\Controllers\App\Location\CityController;
+use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
 use App\Http\Controllers\App\Property\CommercialController;
@@ -30,19 +31,21 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post.api');
     Route::post('/sms/verify-and-register', [PassportAuth\RegisterController::class, 'verifyAndRegister'])->name('sms.verify_and_register.post.api');
 });
-
+Route::post('/send-notification', [FireBaseNotificationController::class,'send']);
 Route::group(['middleware' => ['cors', 'json.response', 'is_sms_verified']], function () {
     Route::post('/oauth/token', [Laravel\Passport\Http\Controllers\AccessTokenController::class, 'issueToken'])->middleware(['oauth']);
     Route::post('/login', [PassportAuth\LoginController::class, 'login'])->name('login.api');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::post('/logout', [PassportAuth\LoginController::class, 'logout'])->name('logout.api');
+    Route::get('/logout', [PassportAuth\LoginController::class, 'logout'])->name('logout.api');
     Route::get('/resend-verification', [PassportAuth\VerificationController::class, 'resend'])->name('resend.api');
     Route::post('/report-client', [UserController::class, 'reportClient'])->name('user.report_client');
     Route::get('/delete', [UserController::class, 'delete'])->name('user.delete_account');
     Route::get('/view', [UserController::class, 'show'])->name('user.show_account');
     Route::post('/update', [UserController::class, 'update'])->name('user.update_account');
+    Route::get('/user-by-token', [UserController::class, 'getUserByToken']);
+
 });
 
 //Property Endpoints
@@ -53,6 +56,9 @@ Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors'
     Route::post('/enable', [PropertyController::class, 'enableProperty'])->name('property.enableProperty.api');
     Route::post('/disable', [PropertyController::class, 'disableProperty'])->name('property.disableProperty.api');
     Route::put('/{property}/change-status', [PropertyController::class, 'changeStatus']);
+    Route::get('/my-properties', [PropertyController::class, 'myProperties']);
+    Route::get('/my-favorites', [PropertyController::class, 'myFavorites']);
+
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
