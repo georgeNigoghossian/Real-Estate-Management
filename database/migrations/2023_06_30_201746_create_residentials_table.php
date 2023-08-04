@@ -19,14 +19,13 @@ return new class extends Migration
             $table->integer('num_of_bathrooms')->nullable();
             $table->integer('num_of_balconies')->nullable();
             $table->integer('num_of_living_rooms')->nullable();
-            $table->integer('floor');
+            $table->integer('floor')->nullable();
             $table->json('specialAttributes');
             $table->timestamps();
 
         });
         Schema::table('residentials', function($table) {
             $table->unsignedBigInteger('property_id')->nullable();
-
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }

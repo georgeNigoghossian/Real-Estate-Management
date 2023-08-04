@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('sms_verified_at')->nullable();
             $table->string('sms_verification_code')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female'])->default('male');
             $table->date('date_of_birth')->nullable();
             $table->integer('is_blocked')->nullable()->default('0');
-            $table->integer('priority')->nullable();
+            $table->integer('priority')->default(1);
             $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
