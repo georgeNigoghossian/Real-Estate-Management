@@ -25,4 +25,14 @@ class Amenity extends Model
         return $this->belongsTo(AmenityType::class,'amenity_type_id');
     }
 
+    public function scopeSearch($query, $search = '')
+    {
+        return $query->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('description', 'LIKE', '%' . $search . '%');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active',true);
+    }
 }

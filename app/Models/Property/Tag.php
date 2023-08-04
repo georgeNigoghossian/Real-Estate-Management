@@ -20,11 +20,21 @@ class Tag extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Tag::class,'parent_id');
+        return $this->belongsTo(Tag::class, 'parent_id');
     }
 
     public function children()
     {
         return $this->hasMany(Tag::class, 'parent_id', 'id');
+    }
+
+    public function scopeSearch($query, $search = '')
+    {
+        return $query->where('name', 'LIKE', '%' . $search . '%');
+    }
+
+    public function scopeActive($query, $active)
+    {
+        return $query->where('active', $active);
     }
 }

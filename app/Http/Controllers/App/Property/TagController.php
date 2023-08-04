@@ -7,31 +7,34 @@ use App\Http\Requests\Property\TagStoreRequest;
 use App\Http\Requests\Property\TagUpdateRequest;
 use App\Models\Property\Tag;
 use App\Repositories\TagRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TagController extends AppController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param TagRepository $tag_repository
-     */
+
     public function __construct(TagRepository $tag_repository)
     {
         $this->tag_repository = $tag_repository;
     }
-    public function index(Request $request): array
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
     {
-        $columns = Schema::getColumnListing('tags');
         $tags = QueryBuilder::for(Tag::class)
             ->allowedFilters([
-                ...$columns
+                AllowedFilter::scope('term','Search'),
+                AllowedFilter::scope('active','Active'),
             ])
-            ->allowedSorts([
-                ...$columns
-            ])
+
             ->paginate($request->per_page);
         return $this->response(true, $tags, "All Tags");
     }
@@ -50,9 +53,9 @@ class TagController extends AppController
      * Store a newly created resource in storage.
      *
      * @param TagStoreRequest $request
-     * @return array
+     * @return JsonResponse
      */
-    public function store(TagStoreRequest $request): array
+    public function store(TagStoreRequest $request): JsonResponse
     {
         $tag = $this->tag_repository->store($request->validated());
         return $this->response(true, $tag, "Tag has been created successfully", 201);
@@ -63,9 +66,9 @@ class TagController extends AppController
      * Display the specified resource.
      *
      * @param Tag $tag
-     * @return array
+     * @return JsonResponse
      */
-    public function show(Tag $tag): array
+    public function show(Tag $tag): JsonResponse
     {
         $tag = $this->tag_repository->show($tag);
         return $this->response(true, $tag);
@@ -87,9 +90,9 @@ class TagController extends AppController
      *
      * @param TagUpdateRequest $request
      * @param Tag $tag
-     * @return array
+     * @return JsonResponse
      */
-    public function update(TagUpdateRequest $request, Tag $tag): array
+    public function update(TagUpdateRequest $request, Tag $tag): JsonResponse
     {
         $tag = $this->tag_repository->update($request->validated(), $tag);
         return $this->response(true, $tag, 'Tag updated successfully');
@@ -99,9 +102,9 @@ class TagController extends AppController
      * Remove the specified resource from storage.
      *
      * @param Tag $tag
-     * @return array
+     * @return JsonResponse
      */
-    public function destroy(Tag $tag): array
+    public function destroy(Tag $tag): JsonResponse
     {
         $this->tag_repository->destroy($tag);
         return $this->response(true, null, 'Tag deleted successfully');
