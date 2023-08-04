@@ -24,6 +24,9 @@ class Residential extends Property
         'specialAttributes',
     ];
 
+    protected $casts = [
+        'specialAttributes' => 'array',
+    ];
 
     public function property(): BelongsTo
     {

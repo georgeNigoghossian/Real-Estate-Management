@@ -21,6 +21,9 @@ class Commercial extends Model
         'specialAttributes',
     ];
 
+    protected $casts = [
+        'specialAttributes' => 'array',
+    ];
 
     public function property(): BelongsTo
     {

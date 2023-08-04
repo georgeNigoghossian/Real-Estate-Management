@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\App\Agency;
 
 use App\Http\Controllers\App\AppController;
-use App\Http\Controllers\Controller;
 use App\Models\Agency\Agency;
 use App\Repositories\AgencyRepository;
-use App\Repositories\PropertyRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AgencyController extends AppController
@@ -51,10 +50,10 @@ class AgencyController extends AppController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Agency\Agency  $agency
-     * @return \Illuminate\Http\Response
+     * @param Agency $agency
+     * @return JsonResponse
      */
-    public function show(Agency $agency): array
+    public function show(Agency $agency): JsonResponse
     {
         $agency = $this->agency_repository->show($agency);
         return $this->response(true, $agency,  __("api.messages.show_agency_successfully"));
@@ -63,7 +62,7 @@ class AgencyController extends AppController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Agency\Agency  $agency
+     * @param Agency $agency
      * @return \Illuminate\Http\Response
      */
     public function edit(Agency $agency)
@@ -75,7 +74,7 @@ class AgencyController extends AppController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Agency\Agency  $agency
+     * @param Agency $agency
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Agency $agency)
@@ -86,11 +85,12 @@ class AgencyController extends AppController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Agency\Agency  $agency
+     * @param Agency $agency
      * @return \Illuminate\Http\Response
      */
     public function destroy(Agency $agency)
     {
         //
     }
+
 }

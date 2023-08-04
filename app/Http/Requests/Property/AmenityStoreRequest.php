@@ -16,7 +16,7 @@ class AmenityStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'active' => ['nullable','boolean'],
-            'description' => ['nullable', 'numeric','min:0'],
+            'description' => ['nullable', 'string'],
         ];
     }
 

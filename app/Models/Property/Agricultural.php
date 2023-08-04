@@ -17,6 +17,9 @@ class Agricultural extends Model
         'property_id',
         'specialAttributes',
     ];
+    protected $casts = [
+        'specialAttributes' => 'array',
+    ];
 
     public function property(): BelongsTo
     {
@@ -26,7 +29,8 @@ class Agricultural extends Model
     public function scopeSearch($query, $search = '')
     {
         return $query->whereHas('property', function ($q) use ($search) {
-            return $q->where('name', 'LIKE', '%' . $search . '%');
+            return $q->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('description', 'LIKE', '%' . $search . '%');
         });
     }
 

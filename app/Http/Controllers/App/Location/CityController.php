@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Location\City;
 use App\Repositories\CityRepository;
 use Igaster\LaravelCities\Geo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CityController extends AppController
@@ -97,7 +98,7 @@ class CityController extends AppController
     /**
      * Remove the specified resource from storage.
      *
-     * @return array
+     * @return JsonResponse
      */
     public function getAll()
     {

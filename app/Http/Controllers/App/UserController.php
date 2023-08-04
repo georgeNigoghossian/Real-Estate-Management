@@ -54,7 +54,7 @@ class UserController extends AppController
      * Display the specified resource.
      *
      * @param Request $request
-     * @return array
+     * @return JsonResponse
      */
     public function show(Request $request)
     {
@@ -63,9 +63,9 @@ class UserController extends AppController
 
         if ($res != null)
 
-            return $this->response(true,$res,__("api.messages.success_retrieve_account"),200);
+            return $this->response(true, $res, __("api.messages.success_retrieve_account"), 200);
         else
-            return $this->response(false,null, __("api.messages.failed_retrieve_account"), 404);
+            return $this->response(false, null, __("api.messages.failed_retrieve_account"), 404);
     }
 
     /**
@@ -83,8 +83,7 @@ class UserController extends AppController
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\User $User
-     * @return array
+     * @return JsonResponse
      */
     public function update(Request $request)
     {
@@ -97,15 +96,15 @@ class UserController extends AppController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $this->response(false,$errors,__("api.messages.failed_update_account"),400);
+            return $this->response(false, $errors, __("api.messages.failed_update_account"), 400);
         } else {
             $values = $request->all();
 
             $res = $this->userRepository->updateAccount($user, $values);
             if ($res) {
-                return $this->response(true,$res,__("api.messages.success_update_account"),null);
+                return $this->response(true, $user, __("api.messages.success_update_account"), null);
             } else {
-                return $this->response(false,null,__("api.messages.failed_update_account"),500);
+                return $this->response(false, null, __("api.messages.failed_update_account"), 500);
             }
         }
     }
@@ -113,8 +112,7 @@ class UserController extends AppController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\User $User
-     * @return array
+     * @return JsonResponse
      */
     public function delete()
     {
@@ -123,9 +121,9 @@ class UserController extends AppController
         $res = $this->userRepository->deleteAccount($id);
 
         if ($res)
-            return $this->response(true,$res,__("api.messages.success_delete_account"),null);
+            return $this->response(true, $res, __("api.messages.success_delete_account"), null);
         else
-            return $this->response(false,null,__("api.messages.failed_delete_account"),null);
+            return $this->response(false, null, __("api.messages.failed_delete_account"), null);
     }
 
     public function reportClient(Request $request)
@@ -140,8 +138,14 @@ class UserController extends AppController
         $data = $this->userRepository->reportClient($reporting_user_id, $reported_user_id, $report_category_id, $description);
 
         if ($data)
-            return $this->response(true,$data,__("api.messages.success_report_client"),200);
+            return $this->response(true, $data, __("api.messages.success_report_client"), 200);
         else
-            return $this->response(false,null,__("api.messages.failed_report_client"),null);
+            return $this->response(false, null, __("api.messages.failed_report_client"), null);
     }
+
+    public function getUserByToken(): JsonResponse
+    {
+        return $this->response(true, auth()->user());
+    }
+
 }
