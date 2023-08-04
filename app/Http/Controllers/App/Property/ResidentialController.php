@@ -11,6 +11,7 @@ use App\Repositories\ResidentialRepository;
 use App\Sorts\AreaSort;
 use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -34,17 +35,20 @@ class ResidentialController extends AppController
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return array
+     * @return JsonResponse
      */
-    public function index(Request $request): array
+    public function index(Request $request): JsonResponse
     {
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'residentials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Residential::class)
             ->with('property')
+            ->with('property.tags')
+            ->with('property.amenities')
+            ->with('property.user')
             ->allowedFilters([
                 ...$columns,
-                AllowedFilter::scope('search'),
+                AllowedFilter::scope('term','Search'),
                 AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
                 AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
                 AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
@@ -74,9 +78,9 @@ class ResidentialController extends AppController
      * Store a newly created resource in storage.
      *
      * @param ResidentialStoreRequest $request
-     * @return array
+     * @return JsonResponse
      */
-    public function store(ResidentialStoreRequest $request): array
+    public function store(ResidentialStoreRequest $request): JsonResponse
     {
         $property = $this->property_repository->store($request->validated());
         $residential_property = $this->residential_repository->store($request->validated(), $property);
@@ -87,9 +91,9 @@ class ResidentialController extends AppController
      * Display the specified resource.
      *
      * @param Residential $residential
-     * @return array
+     * @return JsonResponse
      */
-    public function show(Residential $residential): array
+    public function show(Residential $residential): JsonResponse
     {
         $property = $this->property_repository->show($residential->property);
         $residential = $this->residential_repository->show($residential);
@@ -112,9 +116,9 @@ class ResidentialController extends AppController
      *
      * @param ResidentialUpdateRequest $request
      * @param Residential $residential
-     * @return array
+     * @return JsonResponse
      */
-    public function update(ResidentialUpdateRequest $request, Residential $residential): array
+    public function update(ResidentialUpdateRequest $request, Residential $residential): JsonResponse
     {
         $property = $this->property_repository->update($request->validated(), $residential->property);
         $residential = $this->residential_repository->update($request->validated(), $residential);
@@ -125,9 +129,9 @@ class ResidentialController extends AppController
      * Remove the specified resource from storage.
      *
      * @param Residential $residential
-     * @return array
+     * @return JsonResponse
      */
-    public function destroy(Residential $residential): array
+    public function destroy(Residential $residential): JsonResponse
     {
         $this->residential_repository->destroy($residential);
         return $this->response(true, null, 'Residential property deleted successfully');

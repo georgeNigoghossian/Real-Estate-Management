@@ -11,6 +11,7 @@ use App\Repositories\PropertyRepository;
 use App\Sorts\AreaSort;
 use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -34,21 +35,24 @@ class AgriculturalController extends AppController
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return array
+     * @return JsonResponse
      */
-    public function index(Request $request): array
+    public function index(Request $request): JsonResponse
     {
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'agriculturals')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Agricultural::class)
-            ->with('property', 'property.user')
+            ->with('property')
+            ->with('property.tags')
+            ->with('property.amenities')
+            ->with('property.user')
             ->allowedFilters([
                 ...$columns,
-                AllowedFilter::scope('search'),
-                AllowedFilter::scope('price-lower-than','PriceLowerThan'),
-                AllowedFilter::scope('price-higher-than','PriceHigherThan'),
-                AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
-                AllowedFilter::scope('area-bigger-than','AreaBiggerThan'),
+                AllowedFilter::scope('term', 'Search'),
+                AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
+                AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
+                AllowedFilter::scope('area-smaller-than', 'AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than', 'AreaBiggerThan'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'agriculturals'),
@@ -61,35 +65,25 @@ class AgriculturalController extends AppController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     *
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param AgriculturalStoreRequest $request
-     * @return array
+     * @return JsonResponse
      */
-    public function store(AgriculturalStoreRequest $request): array
+    public function store(AgriculturalStoreRequest $request): JsonResponse
     {
         $property = $this->property_repository->store($request->validated());
         $agricultural_property = $this->agricultural_repository->store($request->validated(), $property);
-        return $this->response(true, $agricultural_property, "agricultural property has been created successfully", 201);
+        return $this->response(true, $agricultural_property,'Agricultural property added successfully.', 201);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Agricultural $agricultural
-     * @return array
+     * @return JsonResponse
      */
-    public function show(Agricultural $agricultural): array
+    public function show(Agricultural $agricultural): JsonResponse
     {
         $property = $this->property_repository->show($agricultural->property);
         $agricultural = $this->agricultural_repository->show($agricultural);
@@ -112,9 +106,9 @@ class AgriculturalController extends AppController
      *
      * @param AgriculturalUpdateRequest $request
      * @param Agricultural $agricultural
-     * @return array
+     * @return JsonResponse
      */
-    public function update(AgriculturalUpdateRequest $request, Agricultural $agricultural): array
+    public function update(AgriculturalUpdateRequest $request, Agricultural $agricultural): JsonResponse
     {
         $property = $this->property_repository->update($request->validated(), $agricultural->property);
         $agricultural = $this->agricultural_repository->update($request->validated(), $agricultural);
@@ -125,9 +119,9 @@ class AgriculturalController extends AppController
      * Remove the specified resource from storage.
      *
      * @param Agricultural $agricultural
-     * @return array
+     * @return JsonResponse
      */
-    public function destroy(Agricultural $agricultural): array
+    public function destroy(Agricultural $agricultural): JsonResponse
     {
         $this->agricultural_repository->destroy($agricultural);
         return $this->response(true, null, 'agricultural property deleted successfully');

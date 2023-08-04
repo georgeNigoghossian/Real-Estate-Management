@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Property\CommercialStoreRequest;
 use App\Http\Requests\Property\CommercialUpdateRequest;
 use App\Models\Property\Commercial;
 use App\Repositories\CommercialRepository;
@@ -10,6 +11,7 @@ use App\Repositories\PropertyRepository;
 use App\Sorts\AreaSort;
 use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -33,17 +35,20 @@ class CommercialController extends AppController
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return array
+     * @return JsonResponse
      */
-    public function index(Request $request): array
+    public function index(Request $request): JsonResponse
     {
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'commercials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Commercial::class)
             ->with('property')
+            ->with('property.tags')
+            ->with('property.amenities')
+            ->with('property.user')
             ->allowedFilters([
                 ...$columns,
-                AllowedFilter::scope('search'),
+                AllowedFilter::scope('term','Search'),
                 AllowedFilter::scope('price-lower-than','PriceLowerThan'),
                 AllowedFilter::scope('price-higher-than','PriceHigherThan'),
                 AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
@@ -60,22 +65,12 @@ class CommercialController extends AppController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     *
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param CommercialUpdateRequest $request
-     * @return array
+     * @param CommercialStoreRequest $request
+     * @return JsonResponse
      */
-    public function store(CommercialUpdateRequest $request): array
+    public function store(CommercialStoreRequest $request): JsonResponse
     {
         $property = $this->property_repository->store($request->validated());
         $commercial_property = $this->commercial_repository->store($request->validated(), $property);
@@ -86,9 +81,9 @@ class CommercialController extends AppController
      * Display the specified resource.
      *
      * @param Commercial $commercial
-     * @return array
+     * @return JsonResponse
      */
-    public function show(Commercial $commercial): array
+    public function show(Commercial $commercial): JsonResponse
     {
         $property = $this->property_repository->show($commercial->property);
         $commercial = $this->commercial_repository->show($commercial);
@@ -96,24 +91,13 @@ class CommercialController extends AppController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Commercial $commercial
-     *
-     */
-    public function edit(Commercial $commercial)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param CommercialUpdateRequest $request
      * @param Commercial $commercial
-     * @return array
+     * @return JsonResponse
      */
-    public function update(CommercialUpdateRequest $request, Commercial $commercial): array
+    public function update(CommercialUpdateRequest $request, Commercial $commercial): JsonResponse
     {
         $property = $this->property_repository->update($request->validated(), $commercial->property);
         $commercial = $this->commercial_repository->update($request->validated(), $commercial);
@@ -124,9 +108,9 @@ class CommercialController extends AppController
      * Remove the specified resource from storage.
      *
      * @param Commercial $commercial
-     * @return array
+     * @return JsonResponse
      */
-    public function destroy(Commercial $commercial): array
+    public function destroy(Commercial $commercial): JsonResponse
     {
         $this->commercial_repository->destroy($commercial);
         return $this->response(true, null, 'Commercial property deleted successfully');
