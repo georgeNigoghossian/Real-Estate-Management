@@ -75,7 +75,7 @@ class UserRepository extends BaseRepository
     public function updateAccount($user, $values)
     {
 
-        $allowed_fields = ['name', 'email', 'facebook', 'mobile', 'gender', 'date_of_birth'];
+        $allowed_fields = ['name', 'email', 'facebook', 'mobile', 'gender', 'date_of_birth','fcm_token'];
 
         foreach ($allowed_fields as $field) {
 
