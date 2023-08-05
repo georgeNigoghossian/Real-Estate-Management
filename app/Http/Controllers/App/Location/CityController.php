@@ -94,15 +94,4 @@ class CityController extends AppController
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return JsonResponse
-     */
-    public function getAll()
-    {
-        $tree = $this->city_repository->getTree();
-        return $this->response(true, $tree,  __("api.messages.return_cities_tree_successfully"));
-    }
 }

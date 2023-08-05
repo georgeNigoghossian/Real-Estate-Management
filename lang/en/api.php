@@ -29,5 +29,6 @@ return array(
         'return_cities_tree_successfully'=>'Location information has been retrieved successfully',
         'disable_property_successfully'=>"Property has been disabled successfully",
         'enable_property_successfully'=>"Property has been enabled successfully",
+        'add_region_successfully'=>"Region has been created successfully",
     ),
 );

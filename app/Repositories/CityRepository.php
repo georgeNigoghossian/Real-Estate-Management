@@ -25,21 +25,4 @@ class CityRepository extends BaseRepository
         return Geo::class;
     }
 
-    public function getNotCountries(){
-        return Geo::where('level', '!=', 'PCLI')->get();
-    }
-
-    public function getTree(){
-        $res = [];
-        $locations = $this->getNotCountries();
-        $countries = Geo::getCountries();
-        foreach ($countries as $country) {
-            $res[$country->country] = ['name'=> $country->name, 'cities'=>[]];
-        }
-        foreach ($locations as $location){
-            array_push($res[$location->country]['cities'], $location);
-        }
-        return $res;
-    }
-
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\App\Agency\AgencyController;
 use App\Http\Controllers\App\Location\CityController;
+use App\Http\Controllers\App\Location\RegionController;
 use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
@@ -62,6 +63,10 @@ Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors'
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::get('/regions/get-all', [RegionController::class, 'getAll'])->name('regions.getAll.api');
+});
+
+Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::post('/properties/near-by-places', [PropertyController::class, 'nearbyPlaces']);
     Route::apiResource('/properties', PropertyController::class);
     Route::apiResource('/amenities', AmenityController::class);
@@ -69,15 +74,11 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/agriculturals', AgriculturalController::class);
     Route::apiResource('/residentials', ResidentialController::class);
     Route::apiResource('/commercials', CommercialController::class);
+    Route::apiResource('/regions', RegionController::class);
 
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::apiResource('/agencies', AgencyController::class);
 });
-
-Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::get('/cities/get-all', [CityController::class, 'getAll'])->name('cities.getAll.api');
-});
-
 

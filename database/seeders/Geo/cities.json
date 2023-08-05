@@ -1,0 +1,100 @@
+[
+  {
+    "id": 1,
+    "name": "Deir Al Zor Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 2,
+    "name": "Damascus Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 3,
+    "name": "Tartus Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 4,
+    "name": "Idlib Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 5,
+    "name": "Homs Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 6,
+    "name": "Hama Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 7,
+    "name": "Aleppo Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 8,
+    "name": "Damascus Countryside Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 9,
+    "name": "Al Suwayda Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 10,
+    "name": "Al Raqqah Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 11,
+    "name": "Quneitra Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 12,
+    "name": "Latakia Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 13,
+    "name": "Al-Hasakah Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  },
+  {
+    "id": 14,
+    "name": "Daraa Governorate",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 1
+  }
+]
