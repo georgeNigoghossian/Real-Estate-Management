@@ -15,7 +15,6 @@
                 </div>
             </div>
         </footer>
-    </div>
-</div>
+
 
 @include('admin.layouts.partials.scripts')
