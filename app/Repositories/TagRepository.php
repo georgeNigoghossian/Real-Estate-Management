@@ -21,19 +21,17 @@ class TagRepository extends BaseRepository
         return Tag::create($data);
     }
 
-    public function get_all($custom_cond = []){
+    public function get_all($custom_cond = [], $perPage = 10) {
+        $query = Tag::query();
 
-
-        if(count($custom_cond)>0){
-            $custom_cond= implode(' AND ', $custom_cond);
-
-            $tags = Tag::whereRaw($custom_cond)->get();
-        }else{
-            $tags = Tag::all();
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
         }
 
-        return $tags;
+        return $query->paginate($perPage);
     }
+
     public function get_single_tag($id)
     {
 

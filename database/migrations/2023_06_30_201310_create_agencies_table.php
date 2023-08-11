@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
             $table->double('rate')->nullable();
-            $table->integer('is_verified')->nullable()->default('1');
+            $table->integer('is_verified')->nullable()->default(0);
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();

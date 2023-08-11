@@ -2,11 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Agency\Agency;
-use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\Region;
-use Igaster\LaravelCities\Geo;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 
 //use Your Model

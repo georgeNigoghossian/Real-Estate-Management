@@ -49,5 +49,9 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="d-flex justify-content-center paginate-nav">
+            {{ $users->links() }}
+        </div>
     </div>
 @endsection

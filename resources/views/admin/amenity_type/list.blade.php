@@ -46,5 +46,9 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="d-flex justify-content-center paginate-nav">
+            {{ $amenity_types->links() }}
+        </div>
     </div>
 @endsection

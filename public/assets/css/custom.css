@@ -1,0 +1,27 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0px !important;
+
+}
+
+.paginate-nav nav div:first-child{
+    display: none !important;
+}
+
+.paginate-nav nav div:nth-child(2){
+    text-align: center;
+}

@@ -6,7 +6,6 @@ use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
 use App\Models\Location\City;
 use App\Repositories\CityRepository;
-use Igaster\LaravelCities\Geo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

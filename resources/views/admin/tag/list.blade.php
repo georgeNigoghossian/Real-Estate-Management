@@ -62,6 +62,10 @@
 
                 </tbody>
             </table>
+
+            <div class="d-flex justify-content-center paginate-nav">
+                {{ $tags->links() }}
+            </div>
         </div>
     </div>
 @endsection

@@ -25,6 +25,8 @@ class AmenityTypeController extends AppController
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
         $amenity_types = $this->amenityRepository->get_all_amenity_types($custom_cond);
+        $amenity_types =$amenity_types->appends($request->query());
+
         return view('admin.amenity_type.list',compact('amenity_types'));
     }
 

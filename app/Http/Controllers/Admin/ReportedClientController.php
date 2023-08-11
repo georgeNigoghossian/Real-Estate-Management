@@ -19,9 +19,14 @@ class ReportedClientController extends AppController
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->reportedClientRepository->get_all();
+        $custom_cond = [];
+        $users = $this->reportedClientRepository->get_all($custom_cond);
+
+        $users =$users->appends($request->query());
+
+
         return view('admin.repoted_client.list',compact('users'));
     }
 
