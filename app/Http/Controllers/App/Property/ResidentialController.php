@@ -42,10 +42,7 @@ class ResidentialController extends AppController
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'residentials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Residential::class)
-            ->with('property')
-            ->with('property.tags')
-            ->with('property.amenities')
-            ->with('property.user')
+            ->with('property','property.tags','property.amenities','property.user')
             ->allowedFilters([
                 ...$columns,
                 AllowedFilter::scope('term','Search'),

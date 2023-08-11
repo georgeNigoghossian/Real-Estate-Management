@@ -40,6 +40,7 @@ class PropertyRepository extends BaseRepository
 
     public function show(Property $property): Property
     {
+        $property->getMedia();
         return $property;
     }
 

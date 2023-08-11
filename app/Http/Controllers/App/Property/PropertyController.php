@@ -11,10 +11,16 @@ use App\Http\Requests\Property\PropertyUpdateRequest;
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
 use App\Repositories\PropertyRepository;
+use App\Sorts\AreaSort;
+use App\Sorts\CreatedAtSort;
+use App\Sorts\PriceSort;
+use App\Sorts\PrioritySort;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\Enums\SortDirection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertyController extends AppController
@@ -35,13 +41,29 @@ class PropertyController extends AppController
     public function index(Request $request): JsonResponse
     {
         $columns = Schema::getColumnListing('properties');
+        $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Property::class)
+            ->with('tags', 'amenities', 'user', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
             ->allowedFilters([
-                ...$columns
+                ...$columns,
+                AllowedFilter::scope('term', 'Search'),
+                AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
+                AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
+                AllowedFilter::scope('area-smaller-than', 'AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than', 'AreaBiggerThan'),
+                AllowedFilter::scope('property-type', 'PropertyType'),
+                AllowedFilter::scope('property-service', 'PropertyService'),
+                AllowedFilter::scope('city', 'City'),
+                AllowedFilter::scope('country', 'Country'),
+
             ])
             ->allowedSorts([
-                ...$columns
+                AllowedSort::custom('created-at', new CreatedAtSort, 'properties'),
+                AllowedSort::custom('price', new PriceSort, 'properties'),
+                AllowedSort::custom('area', new AreaSort, 'properties'),
+                $priority_sort
             ])
+            ->defaultSort($priority_sort)
             ->paginate($request->per_page);
         return $this->response(true, $properties, "All Properties");
     }

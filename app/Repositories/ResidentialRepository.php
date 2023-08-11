@@ -23,7 +23,6 @@ class ResidentialRepository
         $residential = Residential::create($data);
         $residential->property()->associate($property);
         $residential->save();
-
         return $residential;
     }
 

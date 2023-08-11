@@ -2,85 +2,22 @@
 
 namespace App\Http\Controllers\App;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserNotification;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class NotificationController extends AppController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function myNotifications(Request $request, User $user): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserNotification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserNotification $notification)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserNotification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserNotification $notification)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserNotification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserNotification $notification)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\UserNotification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserNotification $notification)
-    {
-        //
+        $notifications = QueryBuilder::for(UserNotification::class)
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->with('notification')
+            ->paginate($request->per_page);
+        return $this->response(true, $notifications, 'my notifications');
     }
 }

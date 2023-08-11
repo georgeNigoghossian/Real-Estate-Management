@@ -5,16 +5,15 @@ namespace App\Sorts;
 use Spatie\QueryBuilder\Sorts\Sort;
 use Illuminate\Database\Eloquent\Builder;
 
-class PriceSort implements Sort
+class CreatedAtSort implements Sort
 {
     public function __invoke(Builder $query, bool $descending, string $property)
     {
         $direction = $descending ? 'DESC' : 'ASC';
         if ($property != 'properties') {
-            $query->join('properties', 'properties.id', '=', $property . ".property_id")
-                ->orderBy('properties.price', $direction);
+            $query->orderBy('$property.created_at', $direction);
         } else {
-            $query->orderBy('price', $direction);
+            $query->orderBy('created_at', $direction);
         }
     }
 }

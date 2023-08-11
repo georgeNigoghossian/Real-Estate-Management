@@ -30,7 +30,7 @@ class CommercialStoreRequest extends FormRequest
             'num_of_balconies' => ['required', 'integer', 'min:0'],
             'floor' => ['nullable', 'integer'],
             'specialAttributes' => ['string'],
-            'images' => ['required','min:3', 'mimes:jpeg,png,doc,docs,pdf'],
+            'images' => ['required','min:3'],
         ];
     }
 

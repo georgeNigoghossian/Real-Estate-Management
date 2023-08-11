@@ -19,6 +19,8 @@ class Agricultural extends Model
     ];
     protected $casts = [
         'specialAttributes' => 'array',
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime'
     ];
 
     public function property(): BelongsTo

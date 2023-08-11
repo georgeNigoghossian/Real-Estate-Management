@@ -10,8 +10,15 @@ class PrioritySort implements Sort
     public function __invoke(Builder $query, bool $descending, string $property)
     {
         $direction = $descending ? 'DESC' : 'ASC';
-        $query->join('properties', 'properties.id', '=', $property.".property_id")
-            ->join('users', 'users.id', '=', 'properties.user_id')
-            ->orderBy('users.priority', $direction);
+        if ($property != 'properties') {
+            $query->join('properties', 'properties.id', '=', $property . ".property_id")
+                ->join('users', 'users.id', '=', 'properties.user_id')
+                ->orderBy('priority', $direction)
+                ->select($property . '.*');
+        } else {
+            $query->join('users', 'users.id', '=', 'properties.user_id')
+                ->select(  'properties.*')
+                ->orderBy('priority', $direction);
+        }
     }
 }

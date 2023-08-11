@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method static create($data)
  */
-class Residential extends Property
+class Residential extends Model
 {
     use HasFactory;
 

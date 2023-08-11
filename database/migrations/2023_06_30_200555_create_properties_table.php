@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->enum('status', ['in_market','purchased', 'rented'])->default('in_market');
+            $table->enum('service', ['sale','rent', 'holiday'])->default('sale');
             $table->integer('is_disabled')->nullable()->default(0);
             $table->timestamps();
 

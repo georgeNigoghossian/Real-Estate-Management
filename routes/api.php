@@ -3,6 +3,7 @@
 use App\Http\Controllers\App\Agency\AgencyController;
 use App\Http\Controllers\App\Location\CityController;
 use App\Http\Controllers\App\Location\RegionController;
+use App\Http\Controllers\App\NotificationController;
 use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Http\Controllers\App\Property\AgriculturalController;
 use App\Http\Controllers\App\Property\AmenityController;
@@ -32,7 +33,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post.api');
     Route::post('/sms/verify-and-register', [PassportAuth\RegisterController::class, 'verifyAndRegister'])->name('sms.verify_and_register.post.api');
 });
-Route::post('/send-notification', [FireBaseNotificationController::class,'send']);
 Route::group(['middleware' => ['cors', 'json.response', 'is_sms_verified']], function () {
     Route::post('/oauth/token', [Laravel\Passport\Http\Controllers\AccessTokenController::class, 'issueToken'])->middleware(['oauth']);
     Route::post('/login', [PassportAuth\LoginController::class, 'login'])->name('login.api');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'i
 });
 
 //Property Endpoints
-Route::group(['prefix'=>'properties', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::get('/show', [PropertyController::class, 'display_property'])->name('property.displayProperty.api');
     Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.deleteProperty.api');
     Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.saveProperty.api');
@@ -82,3 +82,8 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/agencies', AgencyController::class);
 });
 
+
+//Notifications
+
+Route::post('/send-notification', [FireBaseNotificationController::class, 'send']);
+Route::get('users/{user}/notifications', [NotificationController::class, 'myNotifications']);

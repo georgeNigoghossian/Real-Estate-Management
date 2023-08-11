@@ -42,17 +42,14 @@ class AgriculturalController extends AppController
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'agriculturals')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Agricultural::class)
-            ->with('property')
-            ->with('property.tags')
-            ->with('property.amenities')
-            ->with('property.user')
+            ->with('property','property.tags','property.amenities','property.user')
             ->allowedFilters([
                 ...$columns,
                 AllowedFilter::scope('term', 'Search'),
-                AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
-                AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
-                AllowedFilter::scope('area-smaller-than', 'AreaSmallerThan'),
-                AllowedFilter::scope('area-bigger-than', 'AreaBiggerThan'),
+                AllowedFilter::scope('price-lower-than', 'priceLowerThan'),
+                AllowedFilter::scope('price-higher-than', 'priceHigherThan'),
+                AllowedFilter::scope('area-smaller-than', 'areaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than', 'areaBiggerThan'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'agriculturals'),
@@ -74,7 +71,7 @@ class AgriculturalController extends AppController
     {
         $property = $this->property_repository->store($request->validated());
         $agricultural_property = $this->agricultural_repository->store($request->validated(), $property);
-        return $this->response(true, $agricultural_property,'Agricultural property added successfully.', 201);
+        return $this->response(true, $agricultural_property, 'Agricultural property added successfully.', 201);
     }
 
     /**
