@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "mobile": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "string",
+                "minLength": 9,
+                "maxLength": 13
+            }
+        },
+        "facebook": {
+            "type": "string"
+        },
+        "email": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "string",
+                "format": "email"
+            }
+        }
+    },
+    "required":[
+        "mobile",
+        "email"
+    ]
+}

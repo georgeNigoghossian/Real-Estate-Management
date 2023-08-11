@@ -16,6 +16,8 @@ class PromoteToAgencyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'min:3', 'max:255'],
+            'contact_info' => ['required', 'json', 'json_schema_validator:contact_info_schema.json'],
             'latitude' => ['required'],
             'longitude' => ['required'],
             'region_id' => ['required', 'exists:regions,id'],

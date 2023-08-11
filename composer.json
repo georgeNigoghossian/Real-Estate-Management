@@ -9,6 +9,7 @@
         "ext-curl": "*",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.7",
+        "henriqueramos/laravel_json_schema_validator": "^1.0",
         "kreait/firebase-php": "^7.5",
         "laravel/breeze": "*",
         "laravel/framework": "^9.0",
