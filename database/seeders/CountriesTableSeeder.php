@@ -16,7 +16,7 @@ class CountriesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = file_get_contents(__DIR__.'\\Geo\\countries.json');
+        $json = file_get_contents(__DIR__.'/Geo/countries.json');
 
         $countries = json_decode($json,true);
 

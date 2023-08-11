@@ -15,7 +15,7 @@ class RegionsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = file_get_contents(__DIR__.'\\Geo\\regions.json');
+        $json = file_get_contents(__DIR__.'/Geo/regions.json');
 
         $regions = json_decode($json,true);
 
