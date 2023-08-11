@@ -56,34 +56,29 @@ class AmenityRepository extends BaseRepository
         $amenity_type->delete();
     }
 
-    public function get_all($custom_cond = []){
+    public function get_all($custom_cond = [], $perPage = 10) {
+        $query = Amenity::query();
 
-
-        if(count($custom_cond)>0){
-            $custom_cond= implode(' AND ', $custom_cond);
-
-            $amenities = Amenity::whereRaw($custom_cond)->get();
-        }else{
-            $amenities = Amenity::all();
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
         }
 
-        return $amenities;
+        return $query->paginate($perPage);
     }
 
 
-    public function get_all_amenity_types($custom_cond = []){
+    public function get_all_amenity_types($custom_cond = [], $perPage = 10) {
+        $query = AmenityType::query();
 
-
-        if(count($custom_cond)>0){
-            $custom_cond= implode(' AND ', $custom_cond);
-
-            $amenity_types = AmenityType::whereRaw($custom_cond)->get();
-        }else{
-            $amenity_types = AmenityType::all();
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
         }
 
-        return $amenity_types;
+        return $query->paginate($perPage);
     }
+
 
 
     public function changeActiveStatus($amenity_id,$status){

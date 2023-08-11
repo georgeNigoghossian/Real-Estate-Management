@@ -73,5 +73,8 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'oauth' => \App\Http\Middleware\oauth::class,
         'is_sms_verified' => \App\Http\Middleware\VerifySMS::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

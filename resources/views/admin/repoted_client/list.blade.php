@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('admin.user.filters')
+{{--    @include('admin.repoted_client.filters')--}}
     <div class="card">
         <div class="table-responsive">
             <table class="table align-items-center mb-0">
@@ -31,7 +31,7 @@
                             <p class="text-xs font-weight-normal mb-0">{{$reportedClientRow->reportingUser->name}}</p>
                         </td>
                         <td>
-                            <p class="text-xs font-weight-normal mb-0">{{$reportedClientRow->reportCategory->name}}</p>
+                            <p class="text-xs font-weight-normal mb-0">{{isset($reportedClientRow->reportCategory) ? $reportedClientRow->reportCategory->name : ""}}</p>
                         </td>
 
 
@@ -72,6 +72,10 @@
 
                 </tbody>
             </table>
+        </div>
+
+        <div class="d-flex justify-content-center paginate-nav">
+            {{ $users->links() }}
         </div>
     </div>
 @endsection

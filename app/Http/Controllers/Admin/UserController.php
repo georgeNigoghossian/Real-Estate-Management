@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Models\Property\Property;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use App\Enums\StatusEnum;
 
 class UserController extends AppController
 {
@@ -30,6 +32,9 @@ class UserController extends AppController
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
         $users = $this->userRepository->get_all($custom_cond);
+
+        $users = $users->appends($request->query());
+
         return view('admin.user.list',compact('users'));
     }
 
@@ -43,6 +48,8 @@ class UserController extends AppController
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
         $users = $this->userRepository->get_all($custom_cond);
+
+        $users =$users->appends($request->query());
         return view('admin.user.blocked_list',compact('users'));
     }
 
@@ -68,6 +75,15 @@ class UserController extends AppController
     public function details($id){
         $user = $this->userRepository->get_single_user($id);
 
-        return view('admin.user.details',compact('user'));
+        $properties = $user->properties;
+
+        $status = [
+            'in_market'=>'In Market',
+            'purchased'=>'Purchased',
+            'rented'=>'Rented',
+        ];
+
+
+        return view('admin.user.details',compact('user','properties','status'));
     }
 }

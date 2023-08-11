@@ -23,6 +23,8 @@ class TagController extends AppController
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
         $tags = $this->tagRepository->get_all($custom_cond);
+        $tags =$tags->appends($request->query());
+
         $property_types = [
             'residential'=>'Residential',
             'agricultural'=>'Agricultural',

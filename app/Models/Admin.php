@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
-
+use Spatie\Permission\Traits\HasRoles;
 class Admin extends  Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
 
     public $fillable = [
         'name',
         'email',
         'password',
+        'mobile',
     ];
 
     protected $hidden = [

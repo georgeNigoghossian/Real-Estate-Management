@@ -7,9 +7,11 @@ use \App\Http\Controllers\Admin\ReportedClientController;
 use \App\Http\Controllers\Admin\TagController;
 use \App\Http\Controllers\Admin\AmenityController;
 use \App\Http\Controllers\Admin\AmenityTypeController;
+use \App\Http\Controllers\Admin\AdminController;
 
 Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.post_login');
+Route::get('/run', [AdminController::class, 'run'])->name('admin.admins.run');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
@@ -46,4 +48,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/AmenityType/delete/{id}', [AmenityTypeController::class, 'delete'])->name('admin.amenity_types.delete');
     Route::post('/AmenityType', [AmenityTypeController::class, 'store'])->name('admin.amenity_types.store');
     Route::post('/AmenityType/update/{id}', [AmenityTypeController::class, 'update'])->name('admin.amenity_types.update');
+
+
+    Route::get('/Admin', [AdminController::class, 'index'])->name('admin.admins.list');
+    Route::get('/Admin/create', [AdminController::class, 'create'])->name('admin.admins.create');
+    Route::get('/Admin/edit', [AdminController::class, 'edit'])->name('admin.admins.edit');
+    Route::get('/Admin/delete/{id}', [AdminController::class, 'delete'])->name('admin.admins.delete');
+    Route::post('/Admin', [AdminController::class, 'store'])->name('admin.admins.store');
+    Route::post('/Admin/update/{id}', [AdminController::class, 'update'])->name('admin.admins.update');
+
 });

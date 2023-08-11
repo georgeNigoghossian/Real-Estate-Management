@@ -23,16 +23,14 @@ class ReportedClientRepository extends BaseRepository
         return ReportedClient::class;
     }
 
-    public function get_all($custom_cond = []){
-        if(count($custom_cond)>0){
-            $custom_cond= implode(' AND ', $custom_cond);
+    public function get_all($custom_cond = [], $perPage = 10) {
+        $query = ReportedClient::query();
 
-            $users = ReportedClient::whereRaw($custom_cond)->get();
-        }else{
-            $users = ReportedClient::all();
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
         }
 
-        return $users;
+        return $query->paginate($perPage);
     }
-
 }
