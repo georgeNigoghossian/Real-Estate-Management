@@ -19,13 +19,24 @@ class AgencyController extends AppController
         $this->agency_repository = $agency_repository;
     }
     /**
-     * Display a listing of the resource.
+     * Show the application dashboard.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $custom_cond = [];
+        if($request->is_blocked != "" ){
+            $custom_cond[] = "is_blocked = '$request->is_blocked'";
+        }
+        if($request->name != ""){
+            $custom_cond[] = "name LIKE '%$request->name%'";
+        }
+        $users = $this->agency_repository->get_all($custom_cond);
+
+        $users = $users->appends($request->query());
+
+        return view('admin.agency.list',compact('users'));
     }
 
     /**

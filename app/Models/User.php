@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Agency\Agency;
 use App\Models\Property\Property;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -92,6 +94,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function agency_requests(): HasMany
     {
         return $this->hasMany(AgencyRequest::class);
+    }
+
+    public function agency(): HasOne
+    {
+        return $this->hasOne(Agency::class, 'created_by');
     }
 
 

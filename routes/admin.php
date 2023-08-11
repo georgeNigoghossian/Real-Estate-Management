@@ -61,4 +61,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 
     Route::get('/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.verifyAgency');
+    Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
 });

@@ -56,6 +56,15 @@ class AgencyRepository extends BaseRepository
     {
         return Agency::where('id',$id)->update(['is_verified'=>1]);
     }
+    public function get_all($custom_cond = [], $perPage = 10) {
+        $query = User::query()->has('agency')->with('agency');
 
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
+        }
+
+        return $query->paginate($perPage);
+    }
 
 }
