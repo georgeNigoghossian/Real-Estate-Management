@@ -113,12 +113,12 @@ class AgencyController extends AppController
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Agency\Agency  $agency
-     * @return Response
+     * @return JsonResponse
      */
     public function verifyAgency($id)
     {
         $res = $this->agency_repository->verifyAgency($id);
-//        return $this->response(true, $res,  __("api.messages.show_agency_successfully"));
+        return $this->response(true, $res,  __("api.messages.verify_agency"));
     }
 
     public function promoteRequestStatus(Request $request)

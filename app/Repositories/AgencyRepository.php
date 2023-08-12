@@ -38,11 +38,11 @@ class AgencyRepository extends BaseRepository
             'user_id'=> $user->id
         ]);
         $agency = Agency::create([
-            'latitude'=>$data['latitude'],
-            'longitude'=>$data['longitude'],
-            'contact_info'=>null,
-            'created_by'=>$user->id,
-            'region_id'=>null,
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'contact_info' => null,
+            'created_by' => $user->id,
+            'region_id' => null,
         ]);
         $images = $data['files'];
         foreach ($images as $image) {
@@ -54,10 +54,16 @@ class AgencyRepository extends BaseRepository
 
     public function verifyAgency($id)
     {
-        return Agency::where('id',$id)->update(['is_verified'=>1]);
+        $agency = Agency::where('id', $id)->first();
+        $agency->creator()->update(['priority'=>5]);
+        return $agency->update(['is_verified' => 1]);
     }
-    public function get_all($custom_cond = [], $perPage = 10) {
-        $query = User::query()->has('agency')->with('agency');
+
+    public function get_all($custom_cond = [], $perPage = 10)
+    {
+        $query = User::query()->whereHas('agency', function ($query) {
+            $query->where('is_verified', '=', 1);
+        })->with('agency');
 
         if (count($custom_cond) > 0) {
             $custom_cond = implode(' AND ', $custom_cond);
@@ -66,12 +72,13 @@ class AgencyRepository extends BaseRepository
 
         return $query->paginate($perPage);
     }
+
     public function requestStatus($user)
     {
-        $agency = Agency::where('created_by','=', $user->id)->first();
-        if($agency){
+        $agency = Agency::where('created_by', '=', $user->id)->first();
+        if ($agency) {
             return $agency->status();
-        }else{
+        } else {
             return $user->AgencyRequestStatus();
         }
     }

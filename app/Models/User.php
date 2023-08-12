@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function AgencyRequestStatus(): string
     {
-        return ($this->agency_requests()->exists()) ? 'rejected' : 'No request submitted';
+        return ($this->agency_requests()->exists()) ? 'Rejected' : 'No request submitted';
     }
 
 }

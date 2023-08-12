@@ -50,6 +50,6 @@ class Agency extends Model implements HasMedia
 
     public function status(): string
     {
-        return ($this->is_verified) ? 'accepted' : 'pending';
+        return ($this->is_verified) ? 'Accepted' : 'Pending';
     }
 }
