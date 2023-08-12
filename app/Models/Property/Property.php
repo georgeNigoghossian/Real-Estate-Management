@@ -33,6 +33,7 @@ class Property extends Model implements HasMedia
         'region_id',
         'user_id',
         'status',
+        'service',
         'is_disabled',
     ];
 
