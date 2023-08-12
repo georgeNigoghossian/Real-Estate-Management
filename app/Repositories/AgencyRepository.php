@@ -33,10 +33,9 @@ class AgencyRepository extends BaseRepository
     public function promote($data, $user): Agency
     {
         $agency = Agency::create([
-            'name'=>$data['name'],
             'latitude'=>$data['latitude'],
             'longitude'=>$data['longitude'],
-            'contact_info'=>$data['contact_info'],
+            'contact_info'=>null,
             'created_by'=>$user->id,
             'region_id'=>$data['region_id'],
         ]);

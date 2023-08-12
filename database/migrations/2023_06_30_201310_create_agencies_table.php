@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->double('rate')->nullable()->default(0);
             $table->integer('is_verified')->nullable()->default(0);
             $table->decimal('latitude', 10, 8)->nullable();
