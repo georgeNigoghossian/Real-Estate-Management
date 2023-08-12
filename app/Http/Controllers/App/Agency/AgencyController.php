@@ -122,4 +122,11 @@ class AgencyController extends AppController
         $res = $this->agency_repository->verifyAgency($id);
 //        return $this->response(true, $res,  __("api.messages.show_agency_successfully"));
     }
+
+    public function promoteRequestStatus(Request $request)
+    {
+        $user = $request->user();
+        $status = $this->agency_repository->requestStatus($user);
+        return $this->response(true, ['status'=>$status],  __("api.messages.agency_request_status_retrieval"));
+    }
 }

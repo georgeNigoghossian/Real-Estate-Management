@@ -66,5 +66,15 @@ class AgencyRepository extends BaseRepository
 
         return $query->paginate($perPage);
     }
+    public function requestStatus($user)
+    {
+        $agency = Agency::where('created_by','=', $user->id)->first();
+        if($agency){
+            return $agency->status();
+        }else{
+            return $user->AgencyRequestStatus();
+        }
+    }
+
 
 }

@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::get('/agencies/request-status', [AgencyController::class, 'promoteRequestStatus'])->name('agencies.request-status.api');
     Route::apiResource('/agencies', AgencyController::class);
 });
 

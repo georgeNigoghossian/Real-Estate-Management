@@ -101,5 +101,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Agency::class, 'created_by');
     }
 
+    public function AgencyRequestStatus(): string
+    {
+        return ($this->agency_requests()->exists()) ? 'rejected' : 'No request submitted';
+    }
 
 }

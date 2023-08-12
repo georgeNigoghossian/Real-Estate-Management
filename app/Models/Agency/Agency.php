@@ -47,4 +47,9 @@ class Agency extends Model implements HasMedia
     {
         return Agency::where('is_verified', false)->get();
     }
+
+    public function status(): string
+    {
+        return ($this->is_verified) ? 'accepted' : 'pending';
+    }
 }
