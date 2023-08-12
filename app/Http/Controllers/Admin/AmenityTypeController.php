@@ -8,7 +8,7 @@ use App\Models\Amenity;
 use App\Models\Property\AmenityType;
 use App\Repositories\AmenityRepository;
 use Illuminate\Http\Request;
-
+use JsValidator;
 class AmenityTypeController extends AppController
 {
     private $amenityRepository;
@@ -34,14 +34,31 @@ class AmenityTypeController extends AppController
     public function create(){
 
         $amenity_types = $this->amenityRepository->get_all_amenity_types();
-        return view('admin.amenity_type.create',compact('amenity_types'));
+
+        $model = new AmenityType();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+        return view('admin.amenity_type.create',compact('amenity_types','jsValidator'));
     }
 
 
     public function store(Request $request){
 
+        $model = new AmenityType();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+
+            $request->validate($validation_rules);
+        }
+
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
         ];
         $amenity = $this->amenityRepository->storeAmityType($data);
 
@@ -55,14 +72,31 @@ class AmenityTypeController extends AppController
 
         $amenity_types = $this->amenityRepository->get_all_amenity_types();
         $amenity_type = AmenityType::find($request->id);
-        return view('admin.amenity_type.create',compact('amenity_types','amenity_type'));
+
+        $model = new AmenityType();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+        return view('admin.amenity_type.create',compact('amenity_types','amenity_type','jsValidator'));
     }
 
     public function update($id,Request $request){
 
+        $model = new AmenityType();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+
+            $request->validate($validation_rules);
+        }
 
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
         ];
 
         $amenity_type = AmenityType::find($id);

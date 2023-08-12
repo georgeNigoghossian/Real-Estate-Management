@@ -16,14 +16,29 @@
         </div>
         <div class="card-body">
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-black-50">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form role="form" action="{{$url}}" method="POST" id="amenityForm">
                 @csrf
-                <div class="input-group input-group-outline mb-3">
-                    <input type="text" class="form-control" placeholder="Name" name="name"
-                           value="{{isset($amenity) ? $amenity->name : ""}}">
+                <div class="input-group input-group-outline ">
+                    <input type="text" class="form-control" placeholder="Name (English)" name="name_en"
+                           value="{{isset($amenity) && isset($amenity->name_en)  ? $amenity->name_en : ""}}">
                 </div>
 
-                <div class="input-group input-group-static mb-4 ">
+                <div class="input-group input-group-outline mt-3">
+                    <input type="text" class="form-control" placeholder="Name (Arabic)" name="name_ar"
+                           value="{{isset($amenity) && isset($amenity->name_ar) ? $amenity->name_ar : ""}}">
+                </div>
+
+                <div class="input-group input-group-static mt-3 ">
                     <label for="exampleFormControlSelect1" class="ms-0">Amenity Type</label>
                     <select class="form-control" name="amenity_type">
                         <option value="" selected>Select Amenity Type</option>
@@ -34,6 +49,9 @@
                     </select>
                 </div>
 
+                <div class="input-group input-group-outline mt-3">
+                    <textarea placeholder="Description" class="form-control" name="description" rows="3">{{isset($amenity) && isset($amenity->description) ? $amenity->description : ""}}</textarea>
+                </div>
 
                 <div class="form-group">
                     <label for="document">Photo</label>
@@ -57,6 +75,10 @@
 @endsection
 
 @push('scripts')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    {!! $jsValidator->selector('#amenityForm') !!}
+
     <script>
         var uploadedDocumentMap = {};
         var myDropzone;
@@ -133,7 +155,9 @@
                         myDropzone.processQueue();
 
                     }else{
-                        submitForm();
+                        if (validateForm()) {
+                            submitForm();
+                        }
                     }
                 });
 
@@ -141,6 +165,19 @@
 
             }
         };
+
+
+        function validateForm() {
+
+            var isFormValid = $('#amenityForm').valid();
+
+
+            if (isFormValid) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         function submitForm() {
             $('#amenityForm').off('submit');

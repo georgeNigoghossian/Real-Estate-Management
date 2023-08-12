@@ -14,7 +14,8 @@ class Amenity extends Model
     use HasFactory;
 
     public $fillable = [
-        'name',
+        'name_en',
+        'name_ar',
         'description',
         'active',
         'amenity_type_id',
@@ -36,4 +37,11 @@ class Amenity extends Model
     {
         return $query->where('active',true);
     }
+
+    public $validation_rules = [
+        'name_en'=>'required',
+        'name_ar'=>'required',
+        'amenity_type'=>'required',
+        'document'=>'required',
+    ];
 }

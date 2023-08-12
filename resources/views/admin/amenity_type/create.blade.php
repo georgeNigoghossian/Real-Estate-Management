@@ -16,11 +16,26 @@
         </div>
         <div class="card-body">
 
-            <form role="form" action="{{$url}}" method="POST" id="amenityForm">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-black-50">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form role="form" action="{{$url}}" method="POST" id="amenityTypeForm">
                 @csrf
-                <div class="input-group input-group-outline mb-3">
-                    <input type="text" class="form-control" placeholder="Name" name="name"
-                           value="{{isset($amenity_type) ? $amenity_type->name : ""}}">
+                <div class="input-group input-group-outline ">
+                    <input type="text" class="form-control" placeholder="Name (English)" name="name_en"
+                           value="{{isset($amenity_type) && isset($amenity_type->name_en)? $amenity_type->name_en : ""}}">
+                </div>
+
+                <div class="input-group input-group-outline mt-3">
+                    <input type="text" class="form-control" placeholder="Name (Arabic)" name="name_ar"
+                           value="{{isset($amenity_type) && isset($amenity_type->name_ar)? $amenity_type->name_ar : ""}}">
                 </div>
 
 
@@ -37,5 +52,12 @@
     </div>
 
 @endsection
+
+@push('scripts')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    {!! $jsValidator->selector('#amenityTypeForm') !!}
+
+@endpush
 
 

@@ -7,6 +7,7 @@ use App\Models\Property\Tag;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use JsValidator;
 
 class TagController extends AppController
 {
@@ -42,10 +43,26 @@ class TagController extends AppController
             'commercial'=>'Commercial'
         ];
 
-        return view('admin.tag.create',compact('property_types'));
+        $model = new Tag();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+        return view('admin.tag.create',compact('property_types','jsValidator'));
     }
 
     public function store(Request $request){
+
+        $model = new Tag();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+
+            $request->validate($validation_rules);
+        }
 
         $path = 'uploads/Tag';
         if(isset($request->document[0])){
@@ -56,7 +73,8 @@ class TagController extends AppController
 
 
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
             'file'=>$path,
             'property_type'=>$request->property_type ,
         ];
@@ -101,9 +119,28 @@ class TagController extends AppController
         $tag = $this->tagRepository->get_single_tag($request->id);
 
 
-        return view('admin.tag.create',compact('property_types','tag'));
+        $model = new Tag();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+
+
+        return view('admin.tag.create',compact('property_types','tag','jsValidator'));
     }
     public function update($id,Request $request){
+
+        $model = new Tag();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+
+            $request->validate($validation_rules);
+        }
+
 
         $tag = Tag::find($id);
 //        $filePath = $tag->file;
@@ -124,7 +161,8 @@ class TagController extends AppController
         }
 
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
             'file'=>$path,
             'property_type'=>$request->property_type ,
         ];

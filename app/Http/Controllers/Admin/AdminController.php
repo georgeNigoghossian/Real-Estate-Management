@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
+use JsValidator;
 class AdminController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +55,17 @@ class AdminController extends Controller
         if (!Auth::user()->hasRole('superadmin')) {
             abort(404);
         }
-        return view('admin.admins.create');
+
+        $model = new Admin();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+        return view('admin.admins.create',compact('jsValidator'));
     }
 
     /**
@@ -66,6 +78,14 @@ class AdminController extends Controller
     {
         if (!Auth::user()->hasRole('superadmin')) {
             abort(404);
+        }
+
+        $model = new Admin();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+            $validation_rules['mobile']='required|unique:admins,mobile';
+
+            $request->validate($validation_rules);
         }
 
         $admin = Admin::create([
@@ -100,9 +120,22 @@ class AdminController extends Controller
      */
     public function edit(Request $request)
     {
+        if (!Auth::user()->hasRole('superadmin')) {
+            abort(404);
+        }
+
+        $model = new Admin();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+        unset($validation_rules['password']);
+        $jsValidator = JsValidator::make($validation_rules);
+
         $admin = Admin::find($request->id);
 
-        return view('admin.admins.create',compact('admin'));
+        return view('admin.admins.create',compact('admin','jsValidator'));
     }
 
     /**
@@ -114,6 +147,20 @@ class AdminController extends Controller
      */
     public function update($id,Request $request)
     {
+
+        if (!Auth::user()->hasRole('superadmin')) {
+            abort(404);
+        }
+
+        $model = new Admin();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+            $validation_rules['mobile']='required|unique:admins,mobile';
+            unset($validation_rules['password']);
+
+            $request->validate($validation_rules);
+        }
+
         $admin = Admin::find($id);
         $data = [
             'name' => $request->name,

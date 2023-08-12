@@ -5,6 +5,8 @@ use App\Http\Controllers\App\AppController;
 use App\Models\Property\Amenity;
 use App\Repositories\AmenityRepository;
 use Illuminate\Http\Request;
+use JsValidator;
+
 
 class AmenityController extends AppController
 {
@@ -32,11 +34,28 @@ class AmenityController extends AppController
     public function create(){
 
         $amenity_types = $this->amenityRepository->get_all_amenity_types();
-        return view('admin.amenity.create',compact('amenity_types'));
+
+        $model = new Amenity();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+        return view('admin.amenity.create',compact('amenity_types','jsValidator'));
     }
 
 
     public function store(Request $request){
+
+        $model = new Amenity();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+
+            $request->validate($validation_rules);
+        }
 
         $path = 'uploads/Amenity';
         if(isset($request->document[0])){
@@ -47,7 +66,9 @@ class AmenityController extends AppController
 
 
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
+            'description'=>$request->description,
             'file'=>$path,
             'amenity_type_id'=>$request->amenity_type ,
         ];
@@ -86,11 +107,26 @@ class AmenityController extends AppController
         $amenity_types = $this->amenityRepository->get_all_amenity_types();
         $amenity = Amenity::find($request->id);
 
-        return view('admin.amenity.create',compact('amenity_types','amenity'));
+        $model = new Amenity();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+
+        return view('admin.amenity.create',compact('amenity_types','amenity','jsValidator'));
     }
     public function update($id,Request $request){
 
+        $model = new Amenity();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
 
+            $request->validate($validation_rules);
+        }
 
         if(isset($request->document[0])){
             if(str_starts_with($request->document[0],"uploads/Amenity")){
@@ -105,7 +141,9 @@ class AmenityController extends AppController
         }
 
         $data = [
-            'name'=>$request->name,
+            'name_en'=>$request->name_en,
+            'name_ar'=>$request->name_ar,
+            'description'=>$request->description,
             'file'=>$path,
             'amenity_type_id'=>$request->amenity_type ,
         ];

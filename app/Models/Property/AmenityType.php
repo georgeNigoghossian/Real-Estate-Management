@@ -10,6 +10,12 @@ class AmenityType extends Model
     use HasFactory;
 
     public $fillable = [
-        'name',
+        'name_en',
+        'name_ar',
+    ];
+
+    public $validation_rules =[
+        'name_en'=>'required',
+        'name_ar'=>'required',
     ];
 }

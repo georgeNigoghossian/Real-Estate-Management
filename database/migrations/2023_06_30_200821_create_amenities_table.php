@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_ar');
             $table->string('description')->nullable();
             $table->integer('active')->nullable()->default('1');
             $table->string('file')->nullable();

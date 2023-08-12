@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
+use JsValidator;
 
 class LoginController extends Controller
 {
@@ -16,7 +17,14 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('admin.auth.login');
+        $validation_rules = [
+            'mobile'=>'required',
+            'password'=>'required',
+        ];
+
+        $jsValidator = JsValidator::make($validation_rules);
+
+        return view('admin.auth.login',compact('jsValidator'));
     }
 
     protected function attemptLogin(Request $request)

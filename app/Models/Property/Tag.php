@@ -10,7 +10,8 @@ class Tag extends Model
     use HasFactory;
 
     public $fillable = [
-        'name',
+        'name_en',
+        'name_ar',
         'active',
         'property_type',
         'num_of_properties',
@@ -18,5 +19,11 @@ class Tag extends Model
     ];
 
 
+    public $validation_rules = [
+        'name_en'=>'required',
+        'name_ar'=>'required',
+        'property_type'=>'required',
+        'document'=>'required',
+    ];
 
 }

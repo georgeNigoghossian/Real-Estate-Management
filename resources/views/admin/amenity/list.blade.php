@@ -11,8 +11,8 @@
             <table class="table align-items-center mb-0">
                 <thead>
                 <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name (English)</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name (Arabic)</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amenity Type</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Active</th>
                     <th></th>
@@ -26,7 +26,16 @@
                             <div class="d-flex px-2">
 
                                 <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">{{$amenity->name}}</h6>
+                                    <h6 class="mb-0 text-xs">{{$amenity->name_en}}</h6>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-flex px-2">
+
+                                <div class="my-auto">
+                                    <h6 class="mb-0 text-xs">{{$amenity->name_ar}}</h6>
                                 </div>
                             </div>
                         </td>

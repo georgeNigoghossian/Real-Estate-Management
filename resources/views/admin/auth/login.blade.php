@@ -35,14 +35,14 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.post_login') }}" role="form" class="text-start">
+                            <form method="POST" action="{{ route('admin.post_login') }}" role="form" class="text-start" id="loginForm">
                                 @csrf
-                                <div class="input-group input-group-outline my-3">
+                                <div class="input-group input-group-outline ">
 
                                     <input name="mobile" id="mobile" type="mobile" class="form-control"
                                            placeholder="{{ __('Mobile') }}">
                                 </div>
-                                <div class="input-group input-group-outline mb-3">
+                                <div class="input-group input-group-outline mt-3">
                                     <input name="password" type="password" class="form-control"
                                            placeholder="{{__('Password')}}">
                                 </div>
@@ -55,11 +55,11 @@
                                     <button type="submit"
                                             class="btn bg-gradient-primary w-100 my-4 mb-2">{{__('Login')}}</button>
                                 </div>
-                                <p class="mt-4 text-sm text-center">
-                                    Don't have an account?
-                                    <a href="{{ route('register') }}"
-                                       class="text-primary text-gradient font-weight-bold">Sign up</a>
-                                </p>
+{{--                                <p class="mt-4 text-sm text-center">--}}
+{{--                                    Don't have an account?--}}
+{{--                                    <a href="{{ route('register') }}"--}}
+{{--                                       class="text-primary text-gradient font-weight-bold">Sign up</a>--}}
+{{--                                </p>--}}
                             </form>
                         </div>
                     </div>
@@ -70,4 +70,12 @@
     </div>
 </main>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+{!! $jsValidator->selector('#loginForm') !!}
+
 </html>
+
+
+

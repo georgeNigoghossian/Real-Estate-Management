@@ -10,6 +10,8 @@ use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 class Admin extends  Authenticatable
 {
+
+    public $table="admins";
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
 
@@ -23,5 +25,12 @@ class Admin extends  Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    public $validation_rules = [
+        'name' => 'required',
+        'email' => 'required|email',
+        'mobile' => 'required',
+        'password' => 'required|min:3',
     ];
 }

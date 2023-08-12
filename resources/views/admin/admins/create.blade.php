@@ -16,25 +16,35 @@
         </div>
         <div class="card-body">
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-black-50">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form role="form" action="{{$url}}" method="POST" id="adminsForm">
                 @csrf
-                <div class="input-group input-group-outline mb-3">
+                <div class="input-group input-group-outline ">
                     <input type="text" class="form-control" placeholder="Name" name="name"
                            value="{{isset($admin) ? $admin->name : ""}}">
                 </div>
 
 
-                <div class="input-group input-group-outline mb-3">
+                <div class="input-group input-group-outline mt-3">
                     <input type="text" class="form-control" placeholder="Email" name="email"
                            value="{{isset($admin) ? $admin->email : ""}}">
                 </div>
 
-                <div class="input-group input-group-outline mb-3">
+                <div class="input-group input-group-outline mt-3">
                     <input type="text" class="form-control" placeholder="Mobile" name="mobile"
                            value="{{isset($admin) ? $admin->mobile : ""}}">
                 </div>
 
-                <div class="input-group input-group-outline mb-3">
+                <div class="input-group input-group-outline mt-3">
 
                     <input type="password" class="form-control" placeholder="Password" name="password"
                     >
@@ -57,4 +67,9 @@
 
 @endsection
 
+@push('scripts')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    {!! $jsValidator->selector('#adminsForm') !!}
+@endpush
 

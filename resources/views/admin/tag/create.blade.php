@@ -16,14 +16,29 @@
         </div>
         <div class="card-body">
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-black-50">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form role="form" action="{{$url}}" method="POST" id="tagForm">
                 @csrf
-                <div class="input-group input-group-outline mb-3">
-                    <input type="text" class="form-control" placeholder="Name" name="name"
-                           value="{{isset($tag) ? $tag->name : ""}}">
+                <div class="input-group input-group-outline">
+                    <input type="text" class="form-control" placeholder="Name (English)" name="name_en"
+                           value="{{isset($tag) && isset($tag->name_en) ? $tag->name_en : ""}}">
                 </div>
 
-                <div class="input-group input-group-static mb-4 ">
+                <div class="input-group input-group-outline mt-3">
+                    <input type="text" class="form-control" placeholder="Name (Arabic)" name="name_ar"
+                           value="{{isset($tag)  && isset($tag->name_en) ? $tag->name_ar : ""}}">
+                </div>
+
+                <div class="input-group input-group-static mt-3 ">
                     <label for="exampleFormControlSelect1" class="ms-0">Property Type</label>
                     <select class="form-control" name="property_type">
                         <option value="" selected>Select A Property Type</option>
@@ -56,6 +71,10 @@
 @endsection
 
 @push('scripts')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    {!! $jsValidator->selector('#tagForm') !!}
+
     <script>
         var uploadedDocumentMap = {};
         var myDropzone;
@@ -73,6 +92,7 @@
             autoProcessQueue: false,
             init: function () {
                 myDropzone = this;
+
 
                 @php
                     if(isset($tag)){
@@ -124,7 +144,7 @@
                 myDropzone.off('sending');
                 myDropzone.off('complete');
 
-                // Add a submit button event listener
+
                 $("#tagForm button[type='submit']").on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -132,7 +152,9 @@
                         myDropzone.processQueue();
 
                     }else{
-                        submitForm();
+                        if (validateForm()) {
+                            submitForm();
+                        }
                     }
                 });
 
@@ -140,6 +162,18 @@
 
             }
         };
+
+        function validateForm() {
+
+            var isFormValid = $('#tagForm').valid();
+
+
+            if (isFormValid) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         function submitForm() {
             $('#tagForm').off('submit');

@@ -164,6 +164,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -193,7 +195,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
     ])->toArray(),
 
 ];

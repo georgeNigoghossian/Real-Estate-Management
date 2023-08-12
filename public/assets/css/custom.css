@@ -25,3 +25,7 @@ body, html {
 .paginate-nav nav div:nth-child(2){
     text-align: center;
 }
+
+.alert-danger + form {
+    background-image:none !important;
+}
