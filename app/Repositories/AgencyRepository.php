@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Agency\Agency;
+use App\Models\AgencyRequest;
 use App\Models\File;
 use App\Models\User;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
@@ -32,17 +33,22 @@ class AgencyRepository extends BaseRepository
 
     public function promote($data, $user): Agency
     {
+        $request = AgencyRequest::create([
+            'reason'=> $data['reason'],
+            'user_id'=> $user->id
+        ]);
         $agency = Agency::create([
             'latitude'=>$data['latitude'],
             'longitude'=>$data['longitude'],
             'contact_info'=>null,
             'created_by'=>$user->id,
-            'region_id'=>$data['region_id'],
+            'region_id'=>null,
         ]);
         $images = $data['files'];
         foreach ($images as $image) {
             $agency->addMedia($image)->toMediaCollection('images');
         }
+        $agency->request = $request;
         return $agency;
     }
 

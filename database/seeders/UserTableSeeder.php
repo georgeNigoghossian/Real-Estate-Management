@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +22,12 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('password'),
             'sms_verified_at' => '2023-07-15 11:52:50',
             'mobile' => '+963932909535'
+        ]);
+        Admin::create([
+            'name' => 'Rita',
+            'email' => 'rita2@gmail.com',
+            'password' => Hash::make('password'),
+            'mobile' => '+963932909536'
         ]);
 
     }
