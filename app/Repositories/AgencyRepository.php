@@ -34,8 +34,8 @@ class AgencyRepository extends BaseRepository
     public function promote($data, $user): Agency
     {
         $request = AgencyRequest::create([
-            'reason'=> $data['reason'],
-            'user_id'=> $user->id
+            'reason' => $data['reason'],
+            'user_id' => $user->id
         ]);
         $agency = Agency::create([
             'latitude' => $data['latitude'],
@@ -63,6 +63,20 @@ class AgencyRepository extends BaseRepository
     {
         $query = User::query()->whereHas('agency', function ($query) {
             $query->where('is_verified', '=', 1);
+        })->with('agency');
+
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
+        }
+
+        return $query->paginate($perPage);
+    }
+
+    public function get_all_requests($custom_cond = [], $perPage = 10)
+    {
+        $query = User::query()->whereHas('agency', function ($query) {
+            $query->where('is_verified', '=', 0);
         })->with('agency');
 
         if (count($custom_cond) > 0) {

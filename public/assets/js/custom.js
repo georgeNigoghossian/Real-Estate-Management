@@ -156,5 +156,45 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('change', 'tr[data-user-id] .priority-field input', function (event) {
+        var $input = $(this);
+        var newPriority = $input.val().trim();
+        var userId = $input.closest('tr').data('user-id');
+
+
+        if (newPriority !== "") {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: routes.updatePriority,
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            userId: userId,
+                            newPriority: newPriority
+                        },
+                        success: function (response) {
+
+                            $input.closest('td.priority-field').html(newPriority);
+                        }
+                    });
+                } else {
+
+                    $input.val(newPriority);
+                }
+            });
+        }
+    });
+
 
 });

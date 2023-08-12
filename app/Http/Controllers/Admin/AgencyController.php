@@ -54,6 +54,31 @@ class AgencyController extends Controller
 
         return view('admin.agency.list', compact('users','breadcrumb'));
     }
+    public function requests_index(Request $request)
+    {
+
+        $custom_cond = [];
+        if ($request->name != "") {
+            $custom_cond[] = "name LIKE '%$request->name%'";
+        }
+        $users = $this->agency_repository->get_all_requests($custom_cond);
+
+        $users = $users->appends($request->query());
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Agency Requests",
+
+            ]
+        ];
+
+
+        return view('admin.agency.request_list', compact('users','breadcrumb'));
+    }
 
     /**
      * Show the form for creating a new resource.

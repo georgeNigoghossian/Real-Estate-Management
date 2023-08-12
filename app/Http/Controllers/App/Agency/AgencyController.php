@@ -38,6 +38,24 @@ class AgencyController extends AppController
     }
 
     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function requests_index(Request $request)
+    {
+        $custom_cond = [];
+        if($request->name != ""){
+            $custom_cond[] = "name LIKE '%$request->name%'";
+        }
+        $users = $this->agency_repository->get_all_requests($custom_cond);
+
+        $users = $users->appends($request->query());
+
+        return view('admin.agency.list',compact('users'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

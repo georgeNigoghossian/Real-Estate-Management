@@ -64,4 +64,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
+
+    Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');
 });
