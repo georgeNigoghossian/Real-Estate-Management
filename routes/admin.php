@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/User/switch-block', [UserController::class, 'switchBlock'])->name('admin.user.switch_block');
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');
+    Route::get('/User/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.user.verifyAgency');
+
     //Tag
     Route::get('/Tag', [TagController::class, 'index'])->name('admin.tags');
     Route::get('/Tag/create', [TagController::class, 'create'])->name('admin.tags.create');
@@ -60,6 +62,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/Admin/update/{id}', [AdminController::class, 'update'])->name('admin.admins.update');
 
 
-    Route::get('/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.verifyAgency');
+
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
 });

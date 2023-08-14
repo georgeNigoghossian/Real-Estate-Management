@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Tag;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use JsValidator;
 
-class TagController extends AppController
+class TagController extends Controller
 {
     private $tagRepository;
 

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Property;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Enums\StatusEnum;
 
-class UserController extends AppController
+class UserController extends Controller
 {
 
     private UserRepository $userRepository;
@@ -83,6 +84,19 @@ class UserController extends AppController
             'rented'=>'Rented',
         ];
 
+        foreach($properties as $property){
+            $property->getMedia();
+            $media = $property["media"]->toArray();
+
+            if(count($media) >0 ){
+                $photo_url = $media["0"]["original_url"];
+
+            }else{
+                $photo_url = asset('assets/img/home-decor-1.jpg');
+            }
+
+            $property["first_image_url"] = $photo_url;
+        }
 
         return view('admin.user.details',compact('user','properties','status'));
     }

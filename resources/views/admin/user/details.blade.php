@@ -32,11 +32,13 @@
 
                         <hr class="horizontal gray-light my-2">
                         <ul class="list-group">
-                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp;
+                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name: </strong> &nbsp;
                                 {{$user->name}}</li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp;
-                                {{$user->name}}</li>
+                                {{$user->mobile}}</li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp;{{$user->email}}</li>
+
+                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date Of Birth:</strong> &nbsp;{{$user->date_of_birth}}</li>
 
                             <li class="list-group-item border-0 ps-0 pb-0">
                                 <strong class="text-dark text-sm">Social:</strong> &nbsp;
@@ -66,7 +68,8 @@
                         <div class="card card-blog card-plain">
                             <div class="card-header p-0 mt-n4 mx-3">
                                 <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="{{asset('assets/img/home-decor-1.jpg')}}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+
+                                    <img src="{{$property["first_image_url"]}}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                                 </a>
                             </div>
                             <div class="card-body p-3">
@@ -80,7 +83,7 @@
                                     {{$property->description}}
                                 </p>
                                 <div class="d-flex align-items-center justify-content-between ">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Property</button>
 
                                 </div>
                             </div>

@@ -44,7 +44,7 @@
                             <div class="d-flex px-2">
 
                                 <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">{{$property_types[$tag->property_type]}}</h6>
+                                    <h6 class="mb-0 text-xs">{{isset($tag->property_type) ? $property_types[$tag->property_type] : ""}}</h6>
                                 </div>
                             </div>
                         </td>

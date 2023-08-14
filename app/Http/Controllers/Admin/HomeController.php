@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 
-class HomeController extends AppController
+class HomeController extends Controller
 {
     /**
      * Show the application dashboard.

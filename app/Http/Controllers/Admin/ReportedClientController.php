@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\ReportedClient;
 use App\Repositories\ReportedClientRepository;
 use Illuminate\Http\Request;
 
-class ReportedClientController extends AppController
+class ReportedClientController extends Controller
 {
     private $reportedClientRepository;
     public function __construct(ReportedClientRepository $reportedClientRepository)

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Property\Amenity;
 use App\Repositories\AmenityRepository;
 use Illuminate\Http\Request;
 use JsValidator;
 
 
-class AmenityController extends AppController
+class AmenityController extends Controller
 {
     private $amenityRepository;
 

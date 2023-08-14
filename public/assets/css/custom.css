@@ -29,3 +29,21 @@ body, html {
 .alert-danger + form {
     background-image:none !important;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent ;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #bec4c4;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
