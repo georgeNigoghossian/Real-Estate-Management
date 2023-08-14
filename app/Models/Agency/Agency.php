@@ -37,4 +37,19 @@ class Agency extends Model implements HasMedia
     {
         return $this->belongsTo(Region::class,'region_id');
     }
+
+    public static function getAgencies()
+    {
+        return Agency::where('is_verified', true)->get();
+    }
+
+    public static function getAgencyRequests()
+    {
+        return Agency::where('is_verified', false)->get();
+    }
+
+    public function status(): string
+    {
+        return ($this->is_verified) ? 'accepted' : 'pending';
+    }
 }

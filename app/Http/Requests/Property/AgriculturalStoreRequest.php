@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Property;
 
+use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -23,8 +24,10 @@ class AgriculturalStoreRequest extends FormRequest
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['string'],
+            'water_sources'=> ['integer','min:0'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
+            'service' =>[Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
             'specialAttributes' => ['string'],
         ];

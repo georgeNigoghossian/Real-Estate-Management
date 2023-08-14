@@ -53,12 +53,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'i
 Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::get('/show', [PropertyController::class, 'display_property'])->name('property.displayProperty.api');
     Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.deleteProperty.api');
-    Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.saveProperty.api');
     Route::post('/enable', [PropertyController::class, 'enableProperty'])->name('property.enableProperty.api');
     Route::post('/disable', [PropertyController::class, 'disableProperty'])->name('property.disableProperty.api');
     Route::put('/{property}/change-status', [PropertyController::class, 'changeStatus']);
     Route::get('/my-properties', [PropertyController::class, 'myProperties']);
+
+    //Favorites
     Route::get('/my-favorites', [PropertyController::class, 'myFavorites']);
+    Route::get('/{property}/is-favorite', [PropertyController::class, 'isFavorite']);
+    Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.saveProperty.api');
 
 });
 
@@ -79,11 +82,12 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
 });
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
+    Route::get('/agencies/request-status', [AgencyController::class, 'promoteRequestStatus'])->name('agencies.request-status.api');
     Route::apiResource('/agencies', AgencyController::class);
 });
 
 
 //Notifications
 
-Route::post('/send-notification', [FireBaseNotificationController::class, 'send']);
+Route::post('/send-notification', [FireBaaseNotificationController::class, 'send']);
 Route::get('users/{user}/notifications', [NotificationController::class, 'myNotifications']);

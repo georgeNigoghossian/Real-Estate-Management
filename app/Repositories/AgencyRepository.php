@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Agency\Agency;
+use App\Models\AgencyRequest;
 use App\Models\File;
 use App\Models\User;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
@@ -32,23 +33,47 @@ class AgencyRepository extends BaseRepository
 
     public function promote($data, $user): Agency
     {
+        $request = AgencyRequest::create([
+            'reason'=> $data['reason'],
+            'user_id'=> $user->id
+        ]);
         $agency = Agency::create([
             'latitude'=>$data['latitude'],
             'longitude'=>$data['longitude'],
             'contact_info'=>null,
             'created_by'=>$user->id,
-            'region_id'=>$data['region_id'],
+            'region_id'=>null,
         ]);
         $images = $data['files'];
         foreach ($images as $image) {
             $agency->addMedia($image)->toMediaCollection('images');
         }
+        $agency->request = $request;
         return $agency;
     }
 
     public function verifyAgency($id)
     {
         return Agency::where('id',$id)->update(['is_verified'=>1]);
+    }
+    public function get_all($custom_cond = [], $perPage = 10) {
+        $query = User::query()->has('agency')->with('agency');
+
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
+        }
+
+        return $query->paginate($perPage);
+    }
+    public function requestStatus($user)
+    {
+        $agency = Agency::where('created_by','=', $user->id)->first();
+        if($agency){
+            return $agency->status();
+        }else{
+            return $user->AgencyRequestStatus();
+        }
     }
 
 

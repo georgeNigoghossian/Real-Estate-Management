@@ -19,13 +19,24 @@ class AgencyController extends AppController
         $this->agency_repository = $agency_repository;
     }
     /**
-     * Display a listing of the resource.
+     * Show the application dashboard.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $custom_cond = [];
+        if($request->is_blocked != "" ){
+            $custom_cond[] = "is_blocked = '$request->is_blocked'";
+        }
+        if($request->name != ""){
+            $custom_cond[] = "name LIKE '%$request->name%'";
+        }
+        $users = $this->agency_repository->get_all($custom_cond);
+
+        $users = $users->appends($request->query());
+
+        return view('admin.agency.list',compact('users'));
     }
 
     /**
@@ -110,5 +121,12 @@ class AgencyController extends AppController
     {
         $res = $this->agency_repository->verifyAgency($id);
 //        return $this->response(true, $res,  __("api.messages.show_agency_successfully"));
+    }
+
+    public function promoteRequestStatus(Request $request)
+    {
+        $user = $request->user();
+        $status = $this->agency_repository->requestStatus($user);
+        return $this->response(true, ['status'=>$status],  __("api.messages.agency_request_status_retrieval"));
     }
 }

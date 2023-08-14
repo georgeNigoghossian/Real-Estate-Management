@@ -7,6 +7,8 @@ use App\Models\Property\SavedProperty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 
 class PropertyRepository extends BaseRepository
@@ -122,21 +124,15 @@ class PropertyRepository extends BaseRepository
         $latitude = $data['latitude'];
         $longitude = $data['longitude'];
         $radius = $data['radius'];
-        if (array_key_exists('property_type', $data)) {
-            $property_type = $data['property_type'];
-            $properties = Property::whereRaw(DB::raw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($latitude))+COS(RADIANS(latitude))*COS(RADIANS($latitude))*COS(RADIANS(longitude)-RADIANS($longitude)))*6380 < ?"), [$radius])
-                ->whereHas($property_type)
-                ->with('tags')
-                ->with('amenities')
-                ->with('user')
-                ->get();
-        } else {
-            $properties = Property::whereRaw(DB::raw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($latitude))+COS(RADIANS(latitude))*COS(RADIANS($latitude))*COS(RADIANS(longitude)-RADIANS($longitude)))*6380 < ?"), [$radius])
-                ->with('tags')
-                ->with('amenities')
-                ->with('user')
-                ->get();
-        }
+        $properties = QueryBuilder::for(Property::class)
+            ->whereRaw(DB::raw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($latitude))+COS(RADIANS(latitude))*COS(RADIANS($latitude))*COS(RADIANS(longitude)-RADIANS($longitude)))*6380 < ?"), [$radius])
+            ->allowedFilters([
+                AllowedFilter::scope('property-type', 'PropertyType'),
+                AllowedFilter::scope('property-service', 'PropertyService'),
+            ])
+            ->with('tags', 'amenities', 'user', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
+            ->get();
+
         return $properties;
     }
 }

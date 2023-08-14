@@ -16,6 +16,7 @@ class Agricultural extends Model
     public $fillable = [
         'property_id',
         'specialAttributes',
+        'water_sources'
     ];
     protected $casts = [
         'specialAttributes' => 'array',

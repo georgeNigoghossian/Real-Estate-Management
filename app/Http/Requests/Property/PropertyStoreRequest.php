@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Property;
 
+use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,7 @@ class PropertyStoreRequest extends FormRequest
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
+            'service' =>[Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
         ];
     }

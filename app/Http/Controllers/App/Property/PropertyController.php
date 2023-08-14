@@ -45,7 +45,6 @@ class PropertyController extends AppController
         $properties = QueryBuilder::for(Property::class)
             ->with('tags', 'amenities', 'user', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
             ->allowedFilters([
-                ...$columns,
                 AllowedFilter::scope('term', 'Search'),
                 AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
                 AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
@@ -55,7 +54,6 @@ class PropertyController extends AppController
                 AllowedFilter::scope('property-service', 'PropertyService'),
                 AllowedFilter::scope('city', 'City'),
                 AllowedFilter::scope('country', 'Country'),
-
             ])
             ->allowedSorts([
                 AllowedSort::custom('created-at', new CreatedAtSort, 'properties'),
@@ -250,8 +248,13 @@ class PropertyController extends AppController
             ->with('property.region.city.country')
             ->paginate($request->per_page);
         return $this->response(true, $properties, "My favorites");
+    }
 
-
+    public function isFavorite(Property $property): JsonResponse
+    {
+        $saved = SavedProperty::where('property_id', $property->id)->where('user_id', auth()->user()->id)->first();
+        if ($saved) return $this->response(true, true, "saved");
+        return $this->response(true, false, "not saved");
     }
 
 
