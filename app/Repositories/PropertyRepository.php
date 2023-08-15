@@ -40,6 +40,18 @@ class PropertyRepository extends BaseRepository
         return $property;
     }
 
+    public function get_all($custom_cond = [], $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $query = Property::query()->with('user');
+
+        if (count($custom_cond) > 0) {
+            $custom_cond = implode(' AND ', $custom_cond);
+            $query = $query->whereRaw($custom_cond);
+        }
+
+        return $query->paginate($perPage);
+    }
+
     public function show(Property $property): Property
     {
         $property->getMedia();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AgencyController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
 use \App\Http\Controllers\Admin\UserController;
@@ -9,7 +10,7 @@ use \App\Http\Controllers\Admin\TagController;
 use \App\Http\Controllers\Admin\AmenityController;
 use \App\Http\Controllers\Admin\AmenityTypeController;
 use \App\Http\Controllers\Admin\AdminController;
-use \App\Http\Controllers\Admin\AgencyController;
+use \App\Http\Controllers\Admin\PropertyController;
 
 Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.post_login');
@@ -64,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
+    Route::get('/Property', [PropertyController::class, 'index'])->name('admin.property.index');
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');
 });

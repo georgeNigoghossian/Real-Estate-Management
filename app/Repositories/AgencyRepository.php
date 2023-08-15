@@ -59,7 +59,7 @@ class AgencyRepository extends BaseRepository
         return $agency->update(['is_verified' => 1]);
     }
 
-    public function get_all($custom_cond = [], $perPage = 10)
+    public function get_all($custom_cond = [], $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator|array|\LaravelIdea\Helper\App\Models\_IH_User_C|\Illuminate\Pagination\LengthAwarePaginator
     {
         $query = User::query()->whereHas('agency', function ($query) {
             $query->where('is_verified', '=', 1);
@@ -73,7 +73,7 @@ class AgencyRepository extends BaseRepository
         return $query->paginate($perPage);
     }
 
-    public function get_all_requests($custom_cond = [], $perPage = 10)
+    public function get_all_requests($custom_cond = [], $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator|array|\LaravelIdea\Helper\App\Models\_IH_User_C|\Illuminate\Pagination\LengthAwarePaginator
     {
         $query = User::query()->whereHas('agency', function ($query) {
             $query->where('is_verified', '=', 0);
