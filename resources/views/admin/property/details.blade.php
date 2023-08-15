@@ -132,7 +132,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <div id="map" style="height: 500px;"></div>
+                            <div id="map" class="rounded" style="height: 500px;"></div>
                         </div>
                     </div>
                 </div>

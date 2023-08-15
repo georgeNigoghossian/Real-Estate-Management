@@ -13,4 +13,12 @@
 
     @include('admin.layouts.partials.head_scripts')
     @stack('head_scripts')
+
+    <style>
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+
 </head>

@@ -33,7 +33,7 @@
                         <td class="priority-field w-25">
                             {{$property->price}}
                         </td>
-                        <td class="priority-field w-25">
+                        <td class="w-25">
                             {{$property->user->name}}
                         </td>
 

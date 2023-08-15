@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        @if (stripos($_SERVER['REQUEST_URI'], '/BlockedUser' )===false)
+        @if (stripos($_SERVER['REQUEST_URI'], '/DisabledProperties' )===false)
             <div class="col-md-3">
 
                 <div class="input-group input-group-static mb-4 ">
