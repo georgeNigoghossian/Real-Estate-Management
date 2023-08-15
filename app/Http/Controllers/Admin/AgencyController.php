@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Agency\PromoteToAgencyRequest;
 use App\Models\Agency\Agency;
 use App\Repositories\AgencyRepository;
@@ -27,6 +28,7 @@ class AgencyController extends Controller
      */
     public function index(Request $request)
     {
+
         $custom_cond = [];
         if ($request->is_blocked != "") {
             $custom_cond[] = "is_blocked = '$request->is_blocked'";
@@ -38,7 +40,19 @@ class AgencyController extends Controller
 
         $users = $users->appends($request->query());
 
-        return view('admin.agency.list', compact('users'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Agency",
+
+            ]
+        ];
+
+
+        return view('admin.agency.list', compact('users','breadcrumb'));
     }
 
     /**

@@ -36,7 +36,7 @@
 
 
                         <td class="align-middle">
-                            <button class="btn btn-icon btn-2 btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#editModal-{{$reportedClientRow->id}}">
+                            <button class="btn btn-icon btn-2 btn-primary px-3" type="button" data-bs-toggle="modal" data-bs-target="#editModal-{{$reportedClientRow->id}}">
                                 <span class="btn-inner--icon"><i class="material-icons">edit</i></span>
                             </button>
 

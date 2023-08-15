@@ -36,7 +36,18 @@ class UserController extends Controller
 
         $users = $users->appends($request->query());
 
-        return view('admin.user.list',compact('users'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Users",
+
+            ]
+        ];
+
+        return view('admin.user.list',compact('users','breadcrumb'));
     }
 
     public function blocked_users(Request $request)
@@ -51,7 +62,18 @@ class UserController extends Controller
         $users = $this->userRepository->get_all($custom_cond);
 
         $users =$users->appends($request->query());
-        return view('admin.user.blocked_list',compact('users'));
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Blocked Users",
+
+            ]
+        ];
+        return view('admin.user.blocked_list',compact('users','breadcrumb'));
     }
 
     public function switchBlock(Request $request){
@@ -98,6 +120,19 @@ class UserController extends Controller
             $property["first_image_url"] = $photo_url;
         }
 
-        return view('admin.user.details',compact('user','properties','status'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Users",
+                'url'=>route('admin.user.list')
+            ],
+            '2'=>[
+                'title'=>"Details",
+            ]
+        ];
+        return view('admin.user.details',compact('user','properties','status','breadcrumb'));
     }
 }

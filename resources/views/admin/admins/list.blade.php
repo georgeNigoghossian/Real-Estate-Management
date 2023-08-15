@@ -37,7 +37,7 @@
 
 
                         <td class="text-end">
-                            <a class="btn btn-icon btn-2 btn-primary text-end"
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3"
                                href="{{route('admin.admins.edit',['id'=>$admin->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">edit</i></span>
                             </a>
@@ -45,7 +45,7 @@
 
 
                         <td class="text-start">
-                            <a class="btn btn-icon btn-2 btn-primary text-end"
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3"
                                href="{{route('admin.admins.delete',['id'=>$admin->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
                             </a>

@@ -32,7 +32,17 @@ class TagController extends Controller
             'agricultural'=>'Agricultural',
             'commercial'=>'Commercial'
         ];
-        return view('admin.tag.list',compact('tags','property_types'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Tags",
+
+            ]
+        ];
+        return view('admin.tag.list',compact('tags','property_types','breadcrumb'));
     }
 
     public function create(){
@@ -53,7 +63,20 @@ class TagController extends Controller
 
         $jsValidator = JsValidator::make($validation_rules);
 
-        return view('admin.tag.create',compact('property_types','jsValidator'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Tags",
+                'url'=>route('admin.tags')
+            ],
+            '2'=>[
+                'title'=>"Create Tag",
+            ]
+        ];
+        return view('admin.tag.create',compact('property_types','jsValidator','breadcrumb'));
     }
 
     public function store(Request $request){
@@ -129,9 +152,21 @@ class TagController extends Controller
 
         $jsValidator = JsValidator::make($validation_rules);
 
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Tags",
+                'url'=>route('admin.tags')
+            ],
+            '2'=>[
+                'title'=>"Edit Tag",
+            ]
+        ];
 
-
-        return view('admin.tag.create',compact('property_types','tag','jsValidator'));
+        return view('admin.tag.create',compact('property_types','tag','jsValidator','breadcrumb'));
     }
     public function update($id,Request $request){
 

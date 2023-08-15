@@ -14,6 +14,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+
+            ],
+        ];
+        return view('admin.home',compact('breadcrumb'));
     }
 }

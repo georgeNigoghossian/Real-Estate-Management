@@ -56,13 +56,13 @@
                         </td>
 
                         <td class="text-end">
-                            <a class="btn btn-icon btn-2 btn-primary text-end" href="{{route('admin.amenities.edit',['id'=>$amenity->id])}}">
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3" href="{{route('admin.amenities.edit',['id'=>$amenity->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">edit</i></span>
                             </a>
                         </td>
 
                         <td class="text-start">
-                            <a class="btn btn-icon btn-2 btn-primary text-end" href="{{route('admin.amenities.delete',['id'=>$amenity->id])}}">
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3" href="{{route('admin.amenities.delete',['id'=>$amenity->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
                             </a>
                         </td>

@@ -9,12 +9,12 @@
 
 
         <div class="col-md-3 align-self-end" >
-            <button class="btn btn-outline-primary" type="submit">
+            <button class="btn btn-outline-primary px-3" type="submit">
                 <span class="material-icons">
                 search
                 </span></button>
 
-            <button class="btn btn-outline-primary" id = "refresh">
+            <button class="btn btn-outline-primary px-3" id = "refresh">
                 <span class="material-icons">
                 refresh
                 </span></button>

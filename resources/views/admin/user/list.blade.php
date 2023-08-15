@@ -36,7 +36,7 @@
 
 
                         <td class="align-middle">
-                            <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.user.details',$user->id)}}" >
+                            <a class="btn btn-icon btn-2 btn-primary px-3" href="{{route('admin.user.details',$user->id)}}" >
                                 <span class="btn-inner--icon"><i class="material-icons">list</i></span>
                             </a>
                         </td>

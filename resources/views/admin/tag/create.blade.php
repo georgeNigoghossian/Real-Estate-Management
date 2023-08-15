@@ -10,10 +10,10 @@
         }
     @endphp
     <div class="card ">
-        <div class="card-header">
-            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.tags')}}">Tags</a></h4>
-            <h4 class="font-weight-bolder d-inline-block"> / {{isset($tag) ? "Edit" : "Create" }} Tag</h4>
-        </div>
+{{--        <div class="card-header">--}}
+{{--            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.tags')}}">Tags</a></h4>--}}
+{{--            <h4 class="font-weight-bolder d-inline-block"> / {{isset($tag) ? "Edit" : "Create" }} Tag</h4>--}}
+{{--        </div>--}}
         <div class="card-body">
 
             @if ($errors->any())

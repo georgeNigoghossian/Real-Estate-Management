@@ -10,10 +10,10 @@
         }
     @endphp
     <div class="card ">
-        <div class="card-header">
-            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.amenity_types')}}">Amenity Types</a></h4>
-            <h4 class="font-weight-bolder d-inline-block"> / {{isset($amenity_type) ? "Edit" : "Create" }} Amenity Type</h4>
-        </div>
+{{--        <div class="card-header">--}}
+{{--            <h4 class="font-weight-bolder d-inline-block"><a href="{{route('admin.amenity_types')}}">Amenity Types</a></h4>--}}
+{{--            <h4 class="font-weight-bolder d-inline-block"> / {{isset($amenity_type) ? "Edit" : "Create" }} Amenity Type</h4>--}}
+{{--        </div>--}}
         <div class="card-body">
 
             @if ($errors->any())

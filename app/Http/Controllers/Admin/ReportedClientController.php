@@ -26,9 +26,18 @@ class ReportedClientController extends Controller
         $users = $this->reportedClientRepository->get_all($custom_cond);
 
         $users =$users->appends($request->query());
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Reported Users",
 
+            ]
+        ];
 
-        return view('admin.repoted_client.list',compact('users'));
+        return view('admin.repoted_client.list',compact('users','breadcrumb'));
     }
 
     /**

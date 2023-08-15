@@ -28,7 +28,17 @@ class AmenityController extends Controller
 
         $amenities =$amenities->appends($request->query());
 
-        return view('admin.amenity.list',compact('amenities'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenities",
+
+            ]
+        ];
+        return view('admin.amenity.list',compact('amenities','breadcrumb'));
     }
 
 
@@ -45,7 +55,20 @@ class AmenityController extends Controller
 
         $jsValidator = JsValidator::make($validation_rules);
 
-        return view('admin.amenity.create',compact('amenity_types','jsValidator'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenities",
+                'url'=>route('admin.amenities')
+            ],
+            '2'=>[
+                'title'=>"Create Amenity",
+            ]
+        ];
+        return view('admin.amenity.create',compact('amenity_types','jsValidator','breadcrumb'));
     }
 
 
@@ -117,8 +140,20 @@ class AmenityController extends Controller
 
         $jsValidator = JsValidator::make($validation_rules);
 
-
-        return view('admin.amenity.create',compact('amenity_types','amenity','jsValidator'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenities",
+                'url'=>route('admin.amenities')
+            ],
+            '2'=>[
+                'title'=>"Edit Amenity",
+            ]
+        ];
+        return view('admin.amenity.create',compact('amenity_types','amenity','jsValidator','breadcrumb'));
     }
     public function update($id,Request $request){
 

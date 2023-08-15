@@ -41,7 +41,18 @@ class AdminController extends Controller
 
         $admins = $query->paginate(10)->appends($request->query());
 
-        return view('admin.admins.list', compact('admins'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Admins",
+
+            ]
+        ];
+
+        return view('admin.admins.list', compact('admins','breadcrumb'));
     }
 
 
@@ -65,7 +76,21 @@ class AdminController extends Controller
 
         $jsValidator = JsValidator::make($validation_rules);
 
-        return view('admin.admins.create',compact('jsValidator'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Admins",
+                'url'=>route('admin.admins.list')
+            ],
+            '2'=>[
+                'title'=>"Create Admin",
+            ]
+        ];
+
+        return view('admin.admins.create',compact('jsValidator','breadcrumb'));
     }
 
     /**
@@ -135,7 +160,22 @@ class AdminController extends Controller
 
         $admin = Admin::find($request->id);
 
-        return view('admin.admins.create',compact('admin','jsValidator'));
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Admins",
+                'url'=>route('admin.admins.list')
+            ],
+            '2'=>[
+                'title'=>"Edit Admin",
+            ]
+        ];
+
+        return view('admin.admins.create',compact('admin','jsValidator','breadcrumb'));
     }
 
     /**

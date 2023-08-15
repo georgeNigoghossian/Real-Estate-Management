@@ -27,7 +27,17 @@ class AmenityTypeController extends AppController
         $amenity_types = $this->amenityRepository->get_all_amenity_types($custom_cond);
         $amenity_types =$amenity_types->appends($request->query());
 
-        return view('admin.amenity_type.list',compact('amenity_types'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenity Types",
+
+            ]
+        ];
+        return view('admin.amenity_type.list',compact('amenity_types','breadcrumb'));
     }
 
 
@@ -43,7 +53,21 @@ class AmenityTypeController extends AppController
         }
 
         $jsValidator = JsValidator::make($validation_rules);
-        return view('admin.amenity_type.create',compact('amenity_types','jsValidator'));
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenity Types",
+                'url'=>route('admin.amenity_types')
+            ],
+            '2'=>[
+                'title'=>"Create Amenity Type",
+            ]
+        ];
+        return view('admin.amenity_type.create',compact('amenity_types','jsValidator','breadcrumb'));
     }
 
 
@@ -82,7 +106,20 @@ class AmenityTypeController extends AppController
 
         $jsValidator = JsValidator::make($validation_rules);
 
-        return view('admin.amenity_type.create',compact('amenity_types','amenity_type','jsValidator'));
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Amenity Types",
+                'url'=>route('admin.amenity_types')
+            ],
+            '2'=>[
+                'title'=>"Edit Amenity Type",
+            ]
+        ];
+        return view('admin.amenity_type.create',compact('amenity_types','amenity_type','jsValidator','breadcrumb'));
     }
 
     public function update($id,Request $request){
