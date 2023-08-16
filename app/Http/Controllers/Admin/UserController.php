@@ -133,6 +133,12 @@ class UserController extends Controller
                 'title'=>"Details",
             ]
         ];
-        return view('admin.user.details',compact('user','properties','status','breadcrumb'));
+
+        $reportedHistory=[];
+        if($user->is_blocked == 1){
+            $reportedHistory = $user->reportedHistory;
+
+        }
+        return view('admin.user.details',compact('reportedHistory','user','properties','status','breadcrumb'));
     }
 }

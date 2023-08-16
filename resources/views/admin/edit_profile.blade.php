@@ -2,13 +2,7 @@
 
 @section('content')
 
-    @php
-        if(isset($admin)){
-            $url = route('admin.admins.update',['id'=>$admin->id]);
-        }else{
-            $url = route('admin.admins.store');
-        }
-    @endphp
+
     <div class="card ">
 
         <div class="card-body">
@@ -23,7 +17,7 @@
                 </div>
             @endif
 
-            <form role="form" action="{{$url}}" method="POST" id="adminsForm">
+            <form role="form" action="{{route('admin.update_profile',$admin->id)}}" method="POST" id="adminsForm">
                 @csrf
                 <div class="input-group input-group-outline ">
                     <input type="text" class="form-control" placeholder="Name" name="name"
@@ -54,8 +48,7 @@
                     <button type="submit"
                             class="btn btn-lg bg-gradient-primary btn-lg mt-4 mb-0 align-self-end ms-auto w-10">Save
                     </button>
-                    <a href="{{ route('admin.admins.list') }}" type="button"
-                       class="btn btn-lg bg-gradient-secondary btn-lg mt-4 mb-0 align-self-end ms-auto w-">Cancel</a>
+
                 </div>
 
             </form>
@@ -67,6 +60,6 @@
 @push('scripts')
 
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
-    {!! $jsValidator->selector('#adminsForm') !!}
+    {!! $jsValidator->selector('#editProfileForm') !!}
 @endpush
 

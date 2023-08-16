@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AgencyController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
 use \App\Http\Controllers\Admin\UserController;
@@ -11,6 +10,8 @@ use \App\Http\Controllers\Admin\AmenityController;
 use \App\Http\Controllers\Admin\AmenityTypeController;
 use \App\Http\Controllers\Admin\AdminController;
 use \App\Http\Controllers\Admin\PropertyController;
+use \App\Http\Controllers\Admin\AgencyController;
+use \App\Http\Controllers\Admin\NotificationController;
 
 Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.post_login');
@@ -68,4 +69,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/Property', [PropertyController::class, 'index'])->name('admin.property.index');
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');
+
+    Route::get('/Notifaction/create', [NotificationController::class, 'create'])->name('admin.notification.create');
+    Route::post('/Notifaction/send', [NotificationController::class, 'send'])->name('admin.notification.send');
+
+    Route::get('/edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
+    Route::post('/update_profile/{id}', [AdminController::class, 'update_profile'])->name('admin.update_profile');
 });

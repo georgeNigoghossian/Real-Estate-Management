@@ -195,7 +195,7 @@ class AdminController extends Controller
         $model = new Admin();
         if (isset($model->validation_rules) && is_array($model->validation_rules)) {
             $validation_rules = $model->validation_rules;
-            $validation_rules['mobile']='required|unique:admins,mobile';
+            $validation_rules['mobile']='required|unique:admins,mobile,'.$id;
             unset($validation_rules['password']);
 
             $request->validate($validation_rules);
@@ -238,4 +238,60 @@ class AdminController extends Controller
 
         $admin->assignRole($superadminRole);
     }
+
+    public function edit_profile(){
+        $model = new Admin();
+
+        $validation_rules = [];
+        if(isset($model->validation_rules) && count($model->validation_rules)>0){
+            $validation_rules = $model->validation_rules;
+        }
+        unset($validation_rules['password']);
+        $jsValidator = JsValidator::make($validation_rules);
+
+        $admin = Admin::find(auth()->user()->id);
+
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Edit Profile",
+            ]
+        ];
+
+        return view('admin.edit_profile',compact('admin','jsValidator','breadcrumb'));
+
+    }
+
+    public function update_profile($id,Request $request)
+    {
+
+
+        $model = new Admin();
+        if (isset($model->validation_rules) && is_array($model->validation_rules)) {
+            $validation_rules = $model->validation_rules;
+            $validation_rules['mobile']='required|unique:admins,mobile,'.$id;
+            unset($validation_rules['password']);
+
+            $request->validate($validation_rules);
+        }
+
+        $admin = Admin::find($id);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+        ];
+
+        if($request->password != ""){
+            $data["password"]= bcrypt($request->password);
+        }
+        $admin = $admin->update($data);
+
+        return redirect()->back();
+    }
+
 }

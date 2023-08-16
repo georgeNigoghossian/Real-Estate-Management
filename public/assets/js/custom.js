@@ -14,33 +14,49 @@ $(document).ready(function () {
 
     $(".blockSwitch").on('change', function () {
         var id = $(this).attr('data-id');
-
         var is_blocked;
+
         if ($(this).is(':checked')) {
             is_blocked = 1;
         } else {
             is_blocked = 0;
         }
 
-        $.ajax({
+        var checkbox = $(this); // Store the checkbox element
 
-            url: routes.switchBlock,
-            type: 'POST',
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            data: {
-                'is_blocked': is_blocked,
-                'id': id
-            },
-            success: function (data) {
+        if (!checkbox.data('initialClick')) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: routes.switchBlock,
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            'is_blocked': is_blocked,
+                            'id': id
+                        },
 
-            },
+                    });
+                } else {
+                    checkbox.data('initialClick', true);
+                    checkbox.trigger('click');
+                }
+            })
+        } else {
+            checkbox.removeData('initialClick');
+        }
+    });
 
-        });
-
-    })
 
 
     $(".tagActive").on('change', function () {
@@ -197,4 +213,23 @@ $(document).ready(function () {
     });
 
 
+});
+$(document).ready(function(){
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+
+        dots:true,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:5
+            }
+        }
+    })
 });
