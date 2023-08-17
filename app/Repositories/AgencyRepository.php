@@ -6,6 +6,7 @@ use App\Models\Agency\Agency;
 use App\Models\AgencyRequest;
 use App\Models\File;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -51,6 +52,7 @@ class AgencyRepository extends BaseRepository
             $agency->addMedia($image)->toMediaCollection('images');
         }
         $agency->request = $request;
+        DB::table('agency_request_agency')->insert(['agency_id'=>$agency->id, 'agency_request_id'=>$request->id]);
         return $agency;
     }
 
@@ -59,6 +61,11 @@ class AgencyRepository extends BaseRepository
         $agency = Agency::where('id', $id)->first();
         $agency->creator()->update(['priority'=>5]);
         return $agency->update(['is_verified' => 1]);
+    }
+
+    public function rejectAgency($id)
+    {
+        return Agency::where('id', $id)->delete();
     }
 
     public function get_all($custom_cond = [], $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator|array|\LaravelIdea\Helper\App\Models\_IH_User_C|\Illuminate\Pagination\LengthAwarePaginator
@@ -79,7 +86,7 @@ class AgencyRepository extends BaseRepository
     {
         $query = User::query()->whereHas('agency', function ($query) {
             $query->where('is_verified', '=', 0);
-        })->with('agency');
+        })->with('agency', 'agency_requests');
 
         if (count($custom_cond) > 0) {
             $custom_cond = implode(' AND ', $custom_cond);
@@ -99,5 +106,14 @@ class AgencyRepository extends BaseRepository
         }
     }
 
+    public function get_agency_request_details($id)
+    {
+        return AgencyRequest::where('id',$id)->with('user')->first();
+    }
+    public function get_agency_details($user)
+    {
+        $agency = $user->agency()->first();
+        return $this->show($agency);
+    }
 
 }

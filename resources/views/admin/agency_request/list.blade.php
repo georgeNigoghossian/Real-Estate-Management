@@ -19,7 +19,8 @@
                 <tbody>
                 @foreach($users as $creator)
                     @php($agency = $creator->agency)
-                    <tr data-agency-id="{{ $agency->id }}">
+                    @php($agency_request = $creator->agency_requests()->first())
+                    <tr data-agency-id="{{ $agency_request->id }}">
                         <td>
                             <div class="d-flex px-2">
 
@@ -37,8 +38,7 @@
 
 
                         <td class="align-middle">
-{{--                            <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.agency.details',$agency->id)}}">--}}
-                            <a class="btn btn-icon btn-2 btn-primary" href="">
+                            <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.agency_requests.details',$agency_request->id)}}">
                                 <span class="btn-inner--icon"><i class="material-icons">list</i></span>
                             </a>
                         </td>

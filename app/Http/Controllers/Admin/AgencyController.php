@@ -7,8 +7,10 @@ use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Agency\PromoteToAgencyRequest;
 use App\Models\Agency\Agency;
+use App\Models\AgencyRequest;
 use App\Repositories\AgencyRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -40,20 +42,21 @@ class AgencyController extends Controller
 
         $users = $users->appends($request->query());
 
-        $breadcrumb =  [
-            '0'=>[
-                'title'=>"Dashboard",
-                'url'=>route('admin.home'),
+        $breadcrumb = [
+            '0' => [
+                'title' => "Dashboard",
+                'url' => route('admin.home'),
             ],
-            '1'=>[
-                'title'=>"Agency",
+            '1' => [
+                'title' => "Agency",
 
             ]
         ];
 
 
-        return view('admin.agency.list', compact('users','breadcrumb'));
+        return view('admin.agency.list', compact('users', 'breadcrumb'));
     }
+
     public function requests_index(Request $request)
     {
 
@@ -65,19 +68,19 @@ class AgencyController extends Controller
 
         $users = $users->appends($request->query());
 
-        $breadcrumb =  [
-            '0'=>[
-                'title'=>"Dashboard",
-                'url'=>route('admin.home'),
+        $breadcrumb = [
+            '0' => [
+                'title' => "Dashboard",
+                'url' => route('admin.home'),
             ],
-            '1'=>[
-                'title'=>"Agency Requests",
+            '1' => [
+                'title' => "Agency Requests",
 
             ]
         ];
 
 
-        return view('admin.agency.request_list', compact('users','breadcrumb'));
+        return view('admin.agency_request.list', compact('users', 'breadcrumb'));
     }
 
     /**
@@ -89,7 +92,6 @@ class AgencyController extends Controller
     {
         //
     }
-
 
 
     /**
@@ -141,17 +143,56 @@ class AgencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Agency\Agency $agency
-     * @return JsonResponse
+     * @param $id
+     * @return RedirectResponse
      */
     public function verifyAgency($id)
     {
-        $res = $this->agency_repository->verifyAgency($id);
-        return response()->json([
-            'success'=>true,
-            'data'=>$res,
-            'message'=>__("api.messages.show_agency_successfully")
-        ]);
+        $this->agency_repository->verifyAgency($id);
+        return redirect()->route('admin.agency_requests.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function rejectAgency($id)
+    {
+        $res = $this->agency_repository->rejectAgency($id);
+        return redirect()->route('admin.agency_requests.index');
+    }
+
+    public function agency_request_details($id)
+    {
+        $agency_request = $this->agency_repository->get_agency_request_details($id);
+        $agency = $this->agency_repository->get_agency_details($agency_request['user']);
+        $user = $agency_request['user']
+;
+//        $media = $agency["media"]->toArray();
+//
+//        if(count($media) >0 ){
+//            $photo_url = $media["0"]["original_url"];
+//
+//        }else{
+//            $photo_url = asset('assets/img/home-decor-1.jpg');
+//        }
+
+        $breadcrumb = [
+            '0' => [
+                'title' => "Dashboard",
+                'url' => route('admin.home'),
+            ],
+            '1' => [
+                'title' => "Agency Requests",
+                'url' => route('admin.agency_requests.index')
+            ],
+            '2' => [
+                'title' => "Details",
+            ]
+        ];
+        return view('admin.agency_request.details', compact('agency_request', 'agency', 'user', 'breadcrumb'));
     }
 
 }

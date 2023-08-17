@@ -2,6 +2,7 @@
 
 namespace App\Models\Agency;
 
+use App\Models\AgencyRequest;
 use App\Models\Location\Region;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,5 +52,10 @@ class Agency extends Model implements HasMedia
     public function status(): string
     {
         return ($this->is_verified) ? 'Accepted' : 'Pending';
+    }
+
+    public function agency_requests(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(AgencyRequest::class, 'agency_requests', 'agency_id','agency_request_id');
     }
 }

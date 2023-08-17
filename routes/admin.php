@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');
     Route::get('/User/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.user.verifyAgency');
+    Route::get('/User/reject-agency/{id}', [AgencyController::class, 'rejectAgency'])->name('admin.user.rejectAgency');
 
     //Tag
     Route::get('/Tag', [TagController::class, 'index'])->name('admin.tags');
@@ -76,6 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');
+    Route::get('/AgencyRequests/details/{id}', [AgencyController::class, 'agency_request_details'])->name('admin.agency_requests.details');
 
     Route::get('/Notifaction/create', [NotificationController::class, 'create'])->name('admin.notification.create');
     Route::post('/Notifaction/send', [NotificationController::class, 'send'])->name('admin.notification.send');
