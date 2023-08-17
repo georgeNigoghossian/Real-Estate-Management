@@ -6,20 +6,21 @@ use App\Models\Agency\Agency;
 use App\Models\Property\Property;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static create(array $array)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
 
     /**
      * The attributes that are mass assignable.
@@ -83,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function savedProperties(): BelongsToMany
     {
-        return $this->belongsToMany(Property::class,'saved_properties');
+        return $this->belongsToMany(Property::class, 'saved_properties');
     }
 
     public function properties(): HasMany
@@ -108,6 +109,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function reportedHistory() : HasMany {
         return $this->hasMany(ReportedClient::class, 'reported_user_id');
+    }
+
+    public function scopeSearch($query, $search = '')
+    {
+        return $query->where('name', 'LIKE', '%' . $search . '%');
     }
 
 }

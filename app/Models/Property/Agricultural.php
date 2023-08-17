@@ -32,8 +32,8 @@ class Agricultural extends Model
     public function scopeSearch($query, $search = '')
     {
         return $query->whereHas('property', function ($q) use ($search) {
-            return $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('description', 'LIKE', '%' . $search . '%');
+            return $q->where('properties.name', 'LIKE', '%' . $search . '%')
+                ->orWhere('properties.description', 'LIKE', '%' . $search . '%');
         });
     }
 

@@ -8,7 +8,6 @@ return [
      * Supported: 'jsvalidation::bootstrap', 'jsvalidation::bootstrap4', 'jsvalidation::bootstrap5', 'jsvalidation::uikit'
      */
     'view' => 'jsvalidation::bootstrap4',
-
     /*
      * Default JQuery selector find the form to be validated.
      * By default, the validations are applied to all forms.

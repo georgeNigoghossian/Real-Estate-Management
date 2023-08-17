@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Property;
 use App\Http\Controllers\App\AppController;
 use App\Http\Requests\Property\nearbyPlacesRequest;
 use App\Http\Requests\Property\PropertyChangeStatusRequest;
+use App\Http\Requests\Property\PropertyDestroyRequest;
 use App\Http\Requests\Property\PropertyDisableEnableRequest;
 use App\Http\Requests\Property\PropertyStoreRequest;
 use App\Http\Requests\Property\PropertyUpdateRequest;
@@ -40,7 +41,6 @@ class PropertyController extends AppController
      */
     public function index(Request $request): JsonResponse
     {
-        $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Property::class)
             ->with('tags', 'amenities', 'user', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
@@ -54,6 +54,10 @@ class PropertyController extends AppController
                 AllowedFilter::scope('property-service', 'PropertyService'),
                 AllowedFilter::scope('city', 'City'),
                 AllowedFilter::scope('country', 'Country'),
+                AllowedFilter::scope('my-properties', 'MyProperties'),
+                AllowedFilter::scope('my-favorites', 'MyFavorites'),
+                AllowedFilter::scope('tags', 'WithTags'),
+                AllowedFilter::scope('amenities', 'WithAmenities'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('created-at', new CreatedAtSort, 'properties'),
@@ -128,10 +132,11 @@ class PropertyController extends AppController
     /**
      * Remove the specified resource from storage.
      *
+     * @param PropertyDestroyRequest $request
      * @param Property $property
      * @return JsonResponse
      */
-    public function destroy(Property $property): JsonResponse
+    public function destroy(PropertyDestroyRequest $request, Property $property): JsonResponse
     {
         $this->property_repository->destroy($property);
         return $this->response(true, null, 'property deleted successfully');

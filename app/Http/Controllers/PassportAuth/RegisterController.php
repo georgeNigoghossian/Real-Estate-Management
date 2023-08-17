@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -39,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-     //   $this->middleware('guest');
+        //   $this->middleware('guest');
     }
 
     /**
@@ -54,7 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
             'gender' => ['required'],
-            'mobile' => ['required','unique:users'],
+            'mobile' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -79,7 +80,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'] ?? null,
             'mobile' => $data['mobile'],
@@ -87,6 +88,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
 
         ]);
+        $role = Role::find(2);
+        $user->roles()->attach($role);
+        return $user;
     }
 
     protected function registered(Request $request, $user)

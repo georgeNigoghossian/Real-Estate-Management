@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -105,8 +106,8 @@ class Property extends Model implements HasMedia
 
     public function scopeSearch($query, $search = '')
     {
-        return $query->where('name', 'LIKE', '%' . $search . '%')
-            ->orWhere('description', 'LIKE', '%' . $search . '%');
+        return $query->where('properties.name', 'LIKE', '%' . $search . '%')
+            ->orWhere('properties.description', 'LIKE', '%' . $search . '%');
     }
 
     public function scopeRegion($query, $search = '')
@@ -157,6 +158,30 @@ class Property extends Model implements HasMedia
     {
         return $query->whereHas('country', function ($q) use ($country_id) {
             $q->where('id', '=', $country_id);
+        });
+    }
+
+    public function scopeMyProperties($query, $user)
+    {
+        return $query->whereRelation('user', 'id', '=', $user);
+    }
+
+    public function scopeMyFavorites($query, $user)
+    {
+        return $query->whereHas('savedUsers')->whereRelation('user', 'id', '=', $user);
+    }
+
+    public function scopeWithTags($query, ...$tags)
+    {
+        return $query->whereHas('tags', function ($q) use ($tags) {
+            $q->whereIn('tags.id', $tags);
+        });
+    }
+
+    public function scopeWithAmenities($query, ...$tags)
+    {
+        return $query->whereHas('amenities', function ($q) use ($tags) {
+            $q->whereIn('amenities.id', $tags);
         });
     }
 }

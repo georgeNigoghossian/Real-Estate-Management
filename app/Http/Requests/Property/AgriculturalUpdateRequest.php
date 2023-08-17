@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Property;
 
 use App\Enums\StatusEnum;
+use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,6 +38,6 @@ class AgriculturalUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return PropertyPolicy::update($this->route()->agricultural->property);
     }
 }

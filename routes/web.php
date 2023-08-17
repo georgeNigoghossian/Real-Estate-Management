@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\PassportAuth\AuthenticatesUsersController;
 use App\Http\Controllers\PassportAuth\LoginController;
 use App\Http\Controllers\PassportAuth\RegisterController;
@@ -29,8 +30,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::get('/sms/verify', [SMSVerificationController::class, 'showVerificationForm'])->name('sms.verify');
 Route::post('/sms/verify', [SMSVerificationController::class, 'verify'])->name('sms.verify.post');
 
-//Auth::routes(['verify' => true]);
-
 Route::group(['middleware' => ['is_sms_verified']], function () {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
@@ -38,6 +37,6 @@ Route::group(['middleware' => ['is_sms_verified']], function () {
 Route::group(['middleware' => ['auth', 'is_sms_verified']], function () {
 
     Route::post('/logout', [AuthenticatesUsersController::class, 'logout'])->name('logout');
-    Route::get('/home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 

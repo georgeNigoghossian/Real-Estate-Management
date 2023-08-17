@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Property\CommercialDestroyRequest;
 use App\Http\Requests\Property\CommercialStoreRequest;
 use App\Http\Requests\Property\CommercialUpdateRequest;
 use App\Models\Property\Commercial;
@@ -104,10 +105,11 @@ class CommercialController extends AppController
     /**
      * Remove the specified resource from storage.
      *
+     * @param CommercialDestroyRequest $request
      * @param Commercial $commercial
      * @return JsonResponse
      */
-    public function destroy(Commercial $commercial): JsonResponse
+    public function destroy(CommercialDestroyRequest $request,Commercial $commercial): JsonResponse
     {
         $this->commercial_repository->destroy($commercial);
         return $this->response(true, null, 'Commercial property deleted successfully');

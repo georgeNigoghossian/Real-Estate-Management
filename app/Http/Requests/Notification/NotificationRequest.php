@@ -14,9 +14,11 @@ class NotificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'title'=>['string'],
-          'body'=>['string'],
-          'image'=>['string'],
+            'title' => ['string'],
+            'body' => ['string'],
+            'image' => ['string'],
+            'registration_ids' => ['prohibited_unless:to,null', 'required_without:to', 'array'],
+            'to' => ['prohibited_unless:registration_ids,null', 'required_without:registration_ids', 'string']
         ];
     }
 

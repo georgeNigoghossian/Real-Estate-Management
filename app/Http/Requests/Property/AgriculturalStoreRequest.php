@@ -4,8 +4,10 @@ namespace App\Http\Requests\Property;
 
 use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
+use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Kreait\Firebase\Contract\Auth;
 
 class AgriculturalStoreRequest extends FormRequest
 {
@@ -30,6 +32,9 @@ class AgriculturalStoreRequest extends FormRequest
             'service' =>[Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
             'specialAttributes' => ['string'],
+            'country' => ['integer', 'exists:countries,id'],
+            'city' => ['integer', 'exists:cities,id'],
+            'region' => ['string'],
         ];
     }
 
@@ -40,6 +45,6 @@ class AgriculturalStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return PropertyPolicy::create();
     }
 }

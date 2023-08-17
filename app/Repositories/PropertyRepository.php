@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Models\Location\City;
+use App\Models\Location\Country;
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +39,14 @@ class PropertyRepository extends BaseRepository
             $property->tags()->sync($data['tags']);
         if (array_key_exists('amenities', $data))
             $property->amenities()->sync($data['amenities']);
+        if (array_key_exists('city', $data)) {
+            $city = City::where('id', $data['city'])->first();
+            $property->city()->associate($city);
+        }
+        if (array_key_exists('country', $data)) {
+            $country = Country::where('id', $data['country'])->first();
+            $property->country()->associate($country);
+        }
         return $property;
     }
 

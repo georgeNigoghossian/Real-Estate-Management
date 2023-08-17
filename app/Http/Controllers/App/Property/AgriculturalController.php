@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Property\AgriculturalDestroyRequest;
 use App\Http\Requests\Property\AgriculturalStoreRequest;
 use App\Http\Requests\Property\AgriculturalUpdateRequest;
+use App\Http\Requests\Property\PropertyDestroyRequest;
 use App\Models\Property\Agricultural;
 use App\Repositories\AgriculturalRepository;
 use App\Repositories\PropertyRepository;
@@ -115,10 +117,11 @@ class AgriculturalController extends AppController
     /**
      * Remove the specified resource from storage.
      *
+     * @param AgriculturalDestroyRequest $request
      * @param Agricultural $agricultural
      * @return JsonResponse
      */
-    public function destroy(Agricultural $agricultural): JsonResponse
+    public function destroy(AgriculturalDestroyRequest $request,Agricultural $agricultural): JsonResponse
     {
         $this->agricultural_repository->destroy($agricultural);
         return $this->response(true, null, 'agricultural property deleted successfully');

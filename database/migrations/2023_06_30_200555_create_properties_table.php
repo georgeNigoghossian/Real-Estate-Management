@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -21,9 +20,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->enum('status', ['in_market','purchased', 'rented'])->default('in_market');
-            $table->enum('service', ['sale','rent', 'holiday'])->default('sale');
+            $table->enum('status', ['in_market', 'purchased', 'rented'])->default('in_market');
+            $table->enum('service', ['sale', 'rent', 'holiday'])->default('sale');
             $table->integer('is_disabled')->nullable()->default(0);
+            $table->string('region')->nullable();
             $table->timestamps();
 
         });
@@ -31,7 +31,6 @@ return new class extends Migration
         Schema::table('properties', function ($table) {
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

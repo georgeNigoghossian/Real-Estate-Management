@@ -8,6 +8,8 @@ use App\Models\File;
 use App\Models\User;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 use Illuminate\Support\Facades\Validator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 //use Your Model
 

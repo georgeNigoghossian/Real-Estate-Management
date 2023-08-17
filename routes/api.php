@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\App\Agency\AgencyController;
-use App\Http\Controllers\App\Location\CityController;
 use App\Http\Controllers\App\Location\RegionController;
 use App\Http\Controllers\App\NotificationController;
 use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
@@ -51,8 +50,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'api', 'cors', 'i
 
 //Property Endpoints
 Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::get('/show', [PropertyController::class, 'display_property'])->name('property.displayProperty.api');
-    Route::get('/delete', [PropertyController::class, 'delete_property'])->name('property.deleteProperty.api');
     Route::post('/enable', [PropertyController::class, 'enableProperty'])->name('property.enableProperty.api');
     Route::post('/disable', [PropertyController::class, 'disableProperty'])->name('property.disableProperty.api');
     Route::put('/{property}/change-status', [PropertyController::class, 'changeStatus']);
@@ -65,29 +62,30 @@ Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cor
 
 });
 
-Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::get('/regions/get-all', [RegionController::class, 'getAll'])->name('regions.getAll.api');
-});
+// public routes
+Route::post('/properties/near-by-places', [PropertyController::class, 'nearbyPlaces']);
+Route::get('/regions/get-all', [RegionController::class, 'getAll'])->name('regions.getAll.api');
+Route::get('/properties', [PropertyController::class, 'index']);
+Route::get('/amenities', [AmenityController::class, 'index']);
+Route::get('/tags', [TagController::class, 'index']);
+Route::get('/agriculturals', [AgriculturalController::class, 'index']);
+Route::get('/residentials', [ResidentialController::class, 'index']);
+Route::get('/commercials', [CommercialController::class, 'index']);
+
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
-    Route::post('/properties/near-by-places', [PropertyController::class, 'nearbyPlaces']);
-    Route::apiResource('/properties', PropertyController::class);
-    Route::apiResource('/amenities', AmenityController::class);
-    Route::apiResource('/tags', TagController::class);
-    Route::apiResource('/agriculturals', AgriculturalController::class);
-    Route::apiResource('/residentials', ResidentialController::class);
-    Route::apiResource('/commercials', CommercialController::class);
+    Route::apiResource('/properties', PropertyController::class)->except(['index']);
+    Route::apiResource('/amenities', AmenityController::class)->except(['index']);
+    Route::apiResource('/tags', TagController::class)->except(['index']);
+    Route::apiResource('/agriculturals', AgriculturalController::class)->except(['index']);
+    Route::apiResource('/residentials', ResidentialController::class)->except(['index']);
+    Route::apiResource('/commercials', CommercialController::class)->except(['index']);
     Route::apiResource('/regions', RegionController::class);
-
-});
-
-Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
     Route::get('/agencies/request-status', [AgencyController::class, 'promoteRequestStatus'])->name('agencies.request-status.api');
     Route::apiResource('/agencies', AgencyController::class);
 });
 
 
 //Notifications
-
-Route::post('/send-notification', [FireBaaseNotificationController::class, 'send']);
+Route::post('/send-notification', [FireBaseNotificationController::class, 'send']);
 Route::get('users/{user}/notifications', [NotificationController::class, 'myNotifications']);

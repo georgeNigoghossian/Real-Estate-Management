@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Property;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Requests\Property\ResidentialDestroyRequest;
 use App\Http\Requests\Property\ResidentialStoreRequest;
 use App\Http\Requests\Property\ResidentialUpdateRequest;
 use App\Models\Property\Residential;
@@ -42,14 +43,14 @@ class ResidentialController extends AppController
         $columns = Schema::getColumnListing('properties');
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'residentials')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Residential::class)
-            ->with('property','property.tags','property.amenities','property.user')
+            ->with('property', 'property.tags', 'property.amenities', 'property.user')
             ->allowedFilters([
                 ...$columns,
-                AllowedFilter::scope('term','Search'),
+                AllowedFilter::scope('term', 'Search'),
                 AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
                 AllowedFilter::scope('price-higher-than', 'PriceHigherThan'),
-                AllowedFilter::scope('area-smaller-than','AreaSmallerThan'),
-                AllowedFilter::scope('area-bigger-than','AreaBiggerThan'),
+                AllowedFilter::scope('area-smaller-than', 'AreaSmallerThan'),
+                AllowedFilter::scope('area-bigger-than', 'AreaBiggerThan'),
             ])
             ->allowedSorts([
                 AllowedSort::custom('price', new PriceSort, 'residentials'),
@@ -125,10 +126,11 @@ class ResidentialController extends AppController
     /**
      * Remove the specified resource from storage.
      *
+     * @param ResidentialDestroyRequest $request
      * @param Residential $residential
      * @return JsonResponse
      */
-    public function destroy(Residential $residential): JsonResponse
+    public function destroy(ResidentialDestroyRequest $request, Residential $residential): JsonResponse
     {
         $this->residential_repository->destroy($residential);
         return $this->response(true, null, 'Residential property deleted successfully');

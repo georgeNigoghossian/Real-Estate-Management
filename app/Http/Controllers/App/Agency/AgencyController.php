@@ -9,6 +9,7 @@ use App\Repositories\AgencyRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Spatie\Permission\Models\Role;
 
 class AgencyController extends AppController
 {
@@ -18,24 +19,27 @@ class AgencyController extends AppController
     {
         $this->agency_repository = $agency_repository;
     }
+
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $custom_cond = [];
-
+        if ($request->is_blocked != "") {
+            $custom_cond[] = "is_blocked = '$request->is_blocked'";
+        }
         if($request->name != ""){
             $custom_cond[] = "name LIKE '%$request->name%'";
         }
-        $users = $this->agency_repository->get_all($custom_cond);
+        $agencies = $this->agency_repository->get_all($custom_cond);
 
-        $users = $users->appends($request->query());
-
-        return view('admin.agency.list',compact('users'));
-    }
+        $agencies = $agencies->appends($request->query());
+        return $this->response(true, $agencies, 'All Agencies');
+  }
 
     /**
      * Show the application dashboard.
@@ -74,11 +78,13 @@ class AgencyController extends AppController
     public function store(PromoteToAgencyRequest $request)
     {
         $user = $request->user();
-        if (Agency::where('created_by', '=',$user->id)->exists()) {
-            return $this->response(false, null,  __("api.messages.promote_to_agency_failed"));
+        if (Agency::where('created_by', '=', $user->id)->exists()) {
+            return $this->response(false, null, __("api.messages.promote_to_agency_failed"));
         }
         $agency = $this->agency_repository->promote($request->validated(), $user);
-        return $this->response(true, $agency,  __("api.messages.promote_to_agency_success"));
+        $role = Role::find(3);
+        $user->roles()->attach($role);
+        return $this->response(true, $agency, __("api.messages.promote_to_agency_success"));
     }
 
     /**
@@ -90,7 +96,7 @@ class AgencyController extends AppController
     public function show(Agency $agency): JsonResponse
     {
         $agency = $this->agency_repository->show($agency);
-        return $this->response(true, $agency,  __("api.messages.show_agency_successfully"));
+        return $this->response(true, $agency, __("api.messages.show_agency_successfully"));
     }
 
     /**
@@ -107,7 +113,7 @@ class AgencyController extends AppController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @param Agency $agency
      * @return \Illuminate\Http\Response
      */
@@ -143,6 +149,6 @@ class AgencyController extends AppController
     {
         $user = $request->user();
         $status = $this->agency_repository->requestStatus($user);
-        return $this->response(true, ['status'=>$status],  __("api.messages.agency_request_status_retrieval"));
+        return $this->response(true, ['status' => $status], __("api.messages.agency_request_status_retrieval"));
     }
 }

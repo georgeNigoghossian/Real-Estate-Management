@@ -67,16 +67,6 @@ class PropertyController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param Property $property
-     * @return JsonResponse
-     */
-    public function show(Property $property): JsonResponse
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Property $property

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Property;
 
 use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
+use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,8 +26,11 @@ class PropertyStoreRequest extends FormRequest
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
-            'service' =>[Rule::in(array_column(ServiceEnum::cases(), 'name'))],
+            'service' => [Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
+            'country' => ['integer', 'exists:countries,id'],
+            'city' => ['integer', 'exists:cities,id'],
+            'region' => ['string'],
         ];
     }
 
@@ -37,6 +41,6 @@ class PropertyStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return PropertyPolicy::create();
     }
 }

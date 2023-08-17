@@ -35,8 +35,8 @@ class Residential extends Model
 
     public function scopeSearch($query, $search = '')
     {
-        return $query->whereHas('property', function ($q) use ($search) {
-            return $q->where('name', 'LIKE', '%' . $search . '%');
+        return $query->whereHas('properties.property', function ($q) use ($search) {
+            return $q->where('properties.name', 'LIKE', '%' . $search . '%');
         });
     }
 

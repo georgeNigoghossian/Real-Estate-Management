@@ -4,8 +4,10 @@ namespace App\Http\Requests\Property;
 
 use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
+use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Kreait\Firebase\Contract\Auth;
 
 class ResidentialStoreRequest extends FormRequest
 {
@@ -33,7 +35,10 @@ class ResidentialStoreRequest extends FormRequest
             'num_of_balconies' => ['required','integer', 'min:0'],
             'num_of_living_rooms' => ['required','integer'],
             'floor' => ['integer'],
-            'specialAttributes' => ['string']
+            'specialAttributes' => ['string'],
+            'country' => ['integer', 'exists:countries,id'],
+            'city' => ['integer', 'exists:cities,id'],
+            'region' => ['string'],
 
         ];
     }
@@ -45,6 +50,6 @@ class ResidentialStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return PropertyPolicy::create();
     }
 }

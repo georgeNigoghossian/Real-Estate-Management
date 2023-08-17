@@ -4,8 +4,10 @@ namespace App\Http\Requests\Property;
 
 use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
+use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Kreait\Firebase\Contract\Auth;
 
 class CommercialStoreRequest extends FormRequest
 {
@@ -26,13 +28,16 @@ class CommercialStoreRequest extends FormRequest
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
-            'service' =>[Rule::in(array_column(ServiceEnum::cases(), 'name'))],
+            'service' => [Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
             'num_of_bathrooms' => ['required', 'integer', 'min:1'],
             'num_of_balconies' => ['required', 'integer', 'min:0'],
             'floor' => ['nullable', 'integer'],
             'specialAttributes' => ['string'],
-            'images' => ['required','min:3'],
+            'images' => ['required', 'min:3'],
+            'country' => ['integer', 'exists:countries,id'],
+            'city' => ['integer', 'exists:cities,id'],
+            'region' => ['string'],
         ];
     }
 
@@ -43,6 +48,6 @@ class CommercialStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return PropertyPolicy::create();
     }
 }
