@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/BlockedUser', [UserController::class, 'blocked_users'])->name('admin.user.blocked_list');
     Route::post('/User/switch-block', [UserController::class, 'switchBlock'])->name('admin.user.switch_block');
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
+    Route::get('/ReportedUser/{id}/details', [ReportedClientController::class, 'details'])->name('admin.reported_users.details');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');
     Route::get('/User/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.user.verifyAgency');
     Route::get('/User/reject-agency/{id}', [AgencyController::class, 'rejectAgency'])->name('admin.user.rejectAgency');

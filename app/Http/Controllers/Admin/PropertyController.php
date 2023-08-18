@@ -112,7 +112,7 @@ class PropertyController extends Controller
     }
 
     public function details($id){
-        $property = $this->property_repository->disableProperty($id);
+        $property = $this->property_repository->displayProperty($id);
 
         $breadcrumb =  [
             '0'=>[

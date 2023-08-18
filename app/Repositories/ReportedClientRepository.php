@@ -24,13 +24,15 @@ class ReportedClientRepository extends BaseRepository
     }
 
     public function get_all($custom_cond = [], $perPage = 10) {
-        $query = ReportedClient::query();
+        $query = ReportedClient::selectRaw("reported_user_id , count('reported_user_id') as total")
+            ->join('users', 'reported_user_id', '=', 'users.id')
+            ->where('users.is_blocked', 0);
 
         if (count($custom_cond) > 0) {
             $custom_cond = implode(' AND ', $custom_cond);
             $query = $query->whereRaw($custom_cond);
         }
-
+        $query->groupBy("reported_user_id");
         return $query->paginate($perPage);
     }
 }

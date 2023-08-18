@@ -7,6 +7,9 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use JsValidator;
+use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
