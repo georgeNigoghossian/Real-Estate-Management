@@ -12,10 +12,7 @@ class CommercialUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if($this->images){
-            return 'oy';
 
-        }
     }
 
     /**

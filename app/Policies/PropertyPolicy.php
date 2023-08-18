@@ -46,4 +46,14 @@ class PropertyPolicy
         return $user->hasRole('admin') || $property->user->id == $user->id;
     }
 
+    /**
+     * Determine whether the user can create models.
+     *
+     * @return Response|bool
+     */
+    public static function rate(): Response|bool
+    {
+        $user = auth()->user();
+        return $user->hasRole('client') || $user->hasRole('agency');
+    }
 }

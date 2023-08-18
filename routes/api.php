@@ -60,6 +60,12 @@ Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cor
     Route::get('/{property}/is-favorite', [PropertyController::class, 'isFavorite']);
     Route::post('/save', [PropertyController::class, 'saveFavorite'])->name('property.saveProperty.api');
 
+    //Ratings
+    Route::post('{property}/rate', [PropertyController::class, 'rateProperty']);
+    Route::get('/my-ratings', [PropertyController::class, 'myRatings']);
+    Route::get('{property}/ratings', [PropertyController::class, 'propertyRatings']);
+
+
 });
 
 // public routes

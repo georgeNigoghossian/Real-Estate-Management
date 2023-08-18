@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -168,7 +166,9 @@ class Property extends Model implements HasMedia
 
     public function scopeMyFavorites($query, $user)
     {
-        return $query->whereHas('savedUsers')->whereRelation('user', 'id', '=', $user);
+        return $query->whereHas('savedUsers', function ($q) use ($user) {
+            return $q->where('user_id', '=', $user);
+        });
     }
 
     public function scopeWithTags($query, ...$tags)

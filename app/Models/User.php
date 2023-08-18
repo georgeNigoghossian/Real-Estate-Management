@@ -107,7 +107,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return ($this->agency_requests()->exists()) ? 'Rejected' : 'No request submitted';
     }
 
-    public function reportedHistory() : HasMany {
+    public function reportedHistory(): HasMany
+    {
         return $this->hasMany(ReportedClient::class, 'reported_user_id');
     }
 
@@ -115,5 +116,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->where('name', 'LIKE', '%' . $search . '%');
     }
-
 }

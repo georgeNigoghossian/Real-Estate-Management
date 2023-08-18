@@ -6,6 +6,7 @@ use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
+use App\Models\RateProperty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
@@ -28,7 +29,6 @@ class PropertyRepository extends BaseRepository
     {
         $property = Property::create($data);
         $property->user()->associate(Auth::user());
-        $property->save();
         if (array_key_exists("images", $data)) {
             $images = $data['images'];
             foreach ($images as $image) {
@@ -47,6 +47,7 @@ class PropertyRepository extends BaseRepository
             $country = Country::where('id', $data['country'])->first();
             $property->country()->associate($country);
         }
+        $property->save();
         return $property;
     }
 
@@ -75,6 +76,7 @@ class PropertyRepository extends BaseRepository
             $property->tags()->sync($data['tags']);
         if (array_key_exists('amenities', $data))
             $property->amenities()->sync($data['amenities']);
+        $property->save();
         return $property;
     }
 
@@ -91,7 +93,7 @@ class PropertyRepository extends BaseRepository
 
     public function displayProperty($id)
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
 
         if ($property) {
             return $property;
@@ -102,7 +104,7 @@ class PropertyRepository extends BaseRepository
 
     public function deleteProperty($id, $user)
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
 
         if (!$property) return [404, __("api.messages.property_not_found")];
         if ($property->user_id != $user->id) return [403, __("api.messages.delete_property_forbidden")];
@@ -111,7 +113,7 @@ class PropertyRepository extends BaseRepository
 
     public function saveProperty($id, $user): array
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
 
         if ($property->is_disabled) return [403, __("api.messages.property_disabled")];
         $saved = SavedProperty::where('property_id', $property->id)->where('user_id', $user->id)->first();
@@ -127,7 +129,7 @@ class PropertyRepository extends BaseRepository
 
     public function disableProperty($id)
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
         $property->is_disabled = true;
         $property->save();
         return $property;
@@ -135,7 +137,7 @@ class PropertyRepository extends BaseRepository
 
     public function enableProperty($id)
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
         $property->is_disabled = false;
         $property->save();
         return $property;
@@ -157,4 +159,32 @@ class PropertyRepository extends BaseRepository
 
         return $properties;
     }
+
+    public function rateProperty(Property $property, $data)
+    {
+        $user = auth()->user();
+        if (RateProperty::where('property_id', '=', $property->id)->where('user_id', '=', $user->id)->exists()) {
+            abort('422', 'user already rated the property');
+        }
+
+        $rating = RateProperty::create($data + array(
+                'property_id' => $property->id,
+                'user_id' => $user->id
+            ));
+
+        $agency = $property->user->agency();
+        if ($agency->exists()) {
+            $ratings_avg = QueryBuilder::for(RateProperty::class)
+                ->whereHas('property', function ($q) use ($property) {
+                    $q->whereHas('user', function ($q) use ($property) {
+                        $q->where('id', '=', $property->user->id);
+                    });
+                })->avg('rate');
+            $user->agency->rate = $ratings_avg;
+            $user->agency->update(['rate' => $ratings_avg]);
+        }
+        return $rating;
+    }
+
+
 }

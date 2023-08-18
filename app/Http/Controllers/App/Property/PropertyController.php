@@ -9,8 +9,10 @@ use App\Http\Requests\Property\PropertyDestroyRequest;
 use App\Http\Requests\Property\PropertyDisableEnableRequest;
 use App\Http\Requests\Property\PropertyStoreRequest;
 use App\Http\Requests\Property\PropertyUpdateRequest;
+use App\Http\Requests\Property\RatePropertyRequest;
 use App\Models\Property\Property;
 use App\Models\Property\SavedProperty;
+use App\Models\RateProperty;
 use App\Repositories\PropertyRepository;
 use App\Sorts\AreaSort;
 use App\Sorts\CreatedAtSort;
@@ -18,7 +20,6 @@ use App\Sorts\PriceSort;
 use App\Sorts\PrioritySort;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Enums\SortDirection;
@@ -43,10 +44,10 @@ class PropertyController extends AppController
     {
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Property::class)
-            //->with('tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
-            ->with('user',function($q){
+            ->with('tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media','city', 'country')
+            ->with('user', function ($q) {
                 $q->withWhereHas('agency')->orWhereDoesntHave('agency');
-           })
+            })
             ->allowedFilters([
                 AllowedFilter::scope('term', 'Search'),
                 AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
@@ -265,5 +266,29 @@ class PropertyController extends AppController
         return $this->response(true, false, "not saved");
     }
 
+    public function rateProperty(RatePropertyRequest $request, Property $property): JsonResponse
+    {
+        $rating = $this->property_repository->rateProperty($property, $request->validated());
+        return $this->response(true, $rating, "Property has been rated successfully", 201);
+    }
 
+    public function myRatings(Request $request): JsonResponse
+    {
+        $user = auth()->user()->id;
+        $ratings = QueryBuilder::for(RateProperty::class)
+            ->where('user_id', '=', $user)
+            ->paginate($request->per_page);
+        return $this->response(true, $ratings);
+
+    }
+
+    public function propertyRatings(Request $request,Property $property): JsonResponse
+    {
+        $ratings = QueryBuilder::for(RateProperty::class)
+            ->where('property_id', '=', $property->id)
+            ->with('user')
+            ->paginate($request->per_page);
+        return $this->response(true, $ratings);
+
+    }
 }

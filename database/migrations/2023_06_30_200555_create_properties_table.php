@@ -29,6 +29,10 @@ return new class extends Migration {
         });
 
         Schema::table('properties', function ($table) {
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
