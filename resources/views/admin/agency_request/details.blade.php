@@ -43,9 +43,6 @@
                                     {{$user->mobile}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
                                             class="text-dark">Email:</strong> &nbsp;{{$user->email}}</li>
-
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Location:</strong> &nbsp;{{$user->email}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
                                             class="text-dark">Reason:<br></strong>{{$agency_request->reason}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
@@ -74,13 +71,13 @@
 
                                     <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0"
                                        href="{{$user->facebook}}">
-                                        <i class="fab fa-facebook fa-lg"></i>
+                                        <i class="bi bi-facebook fs-20"></i>
                                     </a>
                                     <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-twitter fa-lg"></i>
+                                        <i class="bi bi-twitter fs-20"></i>
                                     </a>
                                     <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-instagram fa-lg"></i>
+                                        <i class="bi bi-instagram fs-20"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -112,45 +109,73 @@
                         </div>
                     </div>
                 @endif
-                @php($files = $agency->media)
-                @if(count($files) > 0)
-                    <hr class="horizontal gray-light my-2">
-                    <div class="col-12 mt-4">
-                        <div class="mb-5 ps-3">
-                            <h6 class="mb-1">Files and Documents</h6>
-                        </div>
-                        <div class="row">
-                            <div class="owl-carousel owl-theme">
-                                @foreach($files as $file)
-                                    <div class="item">
-                                        <div class="card card-blog card-plain">
-                                            <div class="bg-gradient-dark card-body p-3 border-radius-xl">
-                                                <a class="text-light d-block bg-light.bg-gradient shadow-xl"
-                                                   href="{{$file["original_url"]}}">
-                                                    <i class="m-2 material-icons">insert_drive_file</i>
-                                                    <p class="m-2 text-light text-sm">{{$file->name}}</p></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                <div class="row flex-row-reverse mt-3">
-                    <div class="col-sm-auto">
-                        <a href="{{ route('admin.user.verifyAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary" >Verify Agency</button>
-                        </a>
-                    </div>
-                    <div class="col-sm-auto">
-                        <a href="{{ route('admin.user.rejectAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary" onclick=>Reject Agency</button>
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
+
+    <div class="card card-body mx-3 mx-md-4 mt-2">
+        <div class="mb-5 ps-3">
+            <h6 class="mb-1">Location of Agency</h6>
+        </div>
+        <div id="map" class="rounded" style="height: 300px;"></div>
+    </div>
+
+    @php($files = $agency->media)
+    @if(count($files) > 0)
+        <div class="card card-body mx-3 mx-md-4 mt-2">
+            <hr class="horizontal gray-light my-2">
+            <div class="col-12 mt-4">
+                <div class="mb-5 ps-3">
+                    <h6 class="mb-1">Files and Documents</h6>
+                </div>
+                <div class="row">
+                    <div class="owl-carousel owl-theme">
+                        @foreach($files as $file)
+                            <div class="item">
+                                <div class="card card-blog card-plain">
+                                    <div class="bg-gradient-dark card-body p-3 border-radius-xl">
+                                        <a class="text-light d-block bg-light.bg-gradient shadow-xl"
+                                           href="{{$file["original_url"]}}">
+                                            <i class="m-2 material-icons">insert_drive_file</i>
+                                            <p class="m-2 text-light text-sm">{{$file->name}}</p></a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="row flex-row-reverse mt-3">
+                <div class="col-sm-auto">
+                    <a href="{{ route('admin.user.verifyAgency', ['id'=>$agency->id]) }}">
+                        <button class="btn btn-outline-primary">Verify Agency</button>
+                    </a>
+                </div>
+                <div class="col-sm-auto">
+                    <a href="{{ route('admin.user.rejectAgency', ['id'=>$agency->id]) }}">
+                        <button class="btn btn-outline-primary" onclick=>Reject Agency</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
+
+@push('scripts')
+    <script>
+        var latitude = {{ $agency->latitude }};
+        var longitude = {{ $agency->longitude }};
+        var propertyName = "{{ $user->name }}";
+
+        var map = L.map('map').setView([latitude, longitude], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup(propertyName)
+            .openPopup();
+    </script>
+
+@endpush
