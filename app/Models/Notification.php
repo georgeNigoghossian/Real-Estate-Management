@@ -14,8 +14,9 @@ class Notification extends Model
     use HasFactory;
 
     public $fillable = [
-        'head',
-        'body'
+        'title',
+        'body',
+        'image'
     ];
 
     public function users(): BelongsToMany

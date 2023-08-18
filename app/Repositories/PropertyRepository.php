@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Property\Property;
@@ -72,6 +73,7 @@ class PropertyRepository extends BaseRepository
     public function update($data, Property $property): Property
     {
         $property->update($data);
+        FireBaseNotificationController::changesNotificationTrigger($property);
         if (array_key_exists('tags', $data))
             $property->tags()->sync($data['tags']);
         if (array_key_exists('amenities', $data))

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Models\Agency\Agency;
 use App\Models\AgencyRequest;
 use App\Models\File;
@@ -51,15 +52,16 @@ class AgencyRepository extends BaseRepository
         foreach ($images as $image) {
             $agency->addMedia($image)->toMediaCollection('images');
         }
+        FireBaseNotificationController::PromoteAgencyNotificationTrigger($user->fcm_token);
         $agency->request = $request;
-        DB::table('agency_request_agency')->insert(['agency_id'=>$agency->id, 'agency_request_id'=>$request->id]);
+        DB::table('agency_request_agency')->insert(['agency_id' => $agency->id, 'agency_request_id' => $request->id]);
         return $agency;
     }
 
     public function verifyAgency($id)
     {
         $agency = Agency::where('id', $id)->first();
-        $agency->creator()->update(['priority'=>5]);
+        $agency->creator()->update(['priority' => 5]);
         return $agency->update(['is_verified' => 1]);
     }
 
@@ -108,8 +110,9 @@ class AgencyRepository extends BaseRepository
 
     public function get_agency_request_details($id)
     {
-        return AgencyRequest::where('id',$id)->with('user')->first();
+        return AgencyRequest::where('id', $id)->with('user')->first();
     }
+
     public function get_agency_details($user)
     {
         $agency = $user->agency()->first();

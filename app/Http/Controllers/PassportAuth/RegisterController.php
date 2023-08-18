@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PassportAuth;
 
 use App\Http\Controllers\App\AppController;
+use App\Http\Controllers\App\Notifications\FireBaseNotificationController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\VerifyAndRegisterRequest;
 use App\Models\MobileVerification;
@@ -57,6 +58,7 @@ class RegisterController extends Controller
             'gender' => ['required'],
             'mobile' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'fcm_token' => ['required', 'string']
         ]);
     }
 
@@ -67,7 +69,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         return $request->wantsJson()
-            ? AppController::response(true, null, "User Needs Verification", 200)
+            ? AppController::response(true, null, "User Needs Verification")
             : redirect($this->redirectPath());
     }
 
@@ -106,7 +108,7 @@ class RegisterController extends Controller
             $user = $this->create($request->all());
             $this->guard()->login($user);
             $accessToken = $user->createToken('authToken')->accessToken;
-
+            FireBaseNotificationController::welcomeNotificationTrigger($request->fcm_token);
             $user->sms_verified_at = now();
             $user->save();
             if ($request->wantsJson()) {

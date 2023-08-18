@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'mobile',
         'facebook',
         'gender',
+        'fcm_token',
         'date_of_birth',
         'is_blocked',
         'priority',
