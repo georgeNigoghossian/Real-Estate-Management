@@ -15,7 +15,8 @@ class Notification extends Model
 
     public $fillable = [
         'head',
-        'body'
+        'body',
+        'image'
     ];
 
     public function users(): BelongsToMany
