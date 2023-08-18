@@ -19,7 +19,7 @@ class PropertyPolicy
     public static function create(): Response|bool
     {
         $user = auth()->user();
-        return $user->hasRole('admin') || $user->hasRole('client') || $user->hasRole('agency');
+        return $user->hasRole('client') || $user->hasRole('agency');
     }
 
     /**

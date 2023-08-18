@@ -43,7 +43,10 @@ class PropertyController extends AppController
     {
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Property::class)
-            ->with('tags', 'amenities', 'user', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
+            //->with('tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
+            ->with('user',function($q){
+                $q->withWhereHas('agency')->orWhereDoesntHave('agency');
+           })
             ->allowedFilters([
                 AllowedFilter::scope('term', 'Search'),
                 AllowedFilter::scope('price-lower-than', 'PriceLowerThan'),
