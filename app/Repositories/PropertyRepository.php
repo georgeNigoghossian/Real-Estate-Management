@@ -160,6 +160,13 @@ class PropertyRepository extends BaseRepository
         return $properties;
     }
 
+    public function changeDisableStatus($property_id,$status){
+        $property = Property::where('id',$property_id)->update([
+            'is_disabled'=>$status,
+        ]);
+        return $property;
+    }
+
     public function rateProperty(Property $property, $data)
     {
         $user = auth()->user();

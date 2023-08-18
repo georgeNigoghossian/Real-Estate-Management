@@ -168,16 +168,7 @@ class AgencyController extends Controller
     {
         $agency_request = $this->agency_repository->get_agency_request_details($id);
         $agency = $this->agency_repository->get_agency_details($agency_request['user']);
-        $user = $agency_request['user']
-;
-//        $media = $agency["media"]->toArray();
-//
-//        if(count($media) >0 ){
-//            $photo_url = $media["0"]["original_url"];
-//
-//        }else{
-//            $photo_url = asset('assets/img/home-decor-1.jpg');
-//        }
+        $user = $agency_request['user'];
 
         $breadcrumb = [
             '0' => [
@@ -194,5 +185,29 @@ class AgencyController extends Controller
         ];
         return view('admin.agency_request.details', compact('agency_request', 'agency', 'user', 'breadcrumb'));
     }
+
+    public function agency_details($id)
+    {
+        $agency = $this->agency_repository->get_agency_user($id);
+        $user = $agency['creator'];
+        $properties = $agency['creator']['properties'];
+        error_log($properties);
+
+        $breadcrumb = [
+            '0' => [
+                'title' => "Dashboard",
+                'url' => route('admin.home'),
+            ],
+            '1' => [
+                'title' => "Agency Requests",
+                'url' => route('admin.agency.index')
+            ],
+            '2' => [
+                'title' => "Details",
+            ]
+        ];
+        return view('admin.agency.details', compact('properties', 'agency', 'user', 'breadcrumb'));
+    }
+
 
 }

@@ -41,8 +41,7 @@
 
 
                         <td class="align-middle">
-{{--                            <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.agency.details',$agency->id)}}" >--}}
-                            <a class="btn btn-icon btn-2 btn-primary" href="" >
+                            <a class="btn btn-icon btn-2 btn-primary" href="{{route('admin.agency.details',$agency->id)}}" >
                                 <span class="btn-inner--icon"><i class="material-icons">list</i></span>
                             </a>
                         </td>

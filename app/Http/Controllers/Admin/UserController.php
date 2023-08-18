@@ -85,6 +85,10 @@ class UserController extends Controller
         if(isset($request->needs_redirect) && $request->needs_redirect==1){
             return redirect()->back();
         }
+
+        if(isset($request->redirect_to_reported_clients) && $request->redirect_to_reported_clients){
+            return redirect()->route('admin.reported_users');
+        }
     }
 
     public function updatePriority(Request $request){

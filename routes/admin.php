@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/BlockedUser', [UserController::class, 'blocked_users'])->name('admin.user.blocked_list');
     Route::post('/User/switch-block', [UserController::class, 'switchBlock'])->name('admin.user.switch_block');
     Route::get('/ReportedUser', [ReportedClientController::class, 'index'])->name('admin.reported_users');
+    Route::get('/ReportedUser/{id}/details', [ReportedClientController::class, 'details'])->name('admin.reported_users.details');
     Route::post('/update-priority',[UserController::class, 'updatePriority'])->name('admin.user.update_priority');
     Route::get('/User/verify-agency/{id}', [AgencyController::class, 'verifyAgency'])->name('admin.user.verifyAgency');
     Route::get('/User/reject-agency/{id}', [AgencyController::class, 'rejectAgency'])->name('admin.user.rejectAgency');
@@ -72,8 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
+    Route::get('/Agency/details/{id}', [AgencyController::class, 'agency_details'])->name('admin.agency.details');
     Route::get('/Property', [PropertyController::class, 'index'])->name('admin.property.index');
     Route::get('/Property/{id}/details', [PropertyController::class, 'details'])->name('admin.property.details');
+    Route::post('/Property/switch-disable', [PropertyController::class, 'switchDisable'])->name('admin.property.switch_disable');
 
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');

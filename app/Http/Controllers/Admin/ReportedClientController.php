@@ -105,4 +105,26 @@ class ReportedClientController extends Controller
     {
         //
     }
+
+    public function details($id)
+    {
+
+        $reports = ReportedClient::where('reported_user_id',$id)->orderBy('id','DESC')->get();
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Reported Users",
+                'url'=>route('admin.reported_users')
+            ],
+            '2'=>[
+                'title'=>"Details",
+            ]
+        ];
+        $user_id = $id;
+        return view('admin.repoted_client.details',compact('breadcrumb','reports','user_id'));
+    }
 }

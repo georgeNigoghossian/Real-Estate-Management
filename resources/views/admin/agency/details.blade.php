@@ -26,7 +26,7 @@
                         <div class="card-header pb-0 p-3">
                             <div class="row">
                                 <div class="col-md-8 d-flex align-items-center">
-                                    <h6 class="mb-0">Agency Request Information</h6>
+                                    <h6 class="mb-0">Agency Information</h6>
                                 </div>
 
                             </div>
@@ -43,11 +43,6 @@
                                     {{$user->mobile}}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
                                             class="text-dark">Email:</strong> &nbsp;{{$user->email}}</li>
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Reason:<br></strong>{{$agency_request->reason}}</li>
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Date of request:</strong> &nbsp;{{$agency->created_at}}
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -119,44 +114,55 @@
         </div>
         <div id="map" class="rounded" style="height: 300px;"></div>
     </div>
-
-    @php($files = $agency->media)
-    @if(count($files) > 0)
+    @if(count($properties) > 0)
         <div class="card card-body mx-3 mx-md-4 mt-2">
             <hr class="horizontal gray-light my-2">
             <div class="col-12 mt-4">
                 <div class="mb-5 ps-3">
-                    <h6 class="mb-1">Files and Documents</h6>
+                    <h6 class="mb-1">Properties</h6>
                 </div>
                 <div class="row">
                     <div class="owl-carousel owl-theme">
-                        @foreach($files as $file)
+
+                        @foreach($properties as $property)
                             <div class="item">
+
                                 <div class="card card-blog card-plain">
-                                    <div class="bg-gradient-dark card-body p-3 border-radius-xl">
-                                        <a class="text-light d-block bg-light.bg-gradient shadow-xl"
-                                           href="{{$file["original_url"]}}">
-                                            <i class="m-2 material-icons">insert_drive_file</i>
-                                            <p class="m-2 text-light text-sm">{{$file->name}}</p></a>
+                                    <div class="card-header p-0 ">
+                                        <a class="d-block shadow-xl border-radius-xl">
+
+                                            <img src="{{$property["first_image_url"]}}" alt="img-blur-shadow"
+                                                 class="img-fluid shadow border-radius-xl">
+                                        </a>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <p class="mb-0 text-sm">{{isset($status[$property->status]) ? $status[$property->status] : ""}}</p>
+                                        <a href="javascript:;">
+                                            <h5>
+                                                {{$property->name}}
+                                            </h5>
+                                        </a>
+                                        <p class="mb-4 text-sm">
+                                            {{$property->description}}
+                                        </p>
+                                        <div class="d-flex align-items-center justify-content-between ">
+                                            <a href="{{route('admin.property.details',$property->id)}}"
+                                               type="button" class="btn btn-outline-primary btn-sm mb-0">
+                                                View Property
+                                            </a>
+
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+
                         @endforeach
                     </div>
+
                 </div>
             </div>
-            <div class="row flex-row-reverse mt-3">
-                <div class="col-sm-auto">
-                    <a href="{{ route('admin.user.verifyAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary">Verify Agency</button>
-                    </a>
-                </div>
-                <div class="col-sm-auto">
-                    <a href="{{ route('admin.user.rejectAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary" onclick=>Reject Agency</button>
-                    </a>
-                </div>
-            </div>
+
         </div>
     @endif
 @endsection

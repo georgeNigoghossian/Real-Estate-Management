@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 @include('admin.layouts.partials.head')
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show bg-gray-200">
 <div class="wrapper">
 
     @include('admin.layouts.partials.menus.aside')

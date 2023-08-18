@@ -23,6 +23,14 @@
                     @endswitch
                 </div>
             </div>
+            <div class="col-auto m-auto me-2">
+                <div class="form-check form-switch ml-auto">
+                    <label>
+                        Disabled
+                        <input name="disabled" class="form-check-input disableSwitch" type="checkbox" role="switch" data-id="{{$property->id}}"  {{$property->is_disabled==1 ? "checked" : ""}} />
+                    </label>
+                </div>
+            </div>
 
         </div>
         <div class="row">
@@ -98,7 +106,7 @@
                         <div class="card-body p-3 h-100">
 
                             <div id="galleryCarosel" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
+                                <div class="carousel-inner rounded">
                                     @if(is_array($media) && count($media)>0)
                                         @foreach($media as $key=>$photo)
                                             <div class="carousel-item {{$key==0 ? "active" : ""}}">
@@ -128,16 +136,22 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-xl-12">
-                    <div class="card">
-                        <div class="card-body">
+{{--                <div class="col-12 col-xl-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
 
-                            <div id="map" class="rounded" style="height: 500px;"></div>
-                        </div>
-                    </div>
-                </div>
+{{--                            <div id="map" class="rounded" style="height: 500px;"></div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
+    </div>
+    <div class="card card-body mx-3 mx-md-4 mt-2">
+        <div class="mb-5 ps-3">
+            <h6 class="mb-1">Location of Property</h6>
+        </div>
+        <div id="map" class="rounded" style="height: 300px;"></div>
     </div>
 @endsection
 
