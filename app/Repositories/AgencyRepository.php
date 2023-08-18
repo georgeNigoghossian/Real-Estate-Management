@@ -116,4 +116,9 @@ class AgencyRepository extends BaseRepository
         return $this->show($agency);
     }
 
+    public function get_agency_user($id)
+    {
+        return Agency::where('id', $id)->with('creator', 'creator.properties')->first();
+    }
+
 }
