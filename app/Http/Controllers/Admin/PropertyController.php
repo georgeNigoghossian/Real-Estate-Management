@@ -46,7 +46,7 @@ class PropertyController extends Controller
                 'url'=>route('admin.home'),
             ],
             '1'=>[
-                'title'=>"Property",
+                'title'=>"Properties",
 
             ]
         ];
@@ -65,6 +65,17 @@ class PropertyController extends Controller
         //
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Property $property
+     * @return JsonResponse
+     */
+    public function show(Property $property)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -100,4 +111,50 @@ class PropertyController extends Controller
         //
     }
 
+    public function details($id){
+        $property = $this->property_repository->disableProperty($id);
+
+        $breadcrumb =  [
+            '0'=>[
+                'title'=>"Dashboard",
+                'url'=>route('admin.home'),
+            ],
+            '1'=>[
+                'title'=>"Properties",
+                'url'=>route('admin.property.index')
+            ],
+            '2'=>[
+                'title'=>"Details",
+            ]
+        ];
+
+        $property->getMedia();
+        $media = $property["media"]->toArray();
+
+        if(count($media) == 0 ){
+            $media=asset('assets/img/home-decor-1.jpg');
+        }
+
+        $type="";
+        $additional_data=[];
+        if($property->agricultural){
+            $type="Agricultural";
+            $additional_data["Water Sources"]=$property->agricultural->water_sources != null ? $property->agricultural->water_sources : "";
+        }elseif($property->residential){
+            $type="Residential";
+            $additional_data["Number Of Bedrooms"]=$property->residential->num_of_bedrooms != null ? $property->residential->num_of_bedrooms : "";
+            $additional_data["Number Of Bathrooms"]=$property->residential->num_of_bathrooms != null ? $property->residential->num_of_bathrooms : "";
+            $additional_data["Number Of Balconies"]=$property->residential->num_of_balconies != null ? $property->residential->num_of_balconies : "";
+            $additional_data["Number Of Living Rooms"]=$property->residential->num_of_living_rooms != null ? $property->residential->num_of_living_rooms : "";
+            $additional_data["Floor"]=$property->residential->floor != null ? $property->residential->floor : "";
+        }elseif($property->commercial){
+            $type="Commercial";
+            $additional_data["Number Of Bathrooms"]=$property->commercial->num_of_bathrooms != null ? $property->commercial->num_of_bathrooms : "";
+            $additional_data["Number Of Balconies"]=$property->commercial->num_of_balconies != null ? $property->commercial->num_of_balconies : "";
+            $additional_data["Floor"]=$property->commercial->floor != null ? $property->commercial->floor : "";
+
+        }
+
+        return view('admin.property.details',compact('property','breadcrumb','media','type','additional_data'));
+    }
 }

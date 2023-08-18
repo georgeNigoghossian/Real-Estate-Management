@@ -17,6 +17,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+
         $validation_rules = [
             'mobile'=>'required',
             'password'=>'required',
@@ -81,6 +82,7 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
     }
+
 
     public function redirectPath()
     {

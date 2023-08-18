@@ -13,6 +13,11 @@ use \App\Http\Controllers\Admin\PropertyController;
 use \App\Http\Controllers\Admin\AgencyController;
 use \App\Http\Controllers\Admin\NotificationController;
 
+Route::get('/', function () {
+    return redirect('admin/dashboard');
+});
+
+
 Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [LoginController::class, 'login'])->name('admin.post_login');
 Route::get('/run', [AdminController::class, 'run'])->name('admin.admins.run');
@@ -67,6 +72,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
     Route::get('/Property', [PropertyController::class, 'index'])->name('admin.property.index');
+    Route::get('/Property/{id}/details', [PropertyController::class, 'details'])->name('admin.property.details');
+
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');
 
