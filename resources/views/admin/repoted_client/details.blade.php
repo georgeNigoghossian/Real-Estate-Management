@@ -12,9 +12,9 @@
 
 
                     @foreach($reports as $report)
-                        <p><b>Reporter:</b>{{ $report->reportingUser->name }}</p>
-                        <p><b>Reporting Date :</b>{{ date('Y-m-d H:i:s', strtotime($report->created_at)) }}</p>
-                    <p><b>Category:</b>{{ $report->reportCategory != null ? $report->reportCategory->name  : ""}}</p>
+                        <p><b>Reporter: </b>{{ $report->reportingUser->name }}</p>
+                        <p><b>Reporting Date: </b>{{ date('Y-m-d H:i:s', strtotime($report->created_at)) }}</p>
+                    <p><b>Category: </b>{{ $report->reportCategory != null ? $report->reportCategory->name  : ""}}</p>
                         <b>Description:</b>
                         <p>{!! $report->description !!}</p>
                         <hr class="block-user-hr">

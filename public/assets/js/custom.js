@@ -57,7 +57,47 @@ $(document).ready(function () {
         }
     });
 
+    $(".disableSwitch").on('change', function () {
+        var id = $(this).attr('data-id');
+        var is_disabled;
 
+        is_disabled = ($(this).is(':checked')) ? 1 : 0;
+
+        var checkbox = $(this); // Store the checkbox element
+
+        if (!checkbox.data('initialClick')) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will lead to the property being disabled from user viewing",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: routes.switchDisable,
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            'is_disabled': is_disabled,
+                            'id': id
+                        },
+
+                    });
+                    location.reload();
+                } else {
+                    checkbox.data('initialClick', true);
+                    checkbox.trigger('click');
+                }
+            })
+        } else {
+            checkbox.removeData('initialClick');
+        }
+    });
 
     $(".tagActive").on('change', function () {
         var id = $(this).attr('data-id');

@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/Agency/details/{id}', [AgencyController::class, 'agency_details'])->name('admin.agency.details');
     Route::get('/Property', [PropertyController::class, 'index'])->name('admin.property.index');
     Route::get('/Property/{id}/details', [PropertyController::class, 'details'])->name('admin.property.details');
+    Route::post('/Property/switch-disable', [PropertyController::class, 'switchDisable'])->name('admin.property.switch_disable');
 
 
     Route::get('/AgencyRequests', [AgencyController::class, 'requests_index'])->name('admin.agency_requests.index');

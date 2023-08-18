@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Property\PropertyDisableEnableRequest;
 use App\Models\Property\Property;
 use App\Repositories\AgencyRepository;
 use App\Repositories\PropertyRepository;
@@ -157,4 +158,16 @@ class PropertyController extends Controller
 
         return view('admin.property.details',compact('property','breadcrumb','media','type','additional_data'));
     }
+    public function switchDisable(Request $request)
+    {
+        $status = $request->is_disabled;
+        $property_id = $request->id;
+        $this->property_repository->changeDisableStatus($property_id,$status);
+
+        if(isset($request->needs_redirect) && $request->needs_redirect==1){
+            return redirect()->back();
+        }
+        return redirect()->route('admin.property.details', ['id'=>$property_id]);
+    }
+
 }

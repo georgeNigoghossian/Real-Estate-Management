@@ -23,6 +23,14 @@
                     @endswitch
                 </div>
             </div>
+            <div class="col-auto m-auto me-2">
+                <div class="form-check form-switch ml-auto">
+                    <label>
+                        Disabled
+                        <input name="disabled" class="form-check-input disableSwitch" type="checkbox" role="switch" data-id="{{$property->id}}"  {{$property->is_disabled==1 ? "checked" : ""}} />
+                    </label>
+                </div>
+            </div>
 
         </div>
         <div class="row">
