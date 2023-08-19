@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Agency\Agency;
+use App\Models\AgencyRequest;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -47,6 +49,12 @@ class UserTableSeeder extends Seeder
             'latitude' => 56.5,
             'longitude' => 23.7,
         ]);
+        $request = AgencyRequest::create([
+            'reason' => 'I want to become an agency.',
+            'user_id' => $agency_user->id
+        ]);
+        DB::table('agency_request_agency')->insert(['agency_id' => $agency->id, 'agency_request_id' => $request->id]);
+
         $role = Role::find(3);
         $agency_user->roles()->attach($role);
         $agency->creator()->associate($agency_user);
