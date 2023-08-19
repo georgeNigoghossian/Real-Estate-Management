@@ -30,7 +30,7 @@ class CommercialStoreRequest extends FormRequest
             'longitude' => ['numeric', 'between:-180,180'],
             'service' => [Rule::in(array_column(ServiceEnum::cases(), 'name'))],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'num_of_bathrooms' => ['required', 'integer', 'min:1'],
+            'num_of_bathrooms' => ['required', 'integer', 'min:0'],
             'num_of_balconies' => ['required', 'integer', 'min:0'],
             'floor' => ['nullable', 'integer'],
             'specialAttributes' => ['string'],

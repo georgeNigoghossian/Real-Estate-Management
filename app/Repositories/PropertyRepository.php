@@ -181,7 +181,7 @@ class PropertyRepository extends BaseRepository
                 'user_id' => $user->id
             ));
 
-        $agency = $property->user->agency();
+        $agency = $property->user->agency()->first();
         if ($agency->exists()) {
             $ratings_avg = QueryBuilder::for(RateProperty::class)
                 ->whereHas('property', function ($q) use ($property) {
@@ -189,8 +189,8 @@ class PropertyRepository extends BaseRepository
                         $q->where('id', '=', $property->user->id);
                     });
                 })->avg('rate');
-            $user->agency->rate = $ratings_avg;
-            $user->agency->update(['rate' => $ratings_avg]);
+            $agency->rate = $ratings_avg;
+            $agency->save();
         }
         return $rating;
     }

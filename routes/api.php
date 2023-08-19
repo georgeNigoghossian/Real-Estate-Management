@@ -10,6 +10,7 @@ use App\Http\Controllers\App\Property\CommercialController;
 use App\Http\Controllers\App\Property\PropertyController;
 use App\Http\Controllers\App\Property\ResidentialController;
 use App\Http\Controllers\App\Property\TagController;
+use App\Http\Controllers\App\ReportCategoryController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassportAuth;
@@ -63,6 +64,7 @@ Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cor
     //Ratings
     Route::post('{property}/rate', [PropertyController::class, 'rateProperty']);
     Route::get('/my-ratings', [PropertyController::class, 'myRatings']);
+    Route::get('{property}/my-rating', [PropertyController::class, 'myPropertyRating']);
     Route::get('{property}/ratings', [PropertyController::class, 'propertyRatings']);
 
 
@@ -89,9 +91,14 @@ Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], f
     Route::apiResource('/regions', RegionController::class);
     Route::get('/agencies/request-status', [AgencyController::class, 'promoteRequestStatus'])->name('agencies.request-status.api');
     Route::apiResource('/agencies', AgencyController::class);
+
+    //Notifications
+    Route::post('/send-notification', [FireBaseNotificationController::class, 'send']);
+    Route::get('users/{user}/notifications', [NotificationController::class, 'myNotifications']);
+
+    //report categories
+    Route::get('/report-categories', [ReportCategoryController::class, 'index']);
+
 });
 
 
-//Notifications
-Route::post('/send-notification', [FireBaseNotificationController::class, 'send']);
-Route::get('users/{user}/notifications', [NotificationController::class, 'myNotifications']);

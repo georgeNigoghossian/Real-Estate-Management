@@ -41,6 +41,6 @@ class AgriculturalRepository
 
     public function destroy(Agricultural $agricultural): void
     {
-        $agricultural->delete();
+        $agricultural->property()->delete();
     }
 }

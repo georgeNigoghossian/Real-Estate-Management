@@ -24,31 +24,31 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    public function reportClient($reporting_user_id,$reported_user_id,$report_category_id,$description){
-
-        $reportedClient = ReportedClient::create([
-            'description'=>$description,
-            'reporting_user_id'=>$reporting_user_id,
-            'reported_user_id'=>$reported_user_id,
-            'report_category_id'=>$report_category_id,
+    public function reportClient($reporting_user_id, $reported_user_id, $report_category_id, $description)
+    {
+        return ReportedClient::create([
+            'description' => $description ?: null,
+            'reporting_user_id' => $reporting_user_id,
+            'reported_user_id' => $reported_user_id,
+            'report_category_id' => $report_category_id,
         ]);
-
-        return $reportedClient;
     }
 
-    public function deleteAccount($id){
+    public function deleteAccount($id)
+    {
         $user = User::find($id);
-        if($user){
+        if ($user) {
             $user->delete();
             return true;
-        }else{
+        } else {
             return false;
         }
 
 
     }
 
-    public function get_all($custom_cond = [], $perPage = 10) {
+    public function get_all($custom_cond = [], $perPage = 10)
+    {
         $query = User::query();
 
 
@@ -64,6 +64,7 @@ class UserRepository extends BaseRepository
 
         return $query->paginate($perPage);
     }
+
     public function get_single_user($id)
     {
         $user = User::find($id);
@@ -79,11 +80,11 @@ class UserRepository extends BaseRepository
     public function updateAccount($user, $values)
     {
 
-        $allowed_fields = ['name', 'email', 'facebook', 'mobile', 'gender', 'date_of_birth','fcm_token'];
+        $allowed_fields = ['name', 'email', 'facebook', 'mobile', 'gender', 'date_of_birth', 'fcm_token'];
 
         foreach ($allowed_fields as $field) {
 
-            if (isset($values[$field]) && $values[$field] != null){
+            if (isset($values[$field]) && $values[$field] != null) {
                 $user->$field = $values[$field];
             }
         }
@@ -92,16 +93,19 @@ class UserRepository extends BaseRepository
     }
 
 
-    public function changeBlockStatus($user_id,$status){
-        $user = User::where('id',$user_id)->update([
-            'is_blocked'=>$status,
+    public function changeBlockStatus($user_id, $status)
+    {
+        $user = User::where('id', $user_id)->update([
+            'is_blocked' => $status,
         ]);
         return $user;
     }
 
-    public function updatePriority($user_id,$priority){
-        $user=User::where('id',$user_id)->update([
-            'priority'=>$priority
+    public function updatePriority($user_id, $priority)
+    {
+        $user = User::where('id', $user_id)->update([
+            'priority' => $priority
         ]);
     }
+
 }

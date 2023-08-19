@@ -8,6 +8,7 @@ use App\Models\MobileVerification;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class SMSVerificationController extends Controller
 {
@@ -42,7 +43,7 @@ class SMSVerificationController extends Controller
 
         $url = "https://services.mtnsyr.com:7443/general/MTNSERVICES/ConcatenatedSender.aspx?User=ppa277&Pass=dnat121717&From=Road Ride&Gsm=$gsm&Msg=$message&Lang=1";
 
-        //$response = Http::post($url);
+        $response = Http::post($url);
 
         $appController = new AppController();
         return $request->wantsJson()

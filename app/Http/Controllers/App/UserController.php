@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\reportClientRequest;
+use App\Models\ReportedClient;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\UserRepository;
@@ -126,24 +128,32 @@ class UserController extends AppController
             return $this->response(false, null, __("api.messages.failed_delete_account"), null);
     }
 
-    public function reportClient(Request $request)
+    public function reportClient(reportClientRequest $request)
     {
 
         $reporting_user_id = auth()->user()->id;
         $reported_user_id = $request->reported_user_id;
         $report_category_id = $request->report_category_id;
         $description = $request->description;
-
+        $report= ReportedClient::where('reporting_user_id',$reporting_user_id)->where('reporting_user_id',$reporting_user_id);
+        if($report->exists()){
+            return $this->response(false, null,'You can only report the same user once');
+        }
 
         $data = $this->userRepository->reportClient($reporting_user_id, $reported_user_id, $report_category_id, $description);
 
         if ($data)
-            return $this->response(true, $data, __("api.messages.success_report_client"), 200);
+            return $this->response(true, $data, __("api.messages.success_report_client"));
         else
-            return $this->response(false, null, __("api.messages.failed_report_client"), null);
+            return $this->response(false, null, __("api.messages.failed_report_client"));
     }
 
     public function getUserByToken(): JsonResponse
+    {
+        return $this->response(true, auth()->user());
+    }
+
+    public function reportUser(): JsonResponse
     {
         return $this->response(true, auth()->user());
     }

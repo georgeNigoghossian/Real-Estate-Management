@@ -41,6 +41,6 @@ class CommercialRepository
 
     public function destroy(Commercial $commercial): void
     {
-        $commercial->delete();
+        $commercial->property()->delete();
     }
 }

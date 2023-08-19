@@ -44,7 +44,7 @@ class PropertyController extends AppController
     {
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
         $properties = QueryBuilder::for(Property::class)
-            ->with('tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media','city', 'country')
+            ->with('ratings','tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
             ->with('user', function ($q) {
                 $q->withWhereHas('agency')->orWhereDoesntHave('agency');
             })
@@ -282,7 +282,17 @@ class PropertyController extends AppController
 
     }
 
-    public function propertyRatings(Request $request,Property $property): JsonResponse
+    public function myPropertyRating(Property $property): JsonResponse
+    {
+        $user = auth()->user()->id;
+        $rating = RateProperty::where('property_id', '=', $property->id)->where('user_id', '=', $user)->get();
+        if ($rating->isEmpty()) {
+            return $this->response(false, null, 'you don\'t have rating for this property');
+        }
+        return $this->response(true, $rating);
+    }
+
+    public function propertyRatings(Request $request, Property $property): JsonResponse
     {
         $ratings = QueryBuilder::for(RateProperty::class)
             ->where('property_id', '=', $property->id)

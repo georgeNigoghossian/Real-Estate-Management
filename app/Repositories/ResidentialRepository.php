@@ -40,6 +40,6 @@ class ResidentialRepository
 
     public function destroy(Residential $residential): void
     {
-        $residential->delete();
+        $residential->property()->delete();
     }
 }

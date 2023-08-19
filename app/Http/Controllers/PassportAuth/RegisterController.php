@@ -58,7 +58,7 @@ class RegisterController extends Controller
             'gender' => ['required'],
             'mobile' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'fcm_token' => ['required', 'string']
+            'fcm_token' => ['string']
         ]);
     }
 
@@ -88,7 +88,7 @@ class RegisterController extends Controller
             'mobile' => $data['mobile'],
             'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
-
+            'fcm_token' => $data['fcm_token'],
         ]);
         $role = Role::find(2);
         $user->roles()->attach($role);

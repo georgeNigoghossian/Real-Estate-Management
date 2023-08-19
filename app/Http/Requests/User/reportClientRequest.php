@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Property;
+namespace App\Http\Requests\User;
 
-use App\Models\Property\Property;
-use App\Models\User;
-use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RatePropertyRequest extends FormRequest
+class reportClientRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -18,8 +14,9 @@ class RatePropertyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'review' => ['sometimes', 'string', 'max:255'],
-            'rate' => ['required', 'numeric', 'min:0']
+            'description' => ['nullable', 'string'],
+            'reported_user_id' => ['required', 'exists:users,id'],
+            'report_category_id' => ['required', 'exists:report_categories,id'],
         ];
     }
 
@@ -30,6 +27,6 @@ class RatePropertyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return PropertyPolicy::rate($this->route()->property);
+        return $this->reported_user_id != auth()->user()->id;
     }
 }

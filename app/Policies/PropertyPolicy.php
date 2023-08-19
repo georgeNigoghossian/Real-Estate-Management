@@ -51,9 +51,10 @@ class PropertyPolicy
      *
      * @return Response|bool
      */
-    public static function rate(): Response|bool
+    public static function rate($property): Response|bool
     {
         $user = auth()->user();
-        return $user->hasRole('client') || $user->hasRole('agency');
+        $not_same = $user->id != $property->user->id;
+        return $not_same && ($user->hasRole('client') || $user->hasRole('agency'));
     }
 }

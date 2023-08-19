@@ -5,6 +5,7 @@ namespace App\Models\Property;
 use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\Region;
+use App\Models\RateProperty;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,9 @@ class Property extends Model implements HasMedia
 
     protected $appends = ['type'];
 
+    public function ratings(){
+        return $this->hasMany(RateProperty::class);
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

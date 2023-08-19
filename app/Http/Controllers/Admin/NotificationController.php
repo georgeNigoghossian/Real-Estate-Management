@@ -22,7 +22,7 @@ class NotificationController extends Controller
 
 
         $validation_rules = [
-            "title"=>"required",
+            "title" => "required",
             "body" => "required",
         ];
 
@@ -38,8 +38,8 @@ class NotificationController extends Controller
             ]
         ];
 
-        $users = User::where('is_blocked','!=','1')->get();
-        return view('admin.notification.create', compact('jsValidator', 'breadcrumb','users'));
+        $users = User::where('is_blocked', '!=', '1')->get();
+        return view('admin.notification.create', compact('jsValidator', 'breadcrumb', 'users'));
     }
 
     public function send(Request $request)
@@ -47,12 +47,12 @@ class NotificationController extends Controller
         $notification = [];
 
         $validation_rules = [
-            "title"=>"required",
+            "title" => "required",
             "body" => "required",
         ];
 
         $request->validate($validation_rules);
-        $data =  $request->toArray();
+        $data = $request->toArray();
 
 
         $notification['title'] = $data['title'];
@@ -86,17 +86,17 @@ class NotificationController extends Controller
             $users = User::all();
         }
 
-        if(array_key_exists("sendTo",$data) && $data["sendTo"]=="all"){
-            $users = User::where('is_blocked',0)->get();
-            foreach($users as $key=>$user){
-                $data["registration_ids"][$key]=$user->fcm_token;
+        if (array_key_exists("sendTo", $data) && $data["sendTo"] == "all") {
+            $users = User::where('is_blocked', 0)->get();
+            foreach ($users as $key => $user) {
+                $data["registration_ids"][$key] = $user->fcm_token;
             }
         }
 
-        if(array_key_exists("sendTo",$data) && $data["sendTo"]=="specific"){
-            $users = User::where('is_blocked',0)->whereIn('id',$data["selectedUsers"])->get();
-            foreach($users as $key=>$user){
-                $data["registration_ids"][$key]=$user->fcm_token;
+        if (array_key_exists("sendTo", $data) && $data["sendTo"] == "specific") {
+            $users = User::where('is_blocked', 0)->whereIn('id', $data["selectedUsers"])->get();
+            foreach ($users as $key => $user) {
+                $data["registration_ids"][$key] = $user->fcm_token;
             }
         }
 

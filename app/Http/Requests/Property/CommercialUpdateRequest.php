@@ -33,7 +33,7 @@ class CommercialUpdateRequest extends FormRequest
             'latitude' => ['numeric', 'between:-90,90'],
             'longitude' => ['numeric', 'between:-180,180'],
             'status' => [Rule::in(array_column(StatusEnum::cases(), 'name'))],
-            'num_of_bathrooms' => ['integer', 'min:1'],
+            'num_of_bathrooms' => ['integer', 'min:0'],
             'num_of_balconies' => ['integer', 'min:0'],
             'floor' => ['nullable','integer'],
             'specialAttributes' => ['string']

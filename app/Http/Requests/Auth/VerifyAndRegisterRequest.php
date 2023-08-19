@@ -25,7 +25,7 @@ class VerifyAndRegisterRequest extends FormRequest
             'mobile' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'verification_code' => ['required', 'numeric', 'digits:4', 'exists:mobile_verifications'],
-            'fcm_token' => ['required', 'string']
+            'fcm_token' => ['string']
         ];
     }
 

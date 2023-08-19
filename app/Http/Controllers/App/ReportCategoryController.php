@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\ReportCategory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ReportCategoryController extends AppController
@@ -11,11 +12,12 @@ class ReportCategoryController extends AppController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $report_categories = ReportCategory::all();
+        return $this->response(true, $report_categories, 'All report categories');
     }
 
     /**
@@ -31,7 +33,7 @@ class ReportCategoryController extends AppController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +44,7 @@ class ReportCategoryController extends AppController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param \App\Models\ReportCategory $reportCategory
      * @return \Illuminate\Http\Response
      */
     public function show(ReportCategory $reportCategory)
@@ -53,7 +55,7 @@ class ReportCategoryController extends AppController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param \App\Models\ReportCategory $reportCategory
      * @return \Illuminate\Http\Response
      */
     public function edit(ReportCategory $reportCategory)
@@ -64,8 +66,8 @@ class ReportCategoryController extends AppController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ReportCategory $reportCategory
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ReportCategory $reportCategory)
@@ -76,7 +78,7 @@ class ReportCategoryController extends AppController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ReportCategory  $reportCategory
+     * @param \App\Models\ReportCategory $reportCategory
      * @return \Illuminate\Http\Response
      */
     public function destroy(ReportCategory $reportCategory)
