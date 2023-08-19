@@ -65,9 +65,6 @@ Route::group(['prefix' => 'properties', 'middleware' => ['auth:api', 'api', 'cor
     Route::post('{property}/rate', [PropertyController::class, 'rateProperty']);
     Route::get('/my-ratings', [PropertyController::class, 'myRatings']);
     Route::get('{property}/my-rating', [PropertyController::class, 'myPropertyRating']);
-    Route::get('{property}/ratings', [PropertyController::class, 'propertyRatings']);
-
-
 });
 
 // public routes
@@ -79,6 +76,7 @@ Route::get('/tags', [TagController::class, 'index']);
 Route::get('/agriculturals', [AgriculturalController::class, 'index']);
 Route::get('/residentials', [ResidentialController::class, 'index']);
 Route::get('/commercials', [CommercialController::class, 'index']);
+Route::get('{property}/ratings', [PropertyController::class, 'propertyRatings']);
 
 
 Route::group(['middleware' => ['auth:api', 'api', 'cors', 'is_sms_verified']], function () {
