@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Agency\Agency;
 use App\Models\ReportedClient;
 use App\Models\User;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
@@ -50,10 +51,16 @@ class UserRepository extends BaseRepository
     public function get_all($custom_cond = [], $perPage = 10) {
         $query = User::query();
 
+
         if (count($custom_cond) > 0) {
             $custom_cond = implode(' AND ', $custom_cond);
             $query = $query->whereRaw($custom_cond);
         }
+
+        $usersWithAgency = Agency::whereNotNull('created_by')->pluck('created_by');
+
+        $query = $query->whereNotIn('id', $usersWithAgency);
+
 
         return $query->paginate($perPage);
     }

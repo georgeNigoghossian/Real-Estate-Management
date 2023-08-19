@@ -124,6 +124,7 @@ class AdminController extends Controller
         $adminRole = Role::findByName('admin');
         $admin->assignRole($adminRole);
 
+        session()->flash('success', 'Admin Created successfully!');
         return redirect()->route('admin.admins.list');
     }
 
@@ -214,6 +215,7 @@ class AdminController extends Controller
         }
         $admin = $admin->update($data);
 
+        session()->flash('success', 'Admin Updated successfully!');
         return redirect()->route('admin.admins.list');
     }
 
@@ -292,6 +294,7 @@ class AdminController extends Controller
         }
         $admin = $admin->update($data);
 
+        session()->flash('success', 'Profile Information Updated successfully!');
         return redirect()->back();
     }
 

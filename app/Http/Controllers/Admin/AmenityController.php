@@ -99,6 +99,7 @@ class AmenityController extends Controller
 
         $amenity = $this->amenityRepository->store($data);
 
+        session()->flash('success', 'Amenity Created successfully!');
 
         return redirect()->route('admin.amenities');
     }
@@ -187,7 +188,7 @@ class AmenityController extends Controller
         $amenity = \App\Models\Property\Amenity::find($id);
         $amenity = $this->amenityRepository->update($data,$amenity);
 
-
+        session()->flash('success', 'Amenity Updated successfully!');
         return redirect()->route('admin.amenities');
     }
 

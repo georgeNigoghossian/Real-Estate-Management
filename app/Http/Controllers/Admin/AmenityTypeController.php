@@ -86,6 +86,7 @@ class AmenityTypeController extends AppController
         ];
         $amenity = $this->amenityRepository->storeAmityType($data);
 
+        session()->flash('success', 'Amenity Type Created successfully!');
 
         return redirect()->route('admin.amenity_types');
     }
@@ -139,7 +140,7 @@ class AmenityTypeController extends AppController
         $amenity_type = AmenityType::find($id);
         $amenity = $this->amenityRepository->updateAmenityType($data,$amenity_type);
 
-
+        session()->flash('success', 'Amenity Type Updated successfully!');
         return redirect()->route('admin.amenity_types');
     }
 

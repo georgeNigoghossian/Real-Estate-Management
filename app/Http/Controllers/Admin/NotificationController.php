@@ -63,7 +63,7 @@ class NotificationController extends Controller
         $notification['sound'] = "default";
         $notification['color'] = "#333333";
         $db_notification = [
-            'head' => $data['title'],
+            'title' => $data['title'],
             'body' => $data['body']
         ];
         if (array_key_exists('image', $data)) {

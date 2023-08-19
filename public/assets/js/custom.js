@@ -273,3 +273,28 @@ $(document).ready(function(){
         }
     })
 });
+
+$(".delete-btn").on('click', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        }
+    });
+});

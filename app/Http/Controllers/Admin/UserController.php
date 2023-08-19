@@ -87,6 +87,8 @@ class UserController extends Controller
         }
 
         if(isset($request->redirect_to_reported_clients) && $request->redirect_to_reported_clients){
+            session()->flash('success', 'User Blocked successfully!');
+
             return redirect()->route('admin.reported_users');
         }
     }

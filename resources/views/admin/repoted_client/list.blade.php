@@ -3,6 +3,12 @@
 @section('content')
 
 {{--    @include('admin.repoted_client.filters')--}}
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
     <div class="card">
         <div class="table-responsive">
             <table class="table align-items-center mb-0">

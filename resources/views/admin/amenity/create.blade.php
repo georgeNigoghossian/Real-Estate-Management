@@ -44,7 +44,7 @@
                         <option value="" selected>Select Amenity Type</option>
                         @foreach($amenity_types as $key=>$type)
 
-                            <option value="{{$type["id"]}}" {{isset($amenity) && isset($amenity->type) && $amenity->type->id == $type["id"] ? "selected" : ""}}>{{$type["name"]}}</option>
+                            <option value="{{$type["id"]}}" {{isset($amenity) && isset($amenity->type) && $amenity->type->id == $type["id"] ? "selected" : ""}}>{{$type["name_en"]}}</option>
                         @endforeach
                     </select>
                 </div>

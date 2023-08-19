@@ -3,6 +3,12 @@
 @section('content')
 
     @include('admin.admins.filters')
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="card">
         <div class="table-responsive">
             <table class="table align-items-center mb-0">
@@ -45,7 +51,7 @@
 
 
                         <td class="text-start">
-                            <a class="btn btn-icon btn-2 btn-primary text-end px-3"
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3 delete-btn"
                                href="{{route('admin.admins.delete',['id'=>$admin->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
                             </a>

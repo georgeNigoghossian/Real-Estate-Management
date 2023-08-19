@@ -105,6 +105,7 @@ class TagController extends Controller
 
         $tag = $this->tagRepository->store($data);
 
+        session()->flash('success', 'Tag Created successfully!');
 
         return redirect()->route('admin.tags');
     }
@@ -206,7 +207,7 @@ class TagController extends Controller
 
         $tag = $this->tagRepository->update($data,$tag);
 
-
+        session()->flash('success', 'Tag Updated successfully!');
         return redirect()->route('admin.tags');
     }
 

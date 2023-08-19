@@ -6,6 +6,12 @@
     @include('admin.tag.filters')
 
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="card">
         <div class="table-responsive">
             <table class="table align-items-center mb-0">
@@ -63,7 +69,7 @@
                         </td>
 
                         <td class="text-start">
-                            <a class="btn btn-icon btn-2 btn-primary text-end px-3" href="{{route('admin.tags.delete',['id'=>$tag->id])}}">
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3 delete-btn" href="{{route('admin.tags.delete',['id'=>$tag->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
                             </a>
                         </td>

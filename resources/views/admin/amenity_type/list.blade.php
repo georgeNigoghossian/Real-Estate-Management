@@ -5,6 +5,11 @@
 
     @include('admin.amenity_type.filters')
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="card">
         <div class="table-responsive">
@@ -46,7 +51,7 @@
                         </td>
 
                         <td class="text-start">
-                            <a class="btn btn-icon btn-2 btn-primary text-end px-3" href="{{route('admin.amenity_types.delete',['id'=>$amenity_type->id])}}">
+                            <a class="btn btn-icon btn-2 btn-primary text-end px-3 delete-btn" href="{{route('admin.amenity_types.delete',['id'=>$amenity_type->id])}}">
                                 <span class="btn-inner--icon"><i class="material-icons">delete</i></span>
                             </a>
                         </td>
