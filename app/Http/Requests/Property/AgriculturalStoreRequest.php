@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Property;
 
+
 use App\Enums\ServiceEnum;
 use App\Enums\StatusEnum;
 use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Kreait\Firebase\Contract\Auth;
 
 class AgriculturalStoreRequest extends FormRequest
 {
@@ -21,7 +21,7 @@ class AgriculturalStoreRequest extends FormRequest
         return [
             'images' => ['required', 'min:3'],
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'area' => ['numeric'],
+            'area' => ['numeric','min:1'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
             'price' => ['required', 'numeric', 'min:0'],

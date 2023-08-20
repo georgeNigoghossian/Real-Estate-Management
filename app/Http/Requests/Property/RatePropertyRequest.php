@@ -19,7 +19,7 @@ class RatePropertyRequest extends FormRequest
     {
         return [
             'review' => ['sometimes', 'string', 'max:255'],
-            'rate' => ['required', 'numeric', 'min:0']
+            'rate' => ['required', 'numeric', 'min:0', 'max:5']
         ];
     }
 

@@ -37,11 +37,19 @@ class Property extends Model implements HasMedia
         'is_disabled',
     ];
 
-    protected $appends = ['type'];
+    protected $appends = ['type', 'rating'];
 
-    public function ratings(){
+
+    public function getRatingAttribute()
+    {
+        return round($this->ratings()->avg('rate'), 2);
+    }
+
+    public function ratings()
+    {
         return $this->hasMany(RateProperty::class);
     }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

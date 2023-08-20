@@ -27,6 +27,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertyController extends AppController
 {
+
     private PropertyRepository $property_repository;
 
     public function __construct(PropertyRepository $property_repository)
@@ -43,8 +44,8 @@ class PropertyController extends AppController
     public function index(Request $request): JsonResponse
     {
         $priority_sort = AllowedSort::custom('owner-priority', new PrioritySort, 'properties')->defaultDirection(SortDirection::DESCENDING);
-        $properties = QueryBuilder::for(Property::class)
-            ->with('ratings','tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
+        $result = QueryBuilder::for(Property::class)
+            ->with('ratings', 'tags', 'amenities', 'residential', 'commercial', 'agricultural', 'media', 'city', 'country')
             ->with('user', function ($q) {
                 $q->withWhereHas('agency')->orWhereDoesntHave('agency');
             })
@@ -71,7 +72,7 @@ class PropertyController extends AppController
             ])
             ->defaultSort($priority_sort)
             ->paginate($request->per_page);
-        return $this->response(true, $properties, "All Properties");
+        return $this->response(true, $result, "All Properties");
     }
 
 

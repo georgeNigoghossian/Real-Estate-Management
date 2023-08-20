@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Notifications;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\NotificationRequest;
 use App\Models\Notification;
+use App\Models\Property\Property;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
@@ -14,6 +15,7 @@ class FireBaseNotificationController extends Controller
     public function send(NotificationRequest $request): JsonResponse
     {
         $notification = [];
+        $property = Property::where('id', 1)->with('media')->first();
         $data = $request->validated();
         $notification['title'] = $data['title'];
         $notification['body'] = $data['body'];
@@ -22,15 +24,22 @@ class FireBaseNotificationController extends Controller
         $notification['content_available'] = "true";
         $notification['sound'] = "default";
         $notification['color'] = "#333333";
+        $notification['image'] = $property->media[0]->getUrl();
         $db_notification = [
             'title' => $data['title'],
             'body' => $data['body']
         ];
+
+        $db_notification = Notification::create($db_notification);
+
         if (array_key_exists('image', $data)) {
             $notification['image'] = $data['image'];
             $db_notification['image'] = $data['image'];
+            $db_notification
+                ->addMediaFromUrl($data['image'])
+                ->toMediaCollection();
         }
-        $db_notification = Notification::create($db_notification);
+
         $response = Http::withOptions(['verify' => false])
             ->withHeaders([
                 'Authorization' => env('FIREBASE_TOKEN'),
@@ -104,9 +113,11 @@ class FireBaseNotificationController extends Controller
         $notification['content_available'] = "true";
         $notification['sound'] = "default";
         $notification['color'] = "#333333";
+        $notification['image'] = $property->media[0]->getUrl();
         $db_notification = [
             'title' => $notification['title'],
-            'body' => $notification['body']
+            'body' => $notification['body'],
+            'image' => $notification['image'],
         ];
         $topic = '/topics/Property' . $property->id;
         Http::withOptions(['verify' => false])

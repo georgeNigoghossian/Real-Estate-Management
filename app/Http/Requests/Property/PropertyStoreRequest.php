@@ -21,7 +21,7 @@ class PropertyStoreRequest extends FormRequest
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
-            'area' => ['numeric'],
+            'area' => ['numeric','min:1'],
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['string'],
             'latitude' => ['numeric', 'between:-90,90'],

@@ -18,7 +18,7 @@ class AgriculturalUpdateRequest extends FormRequest
     {
         return [
             'name' => ['sometimes','string', 'min:3', 'max:255'],
-            'area' => ['numeric'],
+            'area' => ['numeric','min:1'],
             'price' => ['sometimes', 'numeric','min:0'],
             'tags' => ['sometimes', 'array', 'exists:tags,id'],
             'amenities' => ['sometimes', 'array', 'exists:amenities,id'],

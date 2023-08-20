@@ -21,7 +21,7 @@ class CommercialStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'area' => ['numeric'],
+            'area' => ['numeric','min:1'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
             'price' => ['required', 'numeric', 'min:0'],

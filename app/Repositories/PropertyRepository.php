@@ -182,7 +182,7 @@ class PropertyRepository extends BaseRepository
             ));
 
         $agency = $property->user->agency()->first();
-        if ($agency->exists()) {
+        if ($agency!=null) {
             $ratings_avg = QueryBuilder::for(RateProperty::class)
                 ->whereHas('property', function ($q) use ($property) {
                     $q->whereHas('user', function ($q) use ($property) {

@@ -25,7 +25,7 @@ class CommercialUpdateRequest extends FormRequest
         return [
             'images' => [],
             'name' => ['string', 'min:3', 'max:255'],
-            'area' => ['numeric'],
+            'area' => ['numeric','min:1'],
             'tags' => ['nullable', 'array', 'exists:tags,id'],
             'amenities' => ['nullable', 'array', 'exists:amenities,id'],
             'price' => ['numeric', 'min:0'],
