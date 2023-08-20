@@ -111,6 +111,18 @@
                 @endif
             </div>
         </div>
+        <div class="row flex-row-reverse mx-3 mx-md-4 mt-3">
+            <div class="col-sm-auto">
+                <a href="{{ route('admin.user.verifyAgency', ['id'=>$agency->id]) }}">
+                    <button class="btn btn-outline-primary">Verify Agency</button>
+                </a>
+            </div>
+            <div class="col-sm-auto">
+                <a href="{{ route('admin.user.rejectAgency', ['id'=>$agency->id]) }}">
+                    <button class="btn btn-outline-primary" onclick=>Reject Agency</button>
+                </a>
+            </div>
+        </div>
     </div>
 
     <div class="card card-body mx-3 mx-md-4 mt-2">
@@ -143,18 +155,6 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
-            </div>
-            <div class="row flex-row-reverse mt-3">
-                <div class="col-sm-auto">
-                    <a href="{{ route('admin.user.verifyAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary">Verify Agency</button>
-                    </a>
-                </div>
-                <div class="col-sm-auto">
-                    <a href="{{ route('admin.user.rejectAgency', ['id'=>$agency->id]) }}">
-                        <button class="btn btn-outline-primary" onclick=>Reject Agency</button>
-                    </a>
                 </div>
             </div>
         </div>
