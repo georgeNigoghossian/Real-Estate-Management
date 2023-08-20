@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CountryController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
 use \App\Http\Controllers\Admin\UserController;
@@ -70,6 +71,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/Admin', [AdminController::class, 'store'])->name('admin.admins.store');
     Route::post('/Admin/update/{id}', [AdminController::class, 'update'])->name('admin.admins.update');
 
+
+
+    Route::get('/Country', [CountryController::class, 'index'])->name('admin.country.index');
+    Route::post('/Country/create', [CountryController::class, 'create'])->name('admin.country.create');
+    Route::get('/Country/create', [CountryController::class, 'create_page'])->name('admin.country.create_page');
 
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
