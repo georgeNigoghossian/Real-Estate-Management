@@ -23,4 +23,10 @@ class City extends Model
         return $this->hasMany(Region::class);
     }
 
+    public $validation_rules =[
+        'name'=>'required',
+        'country_id'=>'required|exists:countries,id',
+    ];
+
+
 }
