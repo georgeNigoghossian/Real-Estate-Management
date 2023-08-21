@@ -29,69 +29,714 @@
   },
   {
     "id": 5,
+    "name": "New York",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 2
+  },
+  {
+    "id": 6,
+    "name": "Los Angeles",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 2
+  },
+  {
+    "id": 7,
+    "name": "Chicago",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 2
+  },
+  {
+    "id": 8,
+    "name": "Houston",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 2
+  },
+  {
+    "id": 9,
+    "name": "Toronto",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 3
+  },
+  {
+    "id": 10,
+    "name": "Vancouver",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 3
+  },
+  {
+    "id": 11,
+    "name": "Montreal",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 3
+  },
+  {
+    "id": 12,
+    "name": "Calgary",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 3
+  },
+  {
+    "id": 13,
+    "name": "London",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 4
+  },
+  {
+    "id": 14,
+    "name": "Manchester",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 4
+  },
+  {
+    "id": 15,
+    "name": "Birmingham",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 4
+  },
+  {
+    "id": 16,
+    "name": "Edinburgh",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 4
+  },
+  {
+    "id": 17,
+    "name": "Berlin",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 5
+  },
+  {
+    "id": 18,
+    "name": "Munich",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 5
+  },
+  {
+    "id": 19,
+    "name": "Hamburg",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 5
+  },
+  {
+    "id": 20,
+    "name": "Frankfurt",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 5
+  },
+  {
+    "id": 21,
+    "name": "Paris",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 6
+  },
+  {
+    "id": 22,
+    "name": "Marseille",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 6
+  },
+  {
+    "id": 23,
+    "name": "Lyon",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 6
+  },
+  {
+    "id": 24,
+    "name": "Toulouse",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 6
+  },
+  {
+    "id": 25,
+    "name": "Tokyo",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 7
+  },
+  {
+    "id": 26,
+    "name": "Osaka",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 7
+  },
+  {
+    "id": 27,
+    "name": "Yokohama",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 7
+  },
+  {
+    "id": 28,
+    "name": "Nagoya",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 7
+  },
+  {
+    "id": 29,
+    "name": "Beijing",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 8
+  },
+  {
+    "id": 30,
+    "name": "Shanghai",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 8
+  },
+  {
+    "id": 31,
+    "name": "Guangzhou",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 8
+  },
+  {
+    "id": 32,
+    "name": "Shenzhen",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 8
+  },
+  {
+    "id": 33,
+    "name": "Rio de Janeiro",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 9
+  },
+  {
+    "id": 34,
+    "name": "Sao Paulo",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 9
+  },
+  {
+    "id": 35,
+    "name": "Brasilia",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 9
+  },
+  {
+    "id": 36,
+    "name": "Salvador",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 9
+  },
+  {
+    "id": 37,
+    "name": "Moscow",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 10
+  },
+  {
+    "id": 38,
+    "name": "Saint Petersburg",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 10
+  },
+  {
+    "id": 39,
+    "name": "Novosibirsk",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 10
+  },
+  {
+    "id": 40,
+    "name": "Yekaterinburg",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 10
+  },
+  {
+    "id": 41,
+    "name": "Sydney",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 11
+  },
+  {
+    "id": 42,
+    "name": "Melbourne",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 11
+  },
+  {
+    "id": 43,
+    "name": "Brisbane",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 11
+  },
+  {
+    "id": 44,
+    "name": "Perth",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 11
+  },
+  {
+    "id": 45,
+    "name": "Cairo",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 12
+  },
+  {
+    "id": 46,
+    "name": "Alexandria",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 12
+  },
+  {
+    "id": 47,
+    "name": "Giza",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 12
+  },
+  {
+    "id": 48,
+    "name": "Sharm El Sheikh",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 12
+  },
+  {
+    "id": 49,
+    "name": "Nairobi",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 13
+  },
+  {
+    "id": 50,
+    "name": "Mombasa",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 13
+  },
+  {
+    "id": 51,
+    "name": "Kisumu",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 13
+  },
+  {
+    "id": 52,
+    "name": "Nakuru",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 13
+  },
+  {
+    "id": 53,
+    "name": "Santiago",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 14
+  },
+  {
+    "id": 54,
+    "name": "Valparaíso",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 14
+  },
+  {
+    "id": 55,
+    "name": "Concepción",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 14
+  },
+  {
+    "id": 56,
+    "name": "Valdivia",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 14
+  },
+  {
+    "id": 57,
+    "name": "Bogotá",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 15
+  },
+  {
+    "id": 58,
+    "name": "Medellín",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 15
+  },
+  {
+    "id": 59,
+    "name": "Cali",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 15
+  },
+  {
+    "id": 60,
+    "name": "Cartagena",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 15
+  },
+  {
+    "id": 61,
+    "name": "Lima",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 16
+  },
+  {
+    "id": 62,
+    "name": "Arequipa",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 16
+  },
+  {
+    "id": 63,
+    "name": "Cusco",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 16
+  },
+  {
+    "id": 64,
+    "name": "Trujillo",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 16
+  },
+  {
+    "id": 65,
+    "name": "Auckland",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 17
+  },
+  {
+    "id": 66,
+    "name": "Wellington",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 17
+  },
+  {
+    "id": 67,
+    "name": "Christchurch",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 17
+  },
+  {
+    "id": 68,
+    "name": "Hamilton",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 17
+  },
+  {
+    "id": 69,
+    "name": "Lagos",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 18
+  },
+  {
+    "id": 70,
+    "name": "Abuja",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 18
+  },
+  {
+    "id": 71,
+    "name": "Kano",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 18
+  },
+  {
+    "id": 72,
+    "name": "Ibadan",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 18
+  },
+  {
+    "id": 73,
+    "name": "Karachi",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 74,
+    "name": "Lahore",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 75,
+    "name": "Islamabad",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 76,
+    "name": "Rawalpindi",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 77,
+    "name": "Faisalabad",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 78,
+    "name": "Multan",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 19
+  },
+  {
+    "id": 79,
+    "name": "Hanoi",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 20
+  },
+  {
+    "id": 80,
+    "name": "Ho Chi Minh City",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 20
+  },
+  {
+    "id": 81,
+    "name": "Da Nang",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 20
+  },
+  {
+    "id": 82,
+    "name": "Hai Phong",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 20
+  },
+  {
+    "id": 83,
+    "name": "Bangkok",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 21
+  },
+  {
+    "id": 84,
+    "name": "Chiang Mai",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 21
+  },
+  {
+    "id": 85,
+    "name": "Phuket",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 21
+  },
+
+  {
+    "id": 85,
+    "name": "Phuket",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 21
+  },
+  {
+    "id": 86,
+    "name": "Singapore",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 22
+  },
+  {
+    "id": 87,
+    "name": "Jurong",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 22
+  },
+  {
+    "id": 88,
+    "name": "Tampines",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 22
+  },
+  {
+    "id": 89,
+    "name": "Woodlands",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 22
+  },
+  {
+    "id": 90,
+    "name": "Manila",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 23
+  },
+  {
+    "id": 91,
+    "name": "Cebu City",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 23
+  },
+  {
+    "id": 92,
+    "name": "Davao City",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 23
+  },
+  {
+    "id": 93,
+    "name": "Quezon City",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 23
+  },
+  {
+    "id": 94,
+    "name": "Zurich",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 24
+  },
+  {
+    "id": 95,
+    "name": "Geneva",
+    "created_at": null,
+    "updated_at": null,
+    "country_id": 24
+  },
+  {
+    "id": 96,
     "name": "Homs Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 6,
+    "id": 97,
     "name": "Hama Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 7,
+    "id": 98,
     "name": "Aleppo Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 8,
+    "id": 99,
     "name": "Damascus Countryside Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 9,
+    "id": 100,
     "name": "Al Suwayda Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 10,
+    "id": 101,
     "name": "Al Raqqah Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 11,
+    "id": 102,
     "name": "Quneitra Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 12,
+    "id": 103,
     "name": "Latakia Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 13,
+    "id": 104,
     "name": "Al-Hasakah Governorate",
     "created_at": null,
     "updated_at": null,
     "country_id": 1
   },
   {
-    "id": 14,
+    "id": 105,
     "name": "Daraa Governorate",
     "created_at": null,
     "updated_at": null,
