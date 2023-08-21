@@ -135,7 +135,7 @@ class UserController extends AppController
         $reported_user_id = $request->reported_user_id;
         $report_category_id = $request->report_category_id;
         $description = $request->description;
-        $report= ReportedClient::where('reporting_user_id',$reporting_user_id)->where('reporting_user_id',$reporting_user_id);
+        $report= ReportedClient::where('reported_user_id',$reported_user_id)->where('reporting_user_id',$reporting_user_id);
         if($report->exists()){
             return $this->response(false, null,'You can only report the same user once');
         }
