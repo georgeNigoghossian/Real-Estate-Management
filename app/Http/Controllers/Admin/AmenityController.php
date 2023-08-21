@@ -22,7 +22,8 @@ class AmenityController extends Controller
 
         $custom_cond = [];
         if($request->name != ""){
-            $custom_cond[] = "name LIKE '%$request->name%'";
+            $custom_cond[] = "name_en LIKE '%$request->name%' OR name_ar LIKE '%$request->name%'";
+
         }
         $amenities = $this->amenityRepository->get_all($custom_cond);
 
@@ -44,7 +45,7 @@ class AmenityController extends Controller
 
     public function create(){
 
-        $amenity_types = $this->amenityRepository->get_all_amenity_types();
+        //$amenity_types = $this->amenityRepository->get_all_amenity_types();
 
         $model = new Amenity();
 
@@ -68,7 +69,7 @@ class AmenityController extends Controller
                 'title'=>"Create Amenity",
             ]
         ];
-        return view('admin.amenity.create',compact('amenity_types','jsValidator','breadcrumb'));
+        return view('admin.amenity.create',compact('jsValidator','breadcrumb'));
     }
 
 
@@ -94,7 +95,7 @@ class AmenityController extends Controller
             'name_ar'=>$request->name_ar,
             'description'=>$request->description,
             'file'=>$path,
-            'amenity_type_id'=>$request->amenity_type ,
+            //'amenity_type_id'=>$request->amenity_type ,
         ];
 
         $amenity = $this->amenityRepository->store($data);
@@ -129,7 +130,7 @@ class AmenityController extends Controller
 
     public function edit(Request $request){
 
-        $amenity_types = $this->amenityRepository->get_all_amenity_types();
+        //$amenity_types = $this->amenityRepository->get_all_amenity_types();
         $amenity = Amenity::find($request->id);
 
         $model = new Amenity();
@@ -154,7 +155,7 @@ class AmenityController extends Controller
                 'title'=>"Edit Amenity",
             ]
         ];
-        return view('admin.amenity.create',compact('amenity_types','amenity','jsValidator','breadcrumb'));
+        return view('admin.amenity.create',compact('amenity','jsValidator','breadcrumb'));
     }
     public function update($id,Request $request){
 
@@ -182,7 +183,7 @@ class AmenityController extends Controller
             'name_ar'=>$request->name_ar,
             'description'=>$request->description,
             'file'=>$path,
-            'amenity_type_id'=>$request->amenity_type ,
+            //'amenity_type_id'=>$request->amenity_type ,
         ];
 
         $amenity = \App\Models\Property\Amenity::find($id);

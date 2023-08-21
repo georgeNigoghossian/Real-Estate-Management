@@ -18,7 +18,7 @@
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name (English)</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name (Arabic)</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amenity Type</th>
+{{--                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amenity Type</th>--}}
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Active</th>
                     <th></th>
                     <th></th>
@@ -44,14 +44,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div class="d-flex px-2">
+{{--                        <td>--}}
+{{--                            <div class="d-flex px-2">--}}
 
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">{{isset($amenity->type) ? $amenity->type->name_en : ""}}</h6>
-                                </div>
-                            </div>
-                        </td>
+{{--                                <div class="my-auto">--}}
+{{--                                    <h6 class="mb-0 text-xs">{{isset($amenity->type) ? $amenity->type->name_en : ""}}</h6>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </td>--}}
 
                         <td>
                             <div class="form-check form-switch">

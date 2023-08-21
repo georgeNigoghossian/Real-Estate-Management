@@ -38,16 +38,16 @@
                            value="{{isset($amenity) && isset($amenity->name_ar) ? $amenity->name_ar : ""}}">
                 </div>
 
-                <div class="input-group input-group-static mt-3 ">
-                    <label for="exampleFormControlSelect1" class="ms-0">Amenity Type</label>
-                    <select class="form-control" name="amenity_type">
-                        <option value="" selected>Select Amenity Type</option>
-                        @foreach($amenity_types as $key=>$type)
+{{--                <div class="input-group input-group-static mt-3 ">--}}
+{{--                    <label for="exampleFormControlSelect1" class="ms-0">Amenity Type</label>--}}
+{{--                    <select class="form-control" name="amenity_type">--}}
+{{--                        <option value="" selected>Select Amenity Type</option>--}}
+{{--                        @foreach($amenity_types as $key=>$type)--}}
 
-                            <option value="{{$type["id"]}}" {{isset($amenity) && isset($amenity->type) && $amenity->type->id == $type["id"] ? "selected" : ""}}>{{$type["name_en"]}}</option>
-                        @endforeach
-                    </select>
-                </div>
+{{--                            <option value="{{$type["id"]}}" {{isset($amenity) && isset($amenity->type) && $amenity->type->id == $type["id"] ? "selected" : ""}}>{{$type["name_en"]}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
 
                 <div class="input-group input-group-outline mt-3">
                     <textarea placeholder="Description" class="form-control" name="description" rows="3">{{isset($amenity) && isset($amenity->description) ? $amenity->description : ""}}</textarea>

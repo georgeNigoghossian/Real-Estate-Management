@@ -41,7 +41,7 @@ class Amenity extends Model
     public $validation_rules = [
         'name_en'=>'required',
         'name_ar'=>'required',
-        'amenity_type'=>'required',
+        //'amenity_type'=>'required',
         'document'=>'required',
     ];
 }

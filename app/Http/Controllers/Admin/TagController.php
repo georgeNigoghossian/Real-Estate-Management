@@ -22,7 +22,7 @@ class TagController extends Controller
     public function index(Request $request){
         $custom_cond = [];
         if($request->name != ""){
-            $custom_cond[] = "name LIKE '%$request->name%'";
+            $custom_cond[] = "name_en LIKE '%$request->name%' OR name_ar LIKE '%$request->name%'";
         }
         $tags = $this->tagRepository->get_all($custom_cond);
         $tags =$tags->appends($request->query());
