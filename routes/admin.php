@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
@@ -77,6 +78,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/Country/create', [CountryController::class, 'create'])->name('admin.country.create');
     Route::get('/Country/create', [CountryController::class, 'create_page'])->name('admin.country.create_page');
 
+
+    Route::get('/City', [CityController::class, 'index'])->name('admin.city.index');
+    Route::post('/City/create', [CityController::class, 'create'])->name('admin.city.create');
+    Route::get('/City/create', [CityController::class, 'create_page'])->name('admin.city.create_page');
 
     Route::get('/Agency', [AgencyController::class, 'index'])->name('admin.agency.index');
     Route::get('/Agency/details/{id}', [AgencyController::class, 'agency_details'])->name('admin.agency.details');
