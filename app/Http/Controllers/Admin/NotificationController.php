@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\App\AppController;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Models\Property\Property;
 use App\Models\Property\Tag;
 use App\Models\User;
 use App\Repositories\TagRepository;
@@ -38,8 +39,9 @@ class NotificationController extends Controller
             ]
         ];
 
-        $users = User::where('is_blocked', '!=', '1')->get();
-        return view('admin.notification.create', compact('jsValidator', 'breadcrumb', 'users'));
+        $users = User::where('is_blocked','!=','1')->get();
+        $properties = Property::where('is_disabled',0)->get();
+        return view('admin.notification.create', compact('jsValidator', 'breadcrumb','users','properties'));
     }
 
     public function send(Request $request)
@@ -54,7 +56,12 @@ class NotificationController extends Controller
         $request->validate($validation_rules);
         $data = $request->toArray();
 
-
+        if($data["tabSelection"]==1){
+            unset($data['sendTo']);
+        }else{
+            unset($data['topic']);
+            unset($data['customTopic']);
+        }
         $notification['title'] = $data['title'];
         $notification['body'] = $data['body'];
         $notification['android_channel_id'] = "nostra_casa";
@@ -76,6 +83,13 @@ class NotificationController extends Controller
                 'Authorization' => env('FIREBASE_TOKEN'),
                 'Content-Type' => 'application/json'
             ]);
+        if(isset($data["topic"]) && $data["topic"]=="public"){
+            $data["to"]="/topics/Public";
+        }
+        if(isset($data["topic"]) && $data["topic"]=="custom"){
+            $data["to"]=$data["customTopic"];
+        }
+        //dd($data);
         if (array_key_exists('to', $data)) {
             $to = $data['to'];
             $response->post('https://fcm.googleapis.com/fcm/send', [
@@ -86,17 +100,17 @@ class NotificationController extends Controller
             $users = User::all();
         }
 
-        if (array_key_exists("sendTo", $data) && $data["sendTo"] == "all") {
-            $users = User::where('is_blocked', 0)->get();
-            foreach ($users as $key => $user) {
-                $data["registration_ids"][$key] = $user->fcm_token;
+        if(array_key_exists("sendTo",$data) && $data["sendTo"]=="all" && !isset($data["to"])){
+            $users = User::where('is_blocked',0)->get();
+            foreach($users as $key=>$user){
+                $data["registration_ids"][$key]=$user->fcm_token;
             }
         }
 
-        if (array_key_exists("sendTo", $data) && $data["sendTo"] == "specific") {
-            $users = User::where('is_blocked', 0)->whereIn('id', $data["selectedUsers"])->get();
-            foreach ($users as $key => $user) {
-                $data["registration_ids"][$key] = $user->fcm_token;
+        if(array_key_exists("sendTo",$data) && $data["sendTo"]=="specific"){
+            $users = User::where('is_blocked',0)->whereIn('id',$data["selectedUsers"])->get();
+            foreach($users as $key=>$user){
+                $data["registration_ids"][$key]=$user->fcm_token;
             }
         }
 
