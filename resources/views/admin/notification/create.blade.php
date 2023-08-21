@@ -68,7 +68,7 @@
                                 <option value=""></option>
                                 @foreach($properties as $property)
                                     <option
-                                        value="{{"topics/Property".$property->id}}">{{"topics/Property".$property->name}}</option>
+                                        value="{{"/topics/Property".$property->id}}">{{"topics/Property".$property->name}}</option>
                                 @endforeach
                             </select>
                         </div>
