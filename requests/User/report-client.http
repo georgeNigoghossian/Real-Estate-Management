@@ -1,0 +1,11 @@
+POST {{host}}/api/reportClient?id=2
+Accept: application/json
+Authorization: Bearer {{user_token}}
+
+{
+    "reporting_user_id": 1,
+    "reported_user_id": 2,
+    "report_category_id": 1,
+    "description": "fuck that user"
+}
+###
